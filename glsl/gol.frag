@@ -9,16 +9,30 @@ int get(vec2 offset) {
     return int(texture2D(state, (gl_FragCoord.xy + offset) / scale).r);
 }
 
+/**
+ * Count neighbours
+ */
+int countNeighbours() {
+
+    return get(vec2(-1.0, -1.0)) +  // Left bottom
+           get(vec2(-1.0,  0.0)) +  // Left centre
+           get(vec2(-1.0,  1.0)) +  // Left top
+
+           get(vec2( 0.0, -1.0)) +  // Centre bottom
+                                    // Ignore the central cell
+           get(vec2( 0.0,  1.0)) +  // Centre top
+
+           get(vec2( 1.0, -1.0)) +  // Right bottom
+           get(vec2( 1.0,  0.0)) +  // Right centre
+           get(vec2( 1.0,  1.0));   // Right top
+
+}
+
+/**
+ * Main
+ */
 void main() {
-    int sum =
-        get(vec2(-1.0, -1.0)) +
-        get(vec2(-1.0,  0.0)) +
-        get(vec2(-1.0,  1.0)) +
-        get(vec2( 0.0, -1.0)) +
-        get(vec2( 0.0,  1.0)) +
-        get(vec2( 1.0, -1.0)) +
-        get(vec2( 1.0,  0.0)) +
-        get(vec2( 1.0,  1.0));
+    int sum = countNeighbours();
     if (sum == 3) {
         gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     } else if (sum == 2) {
