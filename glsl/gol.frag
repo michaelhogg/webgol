@@ -8,8 +8,28 @@ precision mediump float;
 uniform sampler2D state;
 uniform vec2      scale;
 
-int get(vec2 offset) {
-    return int(texture2D(state, (gl_FragCoord.xy + offset) / scale).r);
+/**
+ * Get the pixel's RGBA channels
+ */
+vec4 getPixelChannels(vec2 offset) {
+
+    vec2 coord         = (gl_FragCoord.xy + offset) / scale;
+    vec4 pixelChannels = texture2D(state, coord);
+
+    return pixelChannels;
+
+}
+
+/**
+ * Get the state of the cell
+ */
+int getCellState(vec2 offset) {
+
+    vec4  pixelChannels = getPixelChannels(offset);
+    float channelsSum   = pixelChannels.r + pixelChannels.g + pixelChannels.b;
+
+    return ((channelsSum > 0.0) ? CELL_STATE_ALIVE : CELL_STATE_DEAD);
+
 }
 
 /**
@@ -17,17 +37,17 @@ int get(vec2 offset) {
  */
 int countNeighbours() {
 
-    return get(vec2(-1.0, -1.0)) +  // Left bottom
-           get(vec2(-1.0,  0.0)) +  // Left centre
-           get(vec2(-1.0,  1.0)) +  // Left top
+    return getCellState(vec2(-1.0, -1.0)) +  // Left bottom
+           getCellState(vec2(-1.0,  0.0)) +  // Left centre
+           getCellState(vec2(-1.0,  1.0)) +  // Left top
 
-           get(vec2( 0.0, -1.0)) +  // Centre bottom
-                                    // Ignore the central cell
-           get(vec2( 0.0,  1.0)) +  // Centre top
+           getCellState(vec2( 0.0, -1.0)) +  // Centre bottom
+                                             // Ignore the central cell
+           getCellState(vec2( 0.0,  1.0)) +  // Centre top
 
-           get(vec2( 1.0, -1.0)) +  // Right bottom
-           get(vec2( 1.0,  0.0)) +  // Right centre
-           get(vec2( 1.0,  1.0));   // Right top
+           getCellState(vec2( 1.0, -1.0)) +  // Right bottom
+           getCellState(vec2( 1.0,  0.0)) +  // Right centre
+           getCellState(vec2( 1.0,  1.0));   // Right top
 
 }
 
@@ -47,7 +67,7 @@ int calculateNextGeneration(int neighbours) {
 
         // Cell keeps its previous state.
 
-        return get(vec2(0.0, 0.0));
+        return getCellState(vec2(0.0, 0.0));
 
     } else {
 
