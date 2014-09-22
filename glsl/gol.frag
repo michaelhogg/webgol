@@ -2,8 +2,11 @@
 precision mediump float;
 #endif
 
+#define CELL_STATE_DEAD  0
+#define CELL_STATE_ALIVE 1
+
 uniform sampler2D state;
-uniform vec2 scale;
+uniform vec2      scale;
 
 int get(vec2 offset) {
     return int(texture2D(state, (gl_FragCoord.xy + offset) / scale).r);
