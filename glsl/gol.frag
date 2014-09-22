@@ -117,10 +117,9 @@ void setFragColour(int cellState, vec4 aliveColour) {
  */
 void main() {
 
-    vec4 aliveColour = vec4(1.0, 1.0, 1.0, 1.0);
-
-    int neighbours = countNeighbours();
-    int cellState  = calculateNextGeneration(neighbours);
+    int  neighbours  = countNeighbours();
+    int  cellState   = calculateNextGeneration(neighbours);
+    vec4 aliveColour = calculateAliveColour();
 
     setFragColour(cellState, aliveColour);
 
