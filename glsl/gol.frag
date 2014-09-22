@@ -5,6 +5,9 @@ precision mediump float;
 #define CELL_STATE_DEAD  0
 #define CELL_STATE_ALIVE 1
 
+// Must be black for getCellState() to work correctly
+#define COLOUR_DEAD vec4(0.0, 0.0, 0.0, 1.0)
+
 uniform sampler2D state;
 uniform vec2      scale;
 
@@ -82,9 +85,9 @@ int calculateNextGeneration(int neighbours) {
 /**
  * Set frag colour
  */
-void setFragColour(int cellState, vec4 aliveColour, vec4 deadColour) {
+void setFragColour(int cellState, vec4 aliveColour) {
 
-    gl_FragColor = ((cellState == CELL_STATE_ALIVE) ? aliveColour : deadColour);
+    gl_FragColor = ((cellState == CELL_STATE_ALIVE) ? aliveColour : COLOUR_DEAD);
 
 }
 
@@ -94,11 +97,10 @@ void setFragColour(int cellState, vec4 aliveColour, vec4 deadColour) {
 void main() {
 
     vec4 aliveColour = vec4(1.0, 1.0, 1.0, 1.0);
-    vec4 deadColour  = vec4(0.0, 0.0, 0.0, 1.0);
 
     int neighbours = countNeighbours();
     int cellState  = calculateNextGeneration(neighbours);
 
-    setFragColour(cellState, aliveColour, deadColour);
+    setFragColour(cellState, aliveColour);
 
 }
