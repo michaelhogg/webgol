@@ -32,16 +32,53 @@ int countNeighbours() {
 }
 
 /**
+ * Calculate next generation
+ */
+int calculateNextGeneration(int neighbours) {
+
+    if (neighbours == 3) {
+
+        // If cell was dead, it becomes alive.
+        // If cell was alive, it stays alive.
+
+        return CELL_STATE_ALIVE;
+
+    } else if (neighbours == 2) {
+
+        // Cell keeps its previous state.
+
+        return get(vec2(0.0, 0.0));
+
+    } else {
+
+        // Cell is now dead.
+
+        return CELL_STATE_DEAD;
+
+    }
+
+}
+
+/**
+ * Set frag colour
+ */
+void setFragColour(int cellState, vec4 aliveColour, vec4 deadColour) {
+
+    gl_FragColor = ((cellState == CELL_STATE_ALIVE) ? aliveColour : deadColour);
+
+}
+
+/**
  * Main
  */
 void main() {
-    int sum = countNeighbours();
-    if (sum == 3) {
-        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-    } else if (sum == 2) {
-        float current = float(get(vec2(0.0, 0.0)));
-        gl_FragColor = vec4(current, current, current, 1.0);
-    } else {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-    }
+
+    vec4 aliveColour = vec4(1.0, 1.0, 1.0, 1.0);
+    vec4 deadColour  = vec4(0.0, 0.0, 0.0, 1.0);
+
+    int neighbours = countNeighbours();
+    int cellState  = calculateNextGeneration(neighbours);
+
+    setFragColour(cellState, aliveColour, deadColour);
+
 }
