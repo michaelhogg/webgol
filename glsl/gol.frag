@@ -89,6 +89,21 @@ int calculateNextGeneration(int neighbours) {
 }
 
 /**
+ * Calculate alive colour using linear interpolation
+ */
+vec4 calculateAliveColour() {
+
+    float xFraction = gl_FragCoord.x / scale.x;  // scale.x contains the view width
+    float yFraction = gl_FragCoord.y / scale.y;  // scale.y contains the view height
+
+    vec4 topColour    = mix(COLOUR_TOP_LEFT,    COLOUR_TOP_RIGHT,    xFraction);
+    vec4 bottomColour = mix(COLOUR_BOTTOM_LEFT, COLOUR_BOTTOM_RIGHT, xFraction);
+
+    return mix(bottomColour, topColour, yFraction);
+
+}
+
+/**
  * Set frag colour
  */
 void setFragColour(int cellState, vec4 aliveColour) {
