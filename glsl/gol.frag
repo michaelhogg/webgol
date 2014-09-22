@@ -8,6 +8,12 @@ precision mediump float;
 // Must be black for getCellState() to work correctly
 #define COLOUR_DEAD vec4(0.0, 0.0, 0.0, 1.0)
 
+#define COLOUR_TOP_LEFT  vec4(1.0, 1.0, 0.0, 1.0)  // Yellow
+#define COLOUR_TOP_RIGHT vec4(1.0, 0.0, 0.0, 1.0)  // Red
+
+#define COLOUR_BOTTOM_LEFT  vec4(0.0, 1.0, 0.0, 1.0)  // Green
+#define COLOUR_BOTTOM_RIGHT vec4(0.3, 0.3, 1.0, 1.0)  // Blue
+
 uniform sampler2D state;
 uniform vec2      scale;
 
