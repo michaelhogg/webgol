@@ -9,7 +9,7 @@ function Controller(gol) {
             gol.setRandom();
             gol.draw();
             break;
-        case 32: /* [space] */
+        case 83: /* s */
             gol.toggle();
             break;
         };
