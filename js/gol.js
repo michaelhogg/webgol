@@ -62,8 +62,7 @@ GOL.now = function() {
 /**
  * Set the entire simulation state at once.
  *
- * @param   {Object} state - Boolean array-like
- * @returns {GOL}    this
+ * @param {Object} state - Boolean array-like
  */
 GOL.prototype.set = function(state) {
 
@@ -78,15 +77,12 @@ GOL.prototype.set = function(state) {
 
     this.textures.front.subset(rgba, 0, 0, this.statesize[0], this.statesize[1]);
 
-    return this;
-
 };
 
 /**
  * Fill the entire state with random values.
  *
- * @param   {number} [p] - Chance of a cell being alive (0.0 to 1.0)
- * @returns {GOL}    this
+ * @param {number} [p] - Chance of a cell being alive (0.0 to 1.0)
  */
 GOL.prototype.setRandom = function(p) {
 
@@ -103,27 +99,19 @@ GOL.prototype.setRandom = function(p) {
 
     this.set(rand);
 
-    return this;
-
 };
 
 /**
  * Clear the simulation state to empty.
- *
- * @returns {GOL} this
  */
 GOL.prototype.setEmpty = function() {
 
     this.set(new Uint8Array(this.statesize[0] * this.statesize[1]));
 
-    return this;
-
 };
 
 /**
  * Swap the texture buffers.
- *
- * @returns {GOL} this
  */
 GOL.prototype.swap = function() {
 
@@ -132,14 +120,10 @@ GOL.prototype.swap = function() {
     this.textures.front = this.textures.back;
     this.textures.back  = tmp;
 
-    return this;
-
 };
 
 /**
  * Step the Game of Life state on the GPU without rendering anything.
- *
- * @returns {GOL} this
  */
 GOL.prototype.step = function() {
 
@@ -166,14 +150,10 @@ GOL.prototype.step = function() {
 
     this.swap();
 
-    return this;
-
 };
 
 /**
  * Render the Game of Life state stored on the GPU.
- *
- * @returns {GOL} this
  */
 GOL.prototype.draw = function() {
 
@@ -189,8 +169,6 @@ GOL.prototype.draw = function() {
         .uniformi('state', 0)
         .uniform('scale', this.viewsize)
         .draw(gl.TRIANGLE_STRIP, 4);
-
-    return this;
 
 };
 
@@ -221,8 +199,6 @@ GOL.prototype.get = function() {
 
 /**
  * Run the simulation automatically on a timer.
- *
- * @returns {GOL} this
  */
 GOL.prototype.start = function() {
 
@@ -233,14 +209,10 @@ GOL.prototype.start = function() {
         }, 60);
     }
 
-    return this;
-
 };
 
 /**
  * Stop animating the simulation.
- *
- * @returns {GOL} this
  */
 GOL.prototype.stop = function() {
 
@@ -248,14 +220,10 @@ GOL.prototype.stop = function() {
 
     this.timer = null;
 
-    return this;
-
 };
 
 /**
  * Toggle the animation state.
- *
- * @returns {GOL} this
  */
 GOL.prototype.toggle = function() {
 

@@ -5,7 +5,9 @@ var gol = null;
 $(document).ready(function() {
 
     var $canvas = $('#life');
-    gol = new GOL($canvas[0]).draw().start();
+    gol = new GOL($canvas[0]);
+    gol.draw();
+    gol.start();
 
     $(document).on('keyup', function(event) {
         switch (event.which) {
