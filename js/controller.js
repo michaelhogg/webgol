@@ -9,19 +9,8 @@ function Controller(gol) {
             gol.setRandom();
             gol.draw();
             break;
-        case 46: /* [delete] */
-            gol.setEmpty();
-            gol.draw();
-            break;
         case 32: /* [space] */
             gol.toggle();
-            break;
-        case 83: /* s */
-            if (event.shiftKey) {
-                if (this._save) gol.set(this._save);
-            } else {
-                this._save = gol.get();
-            }
             break;
         };
     });
