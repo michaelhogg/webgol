@@ -173,20 +173,6 @@ GOL.prototype.draw = function() {
 };
 
 /**
- * Set the state at a specific position.
- * @param {number} x
- * @param {number} y
- * @param {boolean} state True/false for live/dead
- * @returns {GOL} this
- */
-GOL.prototype.poke = function(x, y, state) {
-    var gl = this.igloo.gl,
-        v = state * 255;
-    this.textures.front.subset([v, v, v, 255], x, y, 1, 1);
-    return this;
-};
-
-/**
  * @returns {Object} Boolean array-like of the simulation state
  */
 GOL.prototype.get = function() {
@@ -235,18 +221,4 @@ GOL.prototype.toggle = function() {
     } else {
         this.stop();
     }
-};
-
-/**
- * Find simulation coordinates for event.
- * This is a workaround for Firefox bug #69787 and jQuery bug #8523.
- * @returns {Array} target-relative offset
- */
-GOL.prototype.eventCoord = function(event) {
-    var $target = $(event.target),
-        offset = $target.offset(),
-        border = 1,
-        x = event.pageX - offset.left - border,
-        y = $target.height() - (event.pageY - offset.top - border);
-    return [Math.floor(x / this.scale), Math.floor(y / this.scale)];
 };

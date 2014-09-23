@@ -3,29 +3,6 @@
  */
 function Controller(gol) {
     this.gol = gol;
-    var _this = this,
-        $canvas = $(gol.igloo.canvas);
-    this.drag = null;
-    $canvas.on('mousedown', function(event) {
-        _this.drag = event.which;
-        var pos = gol.eventCoord(event);
-        gol.poke(pos[0], pos[1], _this.drag == 1);
-        gol.draw();
-    });
-    $canvas.on('mouseup', function(event) {
-        _this.drag = null;
-    });
-    $canvas.on('mousemove', function(event) {
-        if (_this.drag) {
-            var pos = gol.eventCoord(event);
-            gol.poke(pos[0], pos[1], _this.drag == 1);
-            gol.draw();
-        }
-    });
-    $canvas.on('contextmenu', function(event) {
-        event.preventDefault();
-        return false;
-    });
     $(document).on('keyup', function(event) {
         switch (event.which) {
         case 82: /* r */
