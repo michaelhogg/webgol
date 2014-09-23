@@ -6,12 +6,11 @@
  */
 function GOL(canvas, scale) {
 
-    var igloo = this.igloo = new Igloo(canvas);
+    this.igloo = new Igloo(canvas);
+    this.gl    = this.igloo.gl;
 
-    var gl = igloo.gl;
-
-    if (gl == null) {
-        alert('Could not initialize WebGL!');
+    if (this.gl == null) {
+        alert('Could not initialise WebGL!');
         throw new Error('No WebGL');
     }
 
@@ -26,24 +25,24 @@ function GOL(canvas, scale) {
     this.lasttick  = GOL.now();
     this.fps       = 0;
 
-    gl.disable(gl.DEPTH_TEST);
+    this.gl.disable(this.gl.DEPTH_TEST);
 
     this.programs = {
-        copy: igloo.program('glsl/quad.vert', 'glsl/copy.frag'),
-        gol:  igloo.program('glsl/quad.vert', 'glsl/gol.frag')
+        copy: this.igloo.program('glsl/quad.vert', 'glsl/copy.frag'),
+        gol:  this.igloo.program('glsl/quad.vert', 'glsl/gol.frag')
     };
 
     this.buffers = {
-        quad: igloo.array(Igloo.QUAD2)
+        quad: this.igloo.array(Igloo.QUAD2)
     };
 
     this.textures = {
-        front: igloo.texture(null, gl.RGBA, gl.REPEAT, gl.NEAREST).blank(this.statesize[0], this.statesize[1]),
-        back:  igloo.texture(null, gl.RGBA, gl.REPEAT, gl.NEAREST).blank(this.statesize[0], this.statesize[1])
+        front: this.igloo.texture(null, this.gl.RGBA, this.gl.REPEAT, this.gl.NEAREST).blank(this.statesize[0], this.statesize[1]),
+        back:  this.igloo.texture(null, this.gl.RGBA, this.gl.REPEAT, this.gl.NEAREST).blank(this.statesize[0], this.statesize[1])
     };
 
     this.framebuffers = {
-        step: igloo.framebuffer()
+        step: this.igloo.framebuffer()
     };
 
     this.setRandom();
@@ -66,7 +65,6 @@ GOL.now = function() {
  */
 GOL.prototype.set = function(state) {
 
-    var gl   = this.igloo.gl;
     var rgba = new Uint8Array(this.statesize[0] * this.statesize[1] * 4);
 
     for (var i = 0; i < state.length; i++) {
@@ -86,8 +84,7 @@ GOL.prototype.set = function(state) {
  */
 GOL.prototype.setRandom = function(p) {
 
-    var gl   = this.igloo.gl,
-        size = this.statesize[0] * this.statesize[1];
+    var size = this.statesize[0] * this.statesize[1];
 
     p = p == null ? 0.5 : p;
 
@@ -135,18 +132,16 @@ GOL.prototype.step = function() {
         this.fps++;
     }
 
-    var gl = this.igloo.gl;
-
     this.framebuffers.step.attach(this.textures.back);
     this.textures.front.bind(0);
 
-    gl.viewport(0, 0, this.statesize[0], this.statesize[1]);
+    this.gl.viewport(0, 0, this.statesize[0], this.statesize[1]);
 
     this.programs.gol.use()
         .attrib('quad', this.buffers.quad, 2)
         .uniformi('state', 0)
         .uniform('scale', this.statesize)
-        .draw(gl.TRIANGLE_STRIP, 4);
+        .draw(this.gl.TRIANGLE_STRIP, 4);
 
     this.swap();
 
@@ -157,18 +152,16 @@ GOL.prototype.step = function() {
  */
 GOL.prototype.draw = function() {
 
-    var gl = this.igloo.gl;
-
     this.igloo.defaultFramebuffer.bind();
     this.textures.front.bind(0);
 
-    gl.viewport(0, 0, this.viewsize[0], this.viewsize[1]);
+    this.gl.viewport(0, 0, this.viewsize[0], this.viewsize[1]);
 
     this.programs.copy.use()
         .attrib('quad', this.buffers.quad, 2)
         .uniformi('state', 0)
         .uniform('scale', this.viewsize)
-        .draw(gl.TRIANGLE_STRIP, 4);
+        .draw(this.gl.TRIANGLE_STRIP, 4);
 
 };
 
@@ -177,15 +170,14 @@ GOL.prototype.draw = function() {
  */
 GOL.prototype.get = function() {
 
-    var gl = this.igloo.gl,
-        w  = this.statesize[0],
-        h  = this.statesize[1];
+    var w = this.statesize[0],
+        h = this.statesize[1];
 
     this.framebuffers.step.attach(this.textures.front);
 
     var rgba = new Uint8Array(w * h * 4);
 
-    gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
+    this.gl.readPixels(0, 0, w, h, this.gl.RGBA, this.gl.UNSIGNED_BYTE, rgba);
 
     var state = new Uint8Array(w * h);
 
