@@ -4,8 +4,10 @@ var gol = null;
 
 $(document).ready(function() {
 
-    var $canvas = $('#life');
-    gol = new GOL($canvas[0]);
+    var $canvas  = $('#life');
+    var cellSize = 4;
+
+    gol = new GOL($canvas[0], cellSize);
     gol.draw();
     gol.start();
 

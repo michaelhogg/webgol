@@ -1,26 +1,25 @@
 /**
  * Game of Life simulation and display.
  *
- * @param {HTMLCanvasElement} canvas  - Render target
- * @param {number}            [scale] - Size of each cell in pixels (power of 2)
+ * @param {HTMLCanvasElement} canvas   - Render target
+ * @param {number}            cellSize - Size of each cell in pixels (power of 2)
  */
-function GOL(canvas, scale) {
+function GOL(canvas, cellSize) {
 
-    this.igloo = new Igloo(canvas);
-    this.gl    = this.igloo.gl;
+    this.cellSize = cellSize;
+    this.igloo    = new Igloo(canvas);
+    this.gl       = this.igloo.gl;
 
     if (this.gl == null) {
         alert('Could not initialise WebGL!');
         throw new Error('No WebGL');
     }
 
-    scale = this.scale = scale || 4;
-
     var w = canvas.width,
         h = canvas.height;
 
     this.viewsize  = new Float32Array([w, h]);
-    this.statesize = new Float32Array([w / scale, h / scale]);
+    this.statesize = new Float32Array([w / cellSize, h / cellSize]);
     this.timer     = null;
     this.lasttick  = GOL.now();
     this.fps       = 0;
