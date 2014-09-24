@@ -128,6 +128,32 @@ GOL.prototype.createTexture = function() {
 };
 
 /**
+ * Get the simulation state.
+ *
+ * @returns {boolean[]}
+ */
+GOL.prototype.get = function() {
+
+    var w = this.statesize[0],
+        h = this.statesize[1];
+
+    this.framebuffers.step.attach(this.textures.front);
+
+    var rgba = new Uint8Array(w * h * 4);
+
+    this.gl.readPixels(0, 0, w, h, this.gl.RGBA, this.gl.UNSIGNED_BYTE, rgba);
+
+    var state = [];
+
+    for (var i = 0; i < w * h; i++) {
+        state[i] = rgba[i * 4] > 128 ? true : false;
+    }
+
+    return state;
+
+};
+
+/**
  * Set the simulation state.
  *
  * @param {boolean[]} state
@@ -236,32 +262,6 @@ GOL.prototype.draw = function() {
         .uniformi('state', 0)
         .uniform('scale', this.viewsize)
         .draw(this.gl.TRIANGLE_STRIP, 4);
-
-};
-
-/**
- * Get the simulation state.
- *
- * @returns {boolean[]}
- */
-GOL.prototype.get = function() {
-
-    var w = this.statesize[0],
-        h = this.statesize[1];
-
-    this.framebuffers.step.attach(this.textures.front);
-
-    var rgba = new Uint8Array(w * h * 4);
-
-    this.gl.readPixels(0, 0, w, h, this.gl.RGBA, this.gl.UNSIGNED_BYTE, rgba);
-
-    var state = [];
-
-    for (var i = 0; i < w * h; i++) {
-        state[i] = rgba[i * 4] > 128 ? true : false;
-    }
-
-    return state;
 
 };
 
