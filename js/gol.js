@@ -148,19 +148,17 @@ GOL.prototype.set = function(state) {
 
 /**
  * Fill the entire state with random values.
- *
- * @param {number} [p] - Chance of a cell being alive (0.0 to 1.0)
  */
-GOL.prototype.setRandom = function(p) {
+GOL.prototype.setRandom = function() {
 
     var size = this.statesize[0] * this.statesize[1];
 
-    p = p == null ? 0.5 : p;
+    var aliveProbability = 0.5;
 
     var rand = new Uint8Array(size);
 
     for (var i = 0; i < size; i++) {
-        rand[i] = Math.random() < p ? 1 : 0;
+        rand[i] = Math.random() < aliveProbability ? 1 : 0;
     }
 
     this.set(rand);
