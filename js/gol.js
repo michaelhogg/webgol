@@ -42,6 +42,12 @@ function GOL(canvas, cellSize) {
     this.statesize = new Float32Array([canvas.width / cellSize, canvas.height / cellSize]);
 
     /**
+     * Total number of cells in the GOL state
+     * @type {number}
+     */
+    this.totalCells = this.statesize[0] * this.statesize[1];
+
+    /**
      * ID of the animation timer (if null, then the timer is not running)
      * @type {(number|null)}
      */
@@ -139,13 +145,13 @@ GOL.prototype.get = function() {
 
     this.framebuffers.step.attach(this.textures.front);
 
-    var rgba = new Uint8Array(w * h * 4);
+    var rgba = new Uint8Array(this.totalCells * 4);
 
     this.gl.readPixels(0, 0, w, h, this.gl.RGBA, this.gl.UNSIGNED_BYTE, rgba);
 
     var state = [];
 
-    for (var i = 0; i < w * h; i++) {
+    for (var i = 0; i < this.totalCells; i++) {
         state[i] = rgba[i * 4] > 128 ? true : false;
     }
 
@@ -160,7 +166,7 @@ GOL.prototype.get = function() {
  */
 GOL.prototype.set = function(state) {
 
-    var rgba = new Uint8Array(this.statesize[0] * this.statesize[1] * 4);
+    var rgba = new Uint8Array(this.totalCells * 4);
 
     for (var i = 0; i < state.length; i++) {
         var ii = i * 4;
@@ -177,13 +183,11 @@ GOL.prototype.set = function(state) {
  */
 GOL.prototype.setRandom = function() {
 
-    var size = this.statesize[0] * this.statesize[1];
-
     var aliveProbability = 0.5;
 
     var rand = [];
 
-    for (var i = 0; i < size; i++) {
+    for (var i = 0; i < this.totalCells; i++) {
         rand[i] = Math.random() < aliveProbability ? true : false;
     }
 
@@ -196,10 +200,9 @@ GOL.prototype.setRandom = function() {
  */
 GOL.prototype.setEmpty = function() {
 
-    var totalCells = this.statesize[0] * this.statesize[1];
-    var state      = [];
+    var state = [];
 
-    for (var i = 0; i < totalCells; i++) {
+    for (var i = 0; i < this.totalCells; i++) {
         state[i] = false;
     }
 
