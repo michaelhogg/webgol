@@ -18,7 +18,7 @@ $(document).ready(function() {
                 gol.setRandom();
                 gol.draw();
                 break;
-            case 83: /* s */
+            case 80: /* p */
                 gol.toggle();
                 break;
         }
