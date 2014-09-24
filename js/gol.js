@@ -6,37 +6,91 @@
  */
 function GOL(canvas, cellSize) {
 
+    /**
+     * Size of each cell in pixels (power of 2)
+     * @type {number}
+     */
     this.cellSize = cellSize;
-    this.igloo    = new Igloo(canvas);
-    this.gl       = this.igloo.gl;
+
+    /**
+     * Igloo object (WebGL wrapper API)
+     * @type {Igloo}
+     */
+    this.igloo = new Igloo(canvas);
+
+    /**
+     * WebGL rendering context associated with the canvas
+     * @type {WebGLRenderingContext}
+     */
+    this.gl = this.igloo.gl;
 
     if (this.gl == null) {
         alert('Could not initialise WebGL!');
         throw new Error('No WebGL');
     }
 
-    this.viewsize  = new Float32Array([canvas.width,            canvas.height]);
+    /**
+     * Dimensions of the view (canvas) displayed on the screen
+     * @type {Float32Array}
+     */
+    this.viewsize = new Float32Array([canvas.width, canvas.height]);
+
+    /**
+     * Dimensions of the GOL state (cells)
+     * @type {Float32Array}
+     */
     this.statesize = new Float32Array([canvas.width / cellSize, canvas.height / cellSize]);
-    this.timer     = null;
-    this.lasttick  = GOL.now();
-    this.fps       = 0;
+
+    /**
+     * ID of the animation timer (if null, then the timer is not running)
+     * @type {(number|null)}
+     */
+    this.timer = null;
+
+    /**
+     * Unix timestamp (in seconds) of the latest GOL state update
+     * @type {number}
+     */
+    this.lasttick = GOL.now();
+
+    /**
+     * Measured frames-per-second (only valid when the animation is running)
+     * @type {number}
+     */
+    this.fps = 0;
 
     this.gl.disable(this.gl.DEPTH_TEST);
 
+    /**
+     * Igloo-wrapped WebGLProgram objects
+     * @type {Igloo.Program}
+     */
     this.programs = {
         copy: this.igloo.program('glsl/quad.vert', 'glsl/copy.frag'),
         gol:  this.igloo.program('glsl/quad.vert', 'glsl/gol.frag')
     };
 
+    /**
+     * Igloo-wrapped WebGLBuffer objects
+     * @type {Igloo.Buffer}
+     */
     this.buffers = {
         quad: this.igloo.array(Igloo.QUAD2)
     };
 
+    /**
+     * Igloo-wrapped WebGLTexture objects
+     * @type {Igloo.Texture}
+     */
     this.textures = {
         front: this.igloo.texture(null, this.gl.RGBA, this.gl.REPEAT, this.gl.NEAREST).blank(this.statesize[0], this.statesize[1]),
         back:  this.igloo.texture(null, this.gl.RGBA, this.gl.REPEAT, this.gl.NEAREST).blank(this.statesize[0], this.statesize[1])
     };
 
+    /**
+     * Igloo-wrapped WebGLFramebuffer objects
+     * @type {Igloo.Framebuffer}
+     */
     this.framebuffers = {
         step: this.igloo.framebuffer()
     };
