@@ -269,15 +269,29 @@ GOL.prototype.draw = function() {
 };
 
 /**
+ * Step the GOL state on the GPU, and then render it
+ */
+GOL.prototype.stepAndDraw = function() {
+
+    this.step();
+    this.draw();
+
+};
+
+/**
  * Run the simulation automatically on a timer.
  */
 GOL.prototype.start = function() {
 
+    var _this = this;
+
     if (this.timer == null) {
-        this.timer = setInterval(function(){
-            gol.step();
-            gol.draw();
-        }, 60);
+        this.timer = setInterval(
+            function() {
+                _this.stepAndDraw();
+            },
+            60
+        );
     }
 
 };
