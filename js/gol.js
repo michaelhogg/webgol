@@ -83,8 +83,8 @@ function GOL(canvas, cellSize) {
      * @type {Igloo.Texture}
      */
     this.textures = {
-        front: this.igloo.texture(null, this.gl.RGBA, this.gl.REPEAT, this.gl.NEAREST).blank(this.statesize[0], this.statesize[1]),
-        back:  this.igloo.texture(null, this.gl.RGBA, this.gl.REPEAT, this.gl.NEAREST).blank(this.statesize[0], this.statesize[1])
+        front: this.createTexture(),
+        back:  this.createTexture()
     };
 
     /**
@@ -103,6 +103,27 @@ function GOL(canvas, cellSize) {
 GOL.now = function() {
 
     return Math.floor(Date.now() / 1000);
+
+};
+
+/**
+ * Create a new blank 2D texture to hold a GOL simulation state
+ *
+ * @returns {Igloo.Texture}
+ */
+GOL.prototype.createTexture = function() {
+
+    var imageSource         = null;             // ArrayBufferView, ImageData, HTMLImageElement, HTMLCanvasElement or HTMLVideoElement
+    var pixelFormat         = this.gl.RGBA;     // PixelFormat enum
+    var wrapMode            = this.gl.REPEAT;   // TextureWrapMode enum
+    var minifyMagnifyFilter = this.gl.NEAREST;  // TextureMinFilter and TextureMagFilter enums
+
+    var texture = this.igloo.texture(imageSource, pixelFormat, wrapMode, minifyMagnifyFilter);
+
+    // Set size, set type to UNSIGNED_BYTE (Uint8Array pixels), and fill with 0
+    texture.blank(this.statesize[0], this.statesize[1]);
+
+    return texture;
 
 };
 
