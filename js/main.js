@@ -8,6 +8,7 @@ $(document).ready(function() {
     var cellSize = 4;
 
     gol = new GOL(canvas, cellSize);
+    gol.setRandom();
     gol.draw();
     gol.start();
 

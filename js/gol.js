@@ -44,8 +44,6 @@ function GOL(canvas, cellSize) {
         step: this.igloo.framebuffer()
     };
 
-    this.setRandom();
-
 }
 
 /**
