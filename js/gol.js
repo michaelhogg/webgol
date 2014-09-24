@@ -308,14 +308,25 @@ GOL.prototype.stop = function() {
 };
 
 /**
+ * Is the animation running?
+ *
+ * @returns {boolean}
+ */
+GOL.prototype.isAnimationRunning = function() {
+
+    return (this.timer !== null);
+
+};
+
+/**
  * Toggle the animation state.
  */
 GOL.prototype.toggle = function() {
 
-    if (this.timer == null) {
-        this.start();
-    } else {
+    if (this.isAnimationRunning()) {
         this.stop();
+    } else {
+        this.start();
     }
 
 };
