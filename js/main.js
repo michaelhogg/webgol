@@ -21,6 +21,11 @@ $(document).ready(function() {
             case 80: /* p */
                 gol.toggle();
                 break;
+            case 83: /* s */
+                if (!gol.isAnimationRunning()) {
+                    gol.stepAndDraw();
+                }
+                break;
         }
     });
 
