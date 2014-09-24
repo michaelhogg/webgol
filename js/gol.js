@@ -128,9 +128,9 @@ GOL.prototype.createTexture = function() {
 };
 
 /**
- * Set the entire simulation state at once.
+ * Set the simulation state.
  *
- * @param {Object} state - Boolean array-like
+ * @param {boolean[]} state
  */
 GOL.prototype.set = function(state) {
 
@@ -147,7 +147,7 @@ GOL.prototype.set = function(state) {
 };
 
 /**
- * Fill the entire state with random values.
+ * Fill the simulation state with random values.
  */
 GOL.prototype.setRandom = function() {
 
@@ -155,10 +155,10 @@ GOL.prototype.setRandom = function() {
 
     var aliveProbability = 0.5;
 
-    var rand = new Uint8Array(size);
+    var rand = [];
 
     for (var i = 0; i < size; i++) {
-        rand[i] = Math.random() < aliveProbability ? 1 : 0;
+        rand[i] = Math.random() < aliveProbability ? true : false;
     }
 
     this.set(rand);
@@ -166,11 +166,18 @@ GOL.prototype.setRandom = function() {
 };
 
 /**
- * Clear the simulation state to empty.
+ * Clear the simulation state (all cells dead).
  */
 GOL.prototype.setEmpty = function() {
 
-    this.set(new Uint8Array(this.statesize[0] * this.statesize[1]));
+    var totalCells = this.statesize[0] * this.statesize[1];
+    var state      = [];
+
+    for (var i = 0; i < totalCells; i++) {
+        state[i] = false;
+    }
+
+    this.set(state);
 
 };
 
@@ -233,7 +240,9 @@ GOL.prototype.draw = function() {
 };
 
 /**
- * @returns {Object} Boolean array-like of the simulation state
+ * Get the simulation state.
+ *
+ * @returns {boolean[]}
  */
 GOL.prototype.get = function() {
 
@@ -246,10 +255,10 @@ GOL.prototype.get = function() {
 
     this.gl.readPixels(0, 0, w, h, this.gl.RGBA, this.gl.UNSIGNED_BYTE, rgba);
 
-    var state = new Uint8Array(w * h);
+    var state = [];
 
     for (var i = 0; i < w * h; i++) {
-        state[i] = rgba[i * 4] > 128 ? 1 : 0;
+        state[i] = rgba[i * 4] > 128 ? true : false;
     }
 
     return state;
