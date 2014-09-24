@@ -15,11 +15,8 @@ function GOL(canvas, cellSize) {
         throw new Error('No WebGL');
     }
 
-    var w = canvas.width,
-        h = canvas.height;
-
-    this.viewsize  = new Float32Array([w, h]);
-    this.statesize = new Float32Array([w / cellSize, h / cellSize]);
+    this.viewsize  = new Float32Array([canvas.width,            canvas.height]);
+    this.statesize = new Float32Array([canvas.width / cellSize, canvas.height / cellSize]);
     this.timer     = null;
     this.lasttick  = GOL.now();
     this.fps       = 0;
