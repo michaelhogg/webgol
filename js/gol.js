@@ -244,14 +244,16 @@ GOL.prototype.step = function() {
         this.fps++;
     }
 
+    var textureUnitIndex = 0;
+
     this.framebuffers.step.attach(this.textures.back);
-    this.textures.front.bind(0);
+    this.textures.front.bind(textureUnitIndex);
 
     this.gl.viewport(0, 0, this.stateWidth, this.stateHeight);
 
     this.programs.gol.use()
         .attrib('quad', this.buffers.quad, 2)
-        .uniformi('sampler', 0)
+        .uniformi('sampler', textureUnitIndex)
         .uniform('stateDimensions', new Float32Array([this.stateWidth, this.stateHeight]))
         .draw(this.gl.TRIANGLE_STRIP, 4);
 
@@ -264,14 +266,16 @@ GOL.prototype.step = function() {
  */
 GOL.prototype.draw = function() {
 
+    var textureUnitIndex = 0;
+
     this.igloo.defaultFramebuffer.bind();
-    this.textures.front.bind(0);
+    this.textures.front.bind(textureUnitIndex);
 
     this.gl.viewport(0, 0, this.viewWidth, this.viewHeight);
 
     this.programs.copy.use()
         .attrib('quad', this.buffers.quad, 2)
-        .uniformi('sampler', 0)
+        .uniformi('sampler', textureUnitIndex)
         .uniform('viewDimensions', new Float32Array([this.viewWidth, this.viewHeight]))
         .draw(this.gl.TRIANGLE_STRIP, 4);
 
