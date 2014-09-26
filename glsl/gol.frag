@@ -18,24 +18,23 @@ uniform sampler2D sampler;
 uniform vec2      stateDimensions;
 
 /**
- * Get the pixel's RGBA channels
+ * Get the specified pixel's colour
  */
-vec4 getPixelChannels(vec2 offset) {
+vec4 getPixelColour(vec2 offset) {
 
-    vec2 coord         = (gl_FragCoord.xy + offset) / stateDimensions;  // Normalise to range 0-1
-    vec4 pixelChannels = texture2D(sampler, coord);
+    vec2 coord = (gl_FragCoord.xy + offset) / stateDimensions;  // Normalise to range 0-1
 
-    return pixelChannels;
+    return texture2D(sampler, coord);
 
 }
 
 /**
- * Get the state of the cell
+ * Get the state of the specified cell
  */
 int getCellState(vec2 offset) {
 
-    vec4  pixelChannels = getPixelChannels(offset);
-    float channelsSum   = pixelChannels.r + pixelChannels.g + pixelChannels.b;
+    vec4  colour      = getPixelColour(offset);
+    float channelsSum = colour.r + colour.g + colour.b;
 
     return ((channelsSum > 0.0) ? CELL_STATE_ALIVE : CELL_STATE_DEAD);
 
