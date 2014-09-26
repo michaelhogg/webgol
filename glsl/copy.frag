@@ -2,9 +2,13 @@
 precision mediump float;
 #endif
 
-uniform sampler2D state;
-uniform vec2 scale;
+uniform sampler2D sampler;
+uniform vec2      viewDimensions;
 
 void main() {
-    gl_FragColor = texture2D(state, gl_FragCoord.xy / scale);
+
+    vec2 coord = gl_FragCoord.xy / viewDimensions;  // Normalise to range 0-1
+
+    gl_FragColor = texture2D(sampler, coord);
+
 }

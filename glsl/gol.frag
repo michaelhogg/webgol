@@ -14,16 +14,16 @@ precision mediump float;
 #define COLOUR_BOTTOM_LEFT  vec4(0.0, 1.0, 0.0, 1.0)  // Green
 #define COLOUR_BOTTOM_RIGHT vec4(0.3, 0.3, 1.0, 1.0)  // Blue
 
-uniform sampler2D state;
-uniform vec2      scale;
+uniform sampler2D sampler;
+uniform vec2      stateDimensions;
 
 /**
  * Get the pixel's RGBA channels
  */
 vec4 getPixelChannels(vec2 offset) {
 
-    vec2 coord         = (gl_FragCoord.xy + offset) / scale;
-    vec4 pixelChannels = texture2D(state, coord);
+    vec2 coord         = (gl_FragCoord.xy + offset) / stateDimensions;  // Normalise to range 0-1
+    vec4 pixelChannels = texture2D(sampler, coord);
 
     return pixelChannels;
 
@@ -93,13 +93,12 @@ int calculateNextGeneration(int neighbours) {
  */
 vec4 calculateAliveColour() {
 
-    float xFraction = gl_FragCoord.x / scale.x;  // scale.x contains the view width
-    float yFraction = gl_FragCoord.y / scale.y;  // scale.y contains the view height
+    vec2 fraction = gl_FragCoord.xy / stateDimensions;
 
-    vec4 topColour    = mix(COLOUR_TOP_LEFT,    COLOUR_TOP_RIGHT,    xFraction);
-    vec4 bottomColour = mix(COLOUR_BOTTOM_LEFT, COLOUR_BOTTOM_RIGHT, xFraction);
+    vec4 topColour    = mix(COLOUR_TOP_LEFT,    COLOUR_TOP_RIGHT,    fraction.x);
+    vec4 bottomColour = mix(COLOUR_BOTTOM_LEFT, COLOUR_BOTTOM_RIGHT, fraction.x);
 
-    return mix(bottomColour, topColour, yFraction);
+    return mix(bottomColour, topColour, fraction.y);
 
 }
 

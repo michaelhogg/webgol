@@ -251,8 +251,8 @@ GOL.prototype.step = function() {
 
     this.programs.gol.use()
         .attrib('quad', this.buffers.quad, 2)
-        .uniformi('state', 0)
-        .uniform('scale', new Float32Array([this.stateWidth, this.stateHeight]))
+        .uniformi('sampler', 0)
+        .uniform('stateDimensions', new Float32Array([this.stateWidth, this.stateHeight]))
         .draw(this.gl.TRIANGLE_STRIP, 4);
 
     this.swap();
@@ -271,8 +271,8 @@ GOL.prototype.draw = function() {
 
     this.programs.copy.use()
         .attrib('quad', this.buffers.quad, 2)
-        .uniformi('state', 0)
-        .uniform('scale', new Float32Array([this.viewWidth, this.viewHeight]))
+        .uniformi('sampler', 0)
+        .uniform('viewDimensions', new Float32Array([this.viewWidth, this.viewHeight]))
         .draw(this.gl.TRIANGLE_STRIP, 4);
 
 };
