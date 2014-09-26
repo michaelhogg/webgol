@@ -246,7 +246,11 @@ GOL.prototype.step = function() {
 
     var textureUnitIndex = 0;
 
+    // Render to the "step" off-screen framebuffer
+    // and write the rendered image to the "back" texture
     this.framebuffers.step.attach(this.textures.back);
+
+    // Make the specified texture unit active, and bind the "front" texture to it
     this.textures.front.bind(textureUnitIndex);
 
     this.gl.viewport(0, 0, this.stateWidth, this.stateHeight);
@@ -268,7 +272,10 @@ GOL.prototype.draw = function() {
 
     var textureUnitIndex = 0;
 
+    // Render to the default framebuffer (the user's screen)
     this.igloo.defaultFramebuffer.bind();
+
+    // Make the specified texture unit active, and bind the "front" texture to it
     this.textures.front.bind(textureUnitIndex);
 
     this.gl.viewport(0, 0, this.viewWidth, this.viewHeight);
