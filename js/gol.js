@@ -42,16 +42,22 @@ function GOL(canvas, cellSize) {
     this.viewHeight = canvas.height;
 
     /**
-     * Dimensions of the GOL state (cells)
-     * @type {Float32Array}
+     * Width of the GOL state (number of cells)
+     * @type {number}
      */
-    this.statesize = new Float32Array([canvas.width / cellSize, canvas.height / cellSize]);
+    this.stateWidth = canvas.width / cellSize;
+
+    /**
+     * Height of the GOL state (number of cells)
+     * @type {number}
+     */
+    this.stateHeight = canvas.height / cellSize;
 
     /**
      * Total number of cells in the GOL state
      * @type {number}
      */
-    this.totalCells = this.statesize[0] * this.statesize[1];
+    this.totalCells = this.stateWidth * this.stateHeight;
 
     /**
      * ID of the animation timer (if null, then the timer is not running)
@@ -133,7 +139,7 @@ GOL.prototype.createTexture = function() {
     var texture = this.igloo.texture(imageSource, pixelFormat, wrapMode, minifyMagnifyFilter);
 
     // Set size, set type to UNSIGNED_BYTE (Uint8Array pixels), and fill with 0
-    texture.blank(this.statesize[0], this.statesize[1]);
+    texture.blank(this.stateWidth, this.stateHeight);
 
     return texture;
 
@@ -146,14 +152,11 @@ GOL.prototype.createTexture = function() {
  */
 GOL.prototype.get = function() {
 
-    var w = this.statesize[0],
-        h = this.statesize[1];
-
     this.framebuffers.step.attach(this.textures.front);
 
     var rgba = new Uint8Array(this.totalCells * 4);
 
-    this.gl.readPixels(0, 0, w, h, this.gl.RGBA, this.gl.UNSIGNED_BYTE, rgba);
+    this.gl.readPixels(0, 0, this.stateWidth, this.stateHeight, this.gl.RGBA, this.gl.UNSIGNED_BYTE, rgba);
 
     var state = [];
 
@@ -180,7 +183,7 @@ GOL.prototype.set = function(state) {
         rgba[ii + 3] = 255;
     }
 
-    this.textures.front.subset(rgba, 0, 0, this.statesize[0], this.statesize[1]);
+    this.textures.front.subset(rgba, 0, 0, this.stateWidth, this.stateHeight);
 
 };
 
@@ -244,12 +247,12 @@ GOL.prototype.step = function() {
     this.framebuffers.step.attach(this.textures.back);
     this.textures.front.bind(0);
 
-    this.gl.viewport(0, 0, this.statesize[0], this.statesize[1]);
+    this.gl.viewport(0, 0, this.stateWidth, this.stateHeight);
 
     this.programs.gol.use()
         .attrib('quad', this.buffers.quad, 2)
         .uniformi('state', 0)
-        .uniform('scale', this.statesize)
+        .uniform('scale', new Float32Array([this.stateWidth, this.stateHeight]))
         .draw(this.gl.TRIANGLE_STRIP, 4);
 
     this.swap();
