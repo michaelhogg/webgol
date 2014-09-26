@@ -30,10 +30,16 @@ function GOL(canvas, cellSize) {
     }
 
     /**
-     * Dimensions of the view (canvas) displayed on the screen
-     * @type {Float32Array}
+     * Width of the view (canvas)
+     * @type {number}
      */
-    this.viewsize = new Float32Array([canvas.width, canvas.height]);
+    this.viewWidth = canvas.width;
+
+    /**
+     * Height of the view (canvas)
+     * @type {number}
+     */
+    this.viewHeight = canvas.height;
 
     /**
      * Dimensions of the GOL state (cells)
@@ -258,12 +264,12 @@ GOL.prototype.draw = function() {
     this.igloo.defaultFramebuffer.bind();
     this.textures.front.bind(0);
 
-    this.gl.viewport(0, 0, this.viewsize[0], this.viewsize[1]);
+    this.gl.viewport(0, 0, this.viewWidth, this.viewHeight);
 
     this.programs.copy.use()
         .attrib('quad', this.buffers.quad, 2)
         .uniformi('state', 0)
-        .uniform('scale', this.viewsize)
+        .uniform('scale', new Float32Array([this.viewWidth, this.viewHeight]))
         .draw(this.gl.TRIANGLE_STRIP, 4);
 
 };
