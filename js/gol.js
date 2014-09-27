@@ -105,6 +105,12 @@ function GOL(canvas, cellSize) {
      */
     this.offscreenFramebuffer = this.igloo.framebuffer();
 
+    /**
+     * PixelType of textures created by Igloo
+     * @constant {number}
+     */
+    this.TEXTURE_PIXELTYPE = this.gl.UNSIGNED_BYTE;  // Corresponds to JavaScript's Uint8Array
+
 }
 
 /**
@@ -130,8 +136,7 @@ GOL.prototype.createTexture = function() {
 
     var texture = this.igloo.texture(imageSource, pixelFormat, wrapMode, minifyMagnifyFilter);
 
-    // Set size, set type to UNSIGNED_BYTE (Uint8Array pixels), and fill with 0
-    texture.blank(this.stateWidth, this.stateHeight);
+    texture.blank(this.stateWidth, this.stateHeight);  // Set size and fill with 0
 
     return texture;
 
@@ -150,7 +155,7 @@ GOL.prototype.get = function() {
 
     var rgba = new Uint8Array(this.totalCells * 4);
 
-    this.gl.readPixels(0, 0, this.stateWidth, this.stateHeight, this.gl.RGBA, this.gl.UNSIGNED_BYTE, rgba);
+    this.gl.readPixels(0, 0, this.stateWidth, this.stateHeight, this.gl.RGBA, this.TEXTURE_PIXELTYPE, rgba);
 
     var state = [];
 
