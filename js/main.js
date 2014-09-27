@@ -10,7 +10,9 @@ $(document).ready(function() {
     gol.setRandom();
     gol.draw();
 
-    golAnimator = new GOLAnimator(gol);
+    var fps = 15;
+
+    golAnimator = new GOLAnimator(gol, fps);
     golAnimator.start();
 
     $(document).on('keyup', function(event) {

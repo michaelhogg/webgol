@@ -1,14 +1,21 @@
 /**
  * Game Of Life animator
  *
- * @param {GOL} gol
+ * @param {GOL}    gol
+ * @param {number} fps - Frames per second
  */
-function GOLAnimator(gol) {
+function GOLAnimator(gol, fps) {
 
     /**
      * @type {GOL}
      */
     this.gol = gol;
+
+    /**
+     * Frames per second
+     * @type {number}
+     */
+    this.fps = fps;
 
     /**
      * ID of the animation timer (if null, then the timer is not running)
@@ -27,13 +34,14 @@ GOLAnimator.prototype.start = function() {
         return;
     }
 
-    var _this = this;
+    var _this      = this;
+    var frameDelay = 1000 / this.fps;  // Milliseconds
 
     this.timerID = setInterval(
         function() {
             _this.gol.stepAndDraw();
         },
-        60
+        frameDelay
     );
 
 };
