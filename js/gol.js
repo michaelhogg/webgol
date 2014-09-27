@@ -167,7 +167,7 @@ GOL.prototype.get = function() {
 
     var rgba  = new Uint8Array(this.totalCells * 4);
     var state = [];
-    var i, ii, r, g, b, channelsSum;
+    var i, ii, r;
 
     // Make the off-screen framebuffer active
     // and attach the "front" texture for readPixels() to read
@@ -179,12 +179,9 @@ GOL.prototype.get = function() {
 
         ii = i * 4;
         r  = rgba[ii + 0];
-        g  = rgba[ii + 1];
-        b  = rgba[ii + 2];
 
-        // This matches getCellState() in the GOL shader
-        channelsSum = r + g + b;
-        state[i]    = (channelsSum > 0) ? true : false;
+        // This matches getCellState() in the shaders
+        state[i] = (r === 255);
 
     }
 
