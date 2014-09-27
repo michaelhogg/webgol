@@ -83,11 +83,42 @@ function GOL(canvas, cellSize) {
     };
 
     /**
-     * Igloo-wrapped WebGLBuffer objects
-     * @type {Igloo.Buffer}
+     * Triangle strip data for the vertex shader
      */
-    this.buffers = {
-        quad: this.igloo.array(Igloo.QUAD2)
+    this.triangleStrip = {
+
+        /**
+         * Type of primitives to render
+         * @type {number}
+         */
+        primitivesMode: this.gl.TRIANGLE_STRIP,
+
+        /**
+         * Igloo-wrapped WebGLBuffer object holding vertex attribute data
+         * of a triangle strip which fills the entire render area
+         * @type {Igloo.Buffer}
+         */
+        vertexBuffer: this.igloo.array(
+            new Float32Array([
+                -1, -1,  // Normalised XY coords
+                 1, -1,
+                -1,  1,
+                 1,  1
+            ])
+        ),
+
+        /**
+         * Number of components per vertex attribute
+         * @type {number}
+         */
+        componentsPerVertexAttribute: 2,
+
+        /**
+         * Total number of vertices
+         * @type {number}
+         */
+        totalVertices: 4
+
     };
 
     /**
@@ -283,10 +314,10 @@ GOL.prototype.step = function() {
     this.gl.viewport(0, 0, this.stateWidth, this.stateHeight);
 
     this.programs.gol.use()
-        .attrib('quad', this.buffers.quad, 2)
+        .attrib('quad', this.triangleStrip.vertexBuffer, this.triangleStrip.componentsPerVertexAttribute)
         .uniformi('sampler', textureUnitIndex)
         .uniform('stateDimensions', new Float32Array([this.stateWidth, this.stateHeight]))
-        .draw(this.gl.TRIANGLE_STRIP, 4);
+        .draw(this.triangleStrip.primitivesMode, this.triangleStrip.totalVertices);
 
     this.swap();
 
@@ -308,14 +339,14 @@ GOL.prototype.draw = function() {
     this.gl.viewport(0, 0, this.viewWidth, this.viewHeight);
 
     this.programs.copy.use()
-        .attrib('quad', this.buffers.quad, 2)
+        .attrib('quad', this.triangleStrip.vertexBuffer, this.triangleStrip.componentsPerVertexAttribute)
         .uniformi('sampler', textureUnitIndex)
         .uniform('viewDimensions', new Float32Array([this.viewWidth, this.viewHeight]))
         .uniform('colourTopLeft',     this.cornerColours.topLeft)
         .uniform('colourTopRight',    this.cornerColours.topRight)
         .uniform('colourBottomLeft',  this.cornerColours.bottomLeft)
         .uniform('colourBottomRight', this.cornerColours.bottomRight)
-        .draw(this.gl.TRIANGLE_STRIP, 4);
+        .draw(this.triangleStrip.primitivesMode, this.triangleStrip.totalVertices);
 
 };
 
