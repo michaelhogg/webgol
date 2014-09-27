@@ -100,12 +100,10 @@ function GOL(canvas, cellSize) {
     };
 
     /**
-     * Igloo-wrapped WebGLFramebuffer objects
+     * Igloo-wrapped off-screen WebGLFramebuffer for rendering and reading texture data
      * @type {Igloo.Framebuffer}
      */
-    this.framebuffers = {
-        step: this.igloo.framebuffer()
-    };
+    this.offscreenFramebuffer = this.igloo.framebuffer();
 
 }
 
@@ -146,7 +144,9 @@ GOL.prototype.createTexture = function() {
  */
 GOL.prototype.get = function() {
 
-    this.framebuffers.step.attach(this.textures.front);
+    // Make the off-screen framebuffer active
+    // and attach the "front" texture for readPixels() to read
+    this.offscreenFramebuffer.attach(this.textures.front);
 
     var rgba = new Uint8Array(this.totalCells * 4);
 
@@ -240,9 +240,9 @@ GOL.prototype.step = function() {
 
     var textureUnitIndex = 0;
 
-    // Render to the "step" off-screen framebuffer
+    // Render to the off-screen framebuffer
     // and write the rendered image to the "back" texture
-    this.framebuffers.step.attach(this.textures.back);
+    this.offscreenFramebuffer.attach(this.textures.back);
 
     // Make the specified texture unit active, and bind the "front" texture to it
     this.textures.front.bind(textureUnitIndex);
