@@ -1,6 +1,5 @@
-/* Initialize everything. */
-
-var gol = null;
+var gol         = null;
+var golAnimator = null;
 
 $(document).ready(function() {
 
@@ -10,7 +9,9 @@ $(document).ready(function() {
     gol = new GOL(canvas, cellSize);
     gol.setRandom();
     gol.draw();
-    gol.start();
+
+    golAnimator = new GOLAnimator(gol);
+    golAnimator.start();
 
     $(document).on('keyup', function(event) {
         switch (event.which) {
@@ -19,10 +20,10 @@ $(document).ready(function() {
                 gol.draw();
                 break;
             case 80: /* p */
-                gol.toggle();
+                golAnimator.toggle();
                 break;
             case 83: /* s */
-                if (!gol.isAnimationRunning()) {
+                if (!golAnimator.isRunning()) {
                     gol.stepAndDraw();
                 }
                 break;

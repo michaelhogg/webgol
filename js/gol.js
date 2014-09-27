@@ -60,12 +60,6 @@ function GOL(canvas, cellSize) {
     this.totalCells = this.stateWidth * this.stateHeight;
 
     /**
-     * ID of the animation timer (if null, then the timer is not running)
-     * @type {(number|null)}
-     */
-    this.timer = null;
-
-    /**
      * Unix timestamp (in seconds) of the latest GOL state update
      * @type {number}
      */
@@ -295,58 +289,5 @@ GOL.prototype.stepAndDraw = function() {
 
     this.step();
     this.draw();
-
-};
-
-/**
- * Run the simulation automatically on a timer.
- */
-GOL.prototype.start = function() {
-
-    var _this = this;
-
-    if (this.timer == null) {
-        this.timer = setInterval(
-            function() {
-                _this.stepAndDraw();
-            },
-            60
-        );
-    }
-
-};
-
-/**
- * Stop animating the simulation.
- */
-GOL.prototype.stop = function() {
-
-    clearInterval(this.timer);
-
-    this.timer = null;
-
-};
-
-/**
- * Is the animation running?
- *
- * @returns {boolean}
- */
-GOL.prototype.isAnimationRunning = function() {
-
-    return (this.timer !== null);
-
-};
-
-/**
- * Toggle the animation state.
- */
-GOL.prototype.toggle = function() {
-
-    if (this.isAnimationRunning()) {
-        this.stop();
-    } else {
-        this.start();
-    }
 
 };
