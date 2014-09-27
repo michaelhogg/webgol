@@ -283,10 +283,6 @@ GOL.prototype.step = function() {
         .attrib('quad', this.buffers.quad, 2)
         .uniformi('sampler', textureUnitIndex)
         .uniform('stateDimensions', new Float32Array([this.stateWidth, this.stateHeight]))
-        .uniform('colourTopLeft',     this.cornerColours.topLeft)
-        .uniform('colourTopRight',    this.cornerColours.topRight)
-        .uniform('colourBottomLeft',  this.cornerColours.bottomLeft)
-        .uniform('colourBottomRight', this.cornerColours.bottomRight)
         .draw(this.gl.TRIANGLE_STRIP, 4);
 
     this.swap();
@@ -312,6 +308,10 @@ GOL.prototype.draw = function() {
         .attrib('quad', this.buffers.quad, 2)
         .uniformi('sampler', textureUnitIndex)
         .uniform('viewDimensions', new Float32Array([this.viewWidth, this.viewHeight]))
+        .uniform('colourTopLeft',     this.cornerColours.topLeft)
+        .uniform('colourTopRight',    this.cornerColours.topRight)
+        .uniform('colourBottomLeft',  this.cornerColours.bottomLeft)
+        .uniform('colourBottomRight', this.cornerColours.bottomRight)
         .draw(this.gl.TRIANGLE_STRIP, 4);
 
 };

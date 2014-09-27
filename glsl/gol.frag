@@ -5,37 +5,21 @@ precision mediump float;
 #define CELL_STATE_DEAD  0
 #define CELL_STATE_ALIVE 1
 
-// Must be black for getCellState() to work correctly
-#define COLOUR_DEAD vec4(0.0, 0.0, 0.0, 1.0)
+#define COLOUR_DEAD  vec4(0.0, 0.0, 0.0, 1.0)
+#define COLOUR_ALIVE vec4(1.0, 0.0, 0.0, 1.0)
 
 uniform sampler2D sampler;
 uniform vec2      stateDimensions;
-
-uniform vec4 colourTopLeft;
-uniform vec4 colourTopRight;
-uniform vec4 colourBottomLeft;
-uniform vec4 colourBottomRight;
-
-/**
- * Get the specified pixel's colour
- */
-vec4 getPixelColour(vec2 offset) {
-
-    vec2 coord = (gl_FragCoord.xy + offset) / stateDimensions;  // Normalise to range 0-1
-
-    return texture2D(sampler, coord);
-
-}
 
 /**
  * Get the state of the specified cell
  */
 int getCellState(vec2 offset) {
 
-    vec4  colour      = getPixelColour(offset);
-    float channelsSum = colour.r + colour.g + colour.b;
+    vec2 coord  = (gl_FragCoord.xy + offset) / stateDimensions;  // Normalise to range 0-1
+    vec4 colour = texture2D(sampler, coord);
 
-    return ((channelsSum > 0.0) ? CELL_STATE_ALIVE : CELL_STATE_DEAD);
+    return ((colour.r == COLOUR_ALIVE.r) ? CELL_STATE_ALIVE : CELL_STATE_DEAD);
 
 }
 
@@ -87,25 +71,11 @@ int calculateNextGeneration(int neighbours) {
 }
 
 /**
- * Calculate alive colour using linear interpolation
- */
-vec4 calculateAliveColour() {
-
-    vec2 fraction = gl_FragCoord.xy / stateDimensions;
-
-    vec4 topColour    = mix(colourTopLeft,    colourTopRight,    fraction.x);
-    vec4 bottomColour = mix(colourBottomLeft, colourBottomRight, fraction.x);
-
-    return mix(bottomColour, topColour, fraction.y);
-
-}
-
-/**
  * Set frag colour
  */
-void setFragColour(int cellState, vec4 aliveColour) {
+void setFragColour(int cellState) {
 
-    gl_FragColor = ((cellState == CELL_STATE_ALIVE) ? aliveColour : COLOUR_DEAD);
+    gl_FragColor = ((cellState == CELL_STATE_ALIVE) ? COLOUR_ALIVE : COLOUR_DEAD);
 
 }
 
@@ -114,10 +84,9 @@ void setFragColour(int cellState, vec4 aliveColour) {
  */
 void main() {
 
-    int  neighbours  = countNeighbours();
-    int  cellState   = calculateNextGeneration(neighbours);
-    vec4 aliveColour = calculateAliveColour();
+    int neighbours = countNeighbours();
+    int cellState  = calculateNextGeneration(neighbours);
 
-    setFragColour(cellState, aliveColour);
+    setFragColour(cellState);
 
 }
