@@ -128,6 +128,12 @@ function GOL(canvas, cellSize) {
      */
     this.TEXTURE_PIXELFORMAT = this.gl.RGBA;
 
+    /**
+     * Maximum value that a pixel's channel can have
+     * @constant {number}
+     */
+    this.PIXEL_CHANNEL_MAX_VALUE = 255;  // PixelType is UNSIGNED_BYTE
+
 }
 
 /**
@@ -181,7 +187,7 @@ GOL.prototype.get = function() {
         r  = rgba[ii + 0];
 
         // This matches getCellState() in the shaders
-        state[i] = (r === 255);
+        state[i] = (r === this.PIXEL_CHANNEL_MAX_VALUE);
 
     }
 
@@ -200,8 +206,8 @@ GOL.prototype.set = function(state) {
 
     for (var i = 0; i < state.length; i++) {
         var ii = i * 4;
-        rgba[ii + 0] = rgba[ii + 1] = rgba[ii + 2] = state[i] ? 255 : 0;
-        rgba[ii + 3] = 255;
+        rgba[ii + 0] = rgba[ii + 1] = rgba[ii + 2] = state[i] ? this.PIXEL_CHANNEL_MAX_VALUE : 0;
+        rgba[ii + 3] = this.PIXEL_CHANNEL_MAX_VALUE;
     }
 
     this.textures.front.subset(rgba, 0, 0, this.stateWidth, this.stateHeight);
