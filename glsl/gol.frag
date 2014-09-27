@@ -8,14 +8,13 @@ precision mediump float;
 // Must be black for getCellState() to work correctly
 #define COLOUR_DEAD vec4(0.0, 0.0, 0.0, 1.0)
 
-#define COLOUR_TOP_LEFT  vec4(1.0, 1.0, 0.0, 1.0)  // Yellow
-#define COLOUR_TOP_RIGHT vec4(1.0, 0.0, 0.0, 1.0)  // Red
-
-#define COLOUR_BOTTOM_LEFT  vec4(0.0, 1.0, 0.0, 1.0)  // Green
-#define COLOUR_BOTTOM_RIGHT vec4(0.3, 0.3, 1.0, 1.0)  // Blue
-
 uniform sampler2D sampler;
 uniform vec2      stateDimensions;
+
+uniform vec4 colourTopLeft;
+uniform vec4 colourTopRight;
+uniform vec4 colourBottomLeft;
+uniform vec4 colourBottomRight;
 
 /**
  * Get the specified pixel's colour
@@ -94,8 +93,8 @@ vec4 calculateAliveColour() {
 
     vec2 fraction = gl_FragCoord.xy / stateDimensions;
 
-    vec4 topColour    = mix(COLOUR_TOP_LEFT,    COLOUR_TOP_RIGHT,    fraction.x);
-    vec4 bottomColour = mix(COLOUR_BOTTOM_LEFT, COLOUR_BOTTOM_RIGHT, fraction.x);
+    vec4 topColour    = mix(colourTopLeft,    colourTopRight,    fraction.x);
+    vec4 bottomColour = mix(colourBottomLeft, colourBottomRight, fraction.x);
 
     return mix(bottomColour, topColour, fraction.y);
 

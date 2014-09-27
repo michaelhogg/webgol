@@ -106,6 +106,17 @@ function GOL(canvas, cellSize) {
     this.offscreenFramebuffer = this.igloo.framebuffer();
 
     /**
+     * Colours of the four corners, in RGBA format
+     * @type {Float32Array}
+     */
+    this.cornerColours = {
+        topLeft:     new Float32Array([1.0, 1.0, 0.0, 1.0]),  // Yellow
+        topRight:    new Float32Array([1.0, 0.0, 0.0, 1.0]),  // Red
+        bottomLeft:  new Float32Array([0.0, 1.0, 0.0, 1.0]),  // Green
+        bottomRight: new Float32Array([0.3, 0.3, 1.0, 1.0])   // Blue
+    };
+
+    /**
      * PixelType of textures created by Igloo
      * @constant {number}
      */
@@ -263,6 +274,10 @@ GOL.prototype.step = function() {
         .attrib('quad', this.buffers.quad, 2)
         .uniformi('sampler', textureUnitIndex)
         .uniform('stateDimensions', new Float32Array([this.stateWidth, this.stateHeight]))
+        .uniform('colourTopLeft',     this.cornerColours.topLeft)
+        .uniform('colourTopRight',    this.cornerColours.topRight)
+        .uniform('colourBottomLeft',  this.cornerColours.bottomLeft)
+        .uniform('colourBottomRight', this.cornerColours.bottomRight)
         .draw(this.gl.TRIANGLE_STRIP, 4);
 
     this.swap();
