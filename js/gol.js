@@ -165,18 +165,27 @@ GOL.prototype.createTexture = function() {
  */
 GOL.prototype.get = function() {
 
+    var rgba  = new Uint8Array(this.totalCells * 4);
+    var state = [];
+    var i, ii, r, g, b, channelsSum;
+
     // Make the off-screen framebuffer active
     // and attach the "front" texture for readPixels() to read
     this.offscreenFramebuffer.attach(this.textures.front);
 
-    var rgba = new Uint8Array(this.totalCells * 4);
-
     this.gl.readPixels(0, 0, this.stateWidth, this.stateHeight, this.TEXTURE_PIXELFORMAT, this.TEXTURE_PIXELTYPE, rgba);
 
-    var state = [];
+    for (i = 0; i < this.totalCells; i++) {
 
-    for (var i = 0; i < this.totalCells; i++) {
-        state[i] = rgba[i * 4] > 128 ? true : false;
+        ii = i * 4;
+        r  = rgba[ii + 0];
+        g  = rgba[ii + 1];
+        b  = rgba[ii + 2];
+
+        // This matches getCellState() in the GOL shader
+        channelsSum = r + g + b;
+        state[i]    = (channelsSum > 0) ? true : false;
+
     }
 
     return state;
