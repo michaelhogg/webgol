@@ -1,3 +1,7 @@
+window.onerror = function(errorMessage) {
+    alert("Something went wrong :(\n\n" + errorMessage);
+};
+
 var gol         = null;
 var golAnimator = null;
 

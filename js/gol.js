@@ -25,8 +25,7 @@ function GOL(canvas, cellSize) {
     this.gl = this.igloo.gl;
 
     if (!(this.gl instanceof WebGLRenderingContext)) {
-        alert('Could not initialise WebGL!');
-        throw new Error('No WebGL');
+        throw new Error("Failed to initialise WebGL");
     }
 
     /**
