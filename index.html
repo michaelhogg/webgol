@@ -1,42 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>WebGL Game of Life</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="gol.css"/>
-    <script src="lib/igloo-0.1.0.js"></script>
-    <script src="lib/jquery-2.1.1.min.js"></script>
-    <script src="js/gol.js"></script>
-    <script src="js/gol-animator.js"></script>
-    <script src="js/main.js"></script>
-  </head>
-  <body>
-    <h1>WebGL Game of Life</h1>
-    <!-- Canvas dimensions must be powers of two. -->
-    <canvas id="golCanvas" width="1024" height="512"></canvas>
-    <div class="description">
-      <p>
-        This Game of Life simulation is running entirely on your
-        graphics card. The simulation state swaps back and forth
-        between two texture buffers in the GPU's memory.
-      </p>
-      <h2>Controls</h2>
-      <ul>
-        <li>
-          <span class="input">[p]</span>
-          <span class="result">toggle pause/play</span>
-        </li>
-        <li>
-          <span class="input">[s]</span>
-          <span class="result">step forward one frame (when paused)</span>
-        </li>
-        <li>
-          <span class="input">[r]</span>
-          <span class="result">reset to random state</span>
-        </li>
-      </ul>
-    </div>
-    <div class="fps">
-    </div>
-  </body>
+    <head>
+        <title>WebGOL</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="gol.css">
+        <script src="lib/jquery-2.1.1.min.js"></script>
+        <script src="lib/igloo-0.1.0.js"></script>
+        <script src="js/gol.js"></script>
+        <script src="js/gol-animator.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+    <body>
+        <canvas id="golCanvas" width="1" height="1"></canvas>
+    </body>
 </html>
