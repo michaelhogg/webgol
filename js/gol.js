@@ -315,6 +315,60 @@ GOL.prototype.swap = function() {
 };
 
 /**
+ * Run a program
+ *
+ * @param {Igloo.Program} program
+ * @param {Igloo.Texture} inputTexture
+ * @param {object[]}      floatUniforms
+ * @param {object[]}      intUniforms
+ */
+GOL.prototype.runProgram = function(program, inputTexture, floatUniforms, intUniforms) {
+
+    var textureUnitIndex = 0;  // Evaluates to TextureUnit TEXTURE0
+    var i;
+
+    // Make the specified texture unit active, and bind the inputTexture to it
+    inputTexture.bind(textureUnitIndex);
+
+    // Make the program active
+    program.use();
+
+    // Make the triangle strip's vertex attribute data available to the vertex shader
+    program.attrib(
+        'quad',
+        this.triangleStrip.vertexBuffer,
+        this.triangleStrip.componentsPerVertexAttribute
+    );
+
+    // Specify the texture unit to be used by the sampler in the fragment shaders
+    // (this makes the inputTexture accessible in the shaders via the sampler)
+    program.uniformi('sampler', textureUnitIndex);
+
+    // Set the float uniform variables
+    for (i = 0; i < floatUniforms.length; i++) {
+        program.uniform(
+            floatUniforms[i].name,
+            floatUniforms[i].value
+        );
+    }
+
+    // Set the int uniform variables
+    for (i = 0; i < intUniforms.length; i++) {
+        program.uniformi(
+            intUniforms[i].name,
+            intUniforms[i].value
+        );
+    }
+
+    // Render the triangle strip
+    program.draw(
+        this.triangleStrip.primitivesMode,
+        this.triangleStrip.totalVertices
+    );
+
+};
+
+/**
  * Step the Game of Life state on the GPU without rendering anything.
  */
 GOL.prototype.step = function() {
@@ -327,23 +381,21 @@ GOL.prototype.step = function() {
         this.fps++;
     }
 
-    var textureUnitIndex = 0;
-
     // Render to the off-screen framebuffer
     // and write the rendered image to the "back" texture
     this.offscreenFramebuffer.attach(this.textures.back);
 
-    // Make the specified texture unit active, and bind the "front" texture to it
-    this.textures.front.bind(textureUnitIndex);
-
     this.gl.viewport(0, 0, this.stateWidth, this.stateHeight);
 
-    this.programs.gol.use()
-        .attrib('quad', this.triangleStrip.vertexBuffer, this.triangleStrip.componentsPerVertexAttribute)
-        .uniformi('sampler', textureUnitIndex)
-        .uniform('stateDimensions', new Float32Array([this.stateWidth, this.stateHeight]))
-        .uniformi('enableWrapping', this.enableStateWrapping ? 1 : 0)
-        .draw(this.triangleStrip.primitivesMode, this.triangleStrip.totalVertices);
+    var floatUniforms = [
+        { name: 'stateDimensions', value: new Float32Array([this.stateWidth, this.stateHeight]) }
+    ];
+
+    var intUniforms = [
+        { name: 'enableWrapping', value: (this.enableStateWrapping ? 1 : 0) }
+    ];
+
+    this.runProgram(this.programs.gol, this.textures.front, floatUniforms, intUniforms);
 
     this.swap();
 
@@ -354,25 +406,22 @@ GOL.prototype.step = function() {
  */
 GOL.prototype.draw = function() {
 
-    var textureUnitIndex = 0;
-
     // Render to the default framebuffer (the user's screen)
     this.igloo.defaultFramebuffer.bind();
 
-    // Make the specified texture unit active, and bind the "front" texture to it
-    this.textures.front.bind(textureUnitIndex);
-
     this.gl.viewport(0, 0, this.viewWidth, this.viewHeight);
 
-    this.programs.copy.use()
-        .attrib('quad', this.triangleStrip.vertexBuffer, this.triangleStrip.componentsPerVertexAttribute)
-        .uniformi('sampler', textureUnitIndex)
-        .uniform('viewDimensions', new Float32Array([this.viewWidth, this.viewHeight]))
-        .uniform('colourTopLeft',     this.cornerColours.topLeft)
-        .uniform('colourTopRight',    this.cornerColours.topRight)
-        .uniform('colourBottomLeft',  this.cornerColours.bottomLeft)
-        .uniform('colourBottomRight', this.cornerColours.bottomRight)
-        .draw(this.triangleStrip.primitivesMode, this.triangleStrip.totalVertices);
+    var floatUniforms = [
+        { name: 'viewDimensions',    value: new Float32Array([this.viewWidth, this.viewHeight]) },
+        { name: 'colourTopLeft',     value: this.cornerColours.topLeft                          },
+        { name: 'colourTopRight',    value: this.cornerColours.topRight                         },
+        { name: 'colourBottomLeft',  value: this.cornerColours.bottomLeft                       },
+        { name: 'colourBottomRight', value: this.cornerColours.bottomRight                      }
+    ];
+
+    var intUniforms = [];
+
+    this.runProgram(this.programs.copy, this.textures.front, floatUniforms, intUniforms);
 
 };
 
