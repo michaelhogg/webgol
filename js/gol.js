@@ -163,6 +163,12 @@ function GOL(canvas, cellSize) {
     this.TEXTURE_PIXELFORMAT = this.gl.RGBA;
 
     /**
+     * Number of channels per pixel
+     * @constant {number}
+     */
+    this.CHANNELS_PER_PIXEL = 4;  // RGBA
+
+    /**
      * Maximum value that a pixel's channel can have
      * @constant {number}
      */
@@ -212,7 +218,7 @@ GOL.prototype.createTexture = function() {
  */
 GOL.prototype.get = function() {
 
-    var rgba  = new Uint8Array(this.totalCells * 4);
+    var rgba  = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
     var state = [];
     var i, ii, r;
 
@@ -232,7 +238,7 @@ GOL.prototype.get = function() {
 
     for (i = 0; i < this.totalCells; i++) {
 
-        ii = i * 4;
+        ii = i * this.CHANNELS_PER_PIXEL;
         r  = rgba[ii + 0];
 
         // This matches getCellState() in the shaders
@@ -251,12 +257,12 @@ GOL.prototype.get = function() {
  */
 GOL.prototype.set = function(state) {
 
-    var rgba = new Uint8Array(this.totalCells * 4);
+    var rgba = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
     var i, ii;
 
     for (i = 0; i < state.length; i++) {
 
-        ii = i * 4;
+        ii = i * this.CHANNELS_PER_PIXEL;
 
         // This matches COLOUR_ALIVE and COLOUR_DEAD in the shaders
         rgba[ii + 0] = (state[i] ? this.PIXEL_CHANNEL_MAX_VALUE : 0);  // red
