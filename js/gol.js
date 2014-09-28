@@ -59,6 +59,12 @@ function GOL(canvas, cellSize) {
     this.totalCells = this.stateWidth * this.stateHeight;
 
     /**
+     * Should the GOL state wrap horizontally and vertically?
+     * @type {boolean}
+     */
+    this.enableStateWrapping = true;
+
+    /**
      * Unix timestamp (in seconds) of the latest GOL state update
      * @type {number}
      */
@@ -336,6 +342,7 @@ GOL.prototype.step = function() {
         .attrib('quad', this.triangleStrip.vertexBuffer, this.triangleStrip.componentsPerVertexAttribute)
         .uniformi('sampler', textureUnitIndex)
         .uniform('stateDimensions', new Float32Array([this.stateWidth, this.stateHeight]))
+        .uniformi('enableWrapping', this.enableStateWrapping ? 1 : 0)
         .draw(this.triangleStrip.primitivesMode, this.triangleStrip.totalVertices);
 
     this.swap();

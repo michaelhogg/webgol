@@ -10,13 +10,32 @@ precision mediump float;
 
 uniform sampler2D sampler;
 uniform vec2      stateDimensions;
+uniform bool      enableWrapping;
+
+/**
+ * Wrap value to the range 0-1
+ */
+float wrapValue(float value) {
+
+    if (value < 0.0)  value += 1.0;
+    if (value > 1.0)  value -= 1.0;
+
+    return value;
+
+}
 
 /**
  * Get the state of the specified cell
  */
 int getCellState(vec2 offset) {
 
-    vec2 coord  = (gl_FragCoord.xy + offset) / stateDimensions;  // Normalise to range 0-1
+    vec2 coord = (gl_FragCoord.xy + offset) / stateDimensions;  // Normalise to range 0-1
+
+    if (enableWrapping == true) {
+        coord.x = wrapValue(coord.x);  // Wrap horizontally
+        coord.y = wrapValue(coord.y);  // Wrap vertically
+    }
+
     vec4 colour = texture2D(sampler, coord);
 
     return ((colour.r == COLOUR_ALIVE.r) ? CELL_STATE_ALIVE : CELL_STATE_DEAD);
