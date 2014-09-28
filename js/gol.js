@@ -373,14 +373,6 @@ GOL.prototype.runProgram = function(program, inputTexture, floatUniforms, intUni
  */
 GOL.prototype.step = function() {
 
-    if (GOL.now() != this.lasttick) {
-        $('.fps').text(this.fps + ' FPS');
-        this.lasttick = GOL.now();
-        this.fps = 0;
-    } else {
-        this.fps++;
-    }
-
     // Render to the off-screen framebuffer
     // and write the rendered image to the "back" texture
     this.offscreenFramebuffer.attach(this.textures.back);
@@ -429,6 +421,13 @@ GOL.prototype.draw = function() {
  * Step the GOL state on the GPU, and then render it
  */
 GOL.prototype.stepAndDraw = function() {
+
+    if (GOL.now() != this.lasttick) {
+        this.lasttick = GOL.now();
+        this.fps      = 0;
+    } else {
+        this.fps++;
+    }
 
     this.step();
     this.draw();
