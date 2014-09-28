@@ -214,7 +214,15 @@ GOL.prototype.get = function() {
     // and attach the "front" texture for readPixels() to read
     this.offscreenFramebuffer.attach(this.textures.front);
 
-    this.gl.readPixels(0, 0, this.stateWidth, this.stateHeight, this.TEXTURE_PIXELFORMAT, this.TEXTURE_PIXELTYPE, rgba);
+    this.gl.readPixels(
+        0,  // x
+        0,  // y
+        this.stateWidth,   // width
+        this.stateHeight,  // height
+        this.TEXTURE_PIXELFORMAT,  // PixelFormat
+        this.TEXTURE_PIXELTYPE,    // PixelType
+        rgba  // array to receive pixel data
+    );
 
     for (i = 0; i < this.totalCells; i++) {
 
