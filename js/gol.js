@@ -2,12 +2,12 @@
  * Game of Life simulation and display.
  *
  * @param {HTMLCanvasElement} canvas   - Render target
- * @param {number}            cellSize - Size of each cell in pixels (power of 2)
+ * @param {number}            cellSize - Size of each cell (in pixels)
  */
 function GOL(canvas, cellSize) {
 
     /**
-     * Size of each cell in pixels (power of 2)
+     * Size of each cell (in pixels)
      * @type {number}
      */
     this.cellSize = cellSize;
