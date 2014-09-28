@@ -13,9 +13,9 @@ function GOLAnimator(gol, fps) {
 
     /**
      * Frames per second
-     * @type {number}
+     * @constant {number}
      */
-    this.fps = fps;
+    this.FPS = fps;
 
     /**
      * ID of the animation timer (if null, then the timer is not running)
@@ -35,7 +35,7 @@ GOLAnimator.prototype.start = function() {
     }
 
     var _this      = this;
-    var frameDelay = 1000 / this.fps;  // Milliseconds
+    var frameDelay = 1000 / this.FPS;  // Milliseconds
 
     this.timerID = setInterval(
         function() {
