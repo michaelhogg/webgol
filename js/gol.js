@@ -234,11 +234,18 @@ GOL.prototype.get = function() {
 GOL.prototype.set = function(state) {
 
     var rgba = new Uint8Array(this.totalCells * 4);
+    var i, ii;
 
-    for (var i = 0; i < state.length; i++) {
-        var ii = i * 4;
-        rgba[ii + 0] = rgba[ii + 1] = rgba[ii + 2] = state[i] ? this.PIXEL_CHANNEL_MAX_VALUE : 0;
-        rgba[ii + 3] = this.PIXEL_CHANNEL_MAX_VALUE;
+    for (i = 0; i < state.length; i++) {
+
+        ii = i * 4;
+
+        // This matches COLOUR_ALIVE and COLOUR_DEAD in the shaders
+        rgba[ii + 0] = (state[i] ? this.PIXEL_CHANNEL_MAX_VALUE : 0);  // red
+        rgba[ii + 1] = 0;  // green
+        rgba[ii + 2] = 0;  // blue
+        rgba[ii + 3] = this.PIXEL_CHANNEL_MAX_VALUE;  // alpha
+
     }
 
     this.textures.front.subset(rgba, 0, 0, this.stateWidth, this.stateHeight);
