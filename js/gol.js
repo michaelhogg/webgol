@@ -71,8 +71,6 @@ function GOL(canvas, cellSize) {
      */
     this.fps = 0;
 
-    this.gl.disable(this.gl.DEPTH_TEST);
-
     /**
      * Igloo-wrapped WebGLProgram objects
      * @type {Igloo.Program}
