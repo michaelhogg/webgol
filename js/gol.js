@@ -180,13 +180,20 @@ GOL.now = function() {
  */
 GOL.prototype.createTexture = function() {
 
-    var imageSource         = null;             // ArrayBufferView, ImageData, HTMLImageElement, HTMLCanvasElement or HTMLVideoElement
-    var wrapMode            = this.gl.REPEAT;   // TextureWrapMode enum
-    var minifyMagnifyFilter = this.gl.NEAREST;  // TextureMinFilter and TextureMagFilter enums
+    // ArrayBufferView, ImageData, HTMLImageElement, HTMLCanvasElement or HTMLVideoElement
+    var imageSource = null;
 
+    // TextureWrapMode enum -- must be CLAMP_TO_EDGE to support textures with NPOT dimensions (non-power-of-two)
+    var wrapMode = this.gl.CLAMP_TO_EDGE;
+
+    // TextureMinFilter and TextureMagFilter enums
+    var minifyMagnifyFilter = this.gl.NEAREST;
+
+    // Create texture
     var texture = this.igloo.texture(imageSource, this.TEXTURE_PIXELFORMAT, wrapMode, minifyMagnifyFilter);
 
-    texture.blank(this.stateWidth, this.stateHeight);  // Set size and fill with 0
+    // Set size and fill with 0
+    texture.blank(this.stateWidth, this.stateHeight);
 
     return texture;
 
