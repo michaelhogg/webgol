@@ -1,5 +1,5 @@
 /**
- * Game of Life simulation and display.
+ * Game of Life simulation and display
  *
  * @param {HTMLCanvasElement} canvas   - Render target
  * @param {number}            cellSize - Size of each cell (in pixels)
@@ -65,7 +65,7 @@ function GOL(canvas, cellSize) {
     this.enableStateWrapping = true;
 
     /**
-     * Unix timestamp (in seconds) of the latest GOL state update
+     * Unix timestamp (in seconds) of the latest GOL animation step
      * @type {number}
      */
     this.lasttick = GOL.now();
@@ -81,8 +81,8 @@ function GOL(canvas, cellSize) {
      * @type {Igloo.Program}
      */
     this.programs = {
-        copy: this.igloo.program('glsl/quad.vert', 'glsl/copy.frag'),
-        gol:  this.igloo.program('glsl/quad.vert', 'glsl/gol.frag')
+        copy: this.igloo.program("glsl/quad.vert", "glsl/copy.frag"),
+        gol:  this.igloo.program("glsl/quad.vert", "glsl/gol.frag")
     };
 
     /**
@@ -177,7 +177,9 @@ function GOL(canvas, cellSize) {
 }
 
 /**
- * @returns {number} The epoch in integer seconds
+ * Get the current Unix timestamp (in seconds)
+ *
+ * @returns {number}
  */
 GOL.now = function() {
 
@@ -186,7 +188,7 @@ GOL.now = function() {
 };
 
 /**
- * Create a new blank 2D texture to hold a GOL simulation state
+ * Create a new blank 2D texture to hold a GOL state
  *
  * @returns {Igloo.Texture}
  */
@@ -230,7 +232,7 @@ GOL.prototype.generateStatePixelColour = function(state) {
 };
 
 /**
- * Get the simulation state.
+ * Get the GOL state
  *
  * @returns {boolean[]}
  */
@@ -245,13 +247,13 @@ GOL.prototype.get = function() {
     this.offscreenFramebuffer.attach(this.textures.front);
 
     this.gl.readPixels(
-        0,  // x
-        0,  // y
-        this.stateWidth,   // width
-        this.stateHeight,  // height
+        0,                         // x
+        0,                         // y
+        this.stateWidth,           // width
+        this.stateHeight,          // height
         this.TEXTURE_PIXELFORMAT,  // PixelFormat
         this.TEXTURE_PIXELTYPE,    // PixelType
-        rgba  // array to receive pixel data
+        rgba                       // array to receive pixel data
     );
 
     for (i = 0; i < this.totalCells; i++) {
@@ -259,7 +261,7 @@ GOL.prototype.get = function() {
         ii = i * this.CHANNELS_PER_PIXEL;
         r  = rgba[ii + 0];
 
-        // This matches getCellState() in the shaders
+        // This matches getCellState() in the fragment shaders
         state[i] = (r === this.PIXEL_CHANNEL_MAX_VALUE);
 
     }
@@ -269,7 +271,7 @@ GOL.prototype.get = function() {
 };
 
 /**
- * Set the simulation state.
+ * Set the GOL state
  *
  * @param {boolean[]} state
  */
@@ -295,13 +297,12 @@ GOL.prototype.set = function(state) {
 };
 
 /**
- * Fill the simulation state with random values.
+ * Fill the GOL state with random values
  */
 GOL.prototype.setRandom = function() {
 
     var aliveProbability = 0.5;
-
-    var rand = [];
+    var rand             = [];
 
     for (var i = 0; i < this.totalCells; i++) {
         rand[i] = Math.random() < aliveProbability ? true : false;
@@ -312,7 +313,7 @@ GOL.prototype.setRandom = function() {
 };
 
 /**
- * Clear the simulation state (all cells dead).
+ * Clear the GOL state (all cells dead)
  */
 GOL.prototype.setEmpty = function() {
 
@@ -327,7 +328,7 @@ GOL.prototype.setEmpty = function() {
 };
 
 /**
- * Swap the texture buffers.
+ * Swap the texture buffers
  */
 GOL.prototype.swap = function() {
 
@@ -359,14 +360,14 @@ GOL.prototype.runProgram = function(program, inputTexture, floatUniforms, intUni
 
     // Make the triangle strip's vertex attribute data available to the vertex shader
     program.attrib(
-        'quad',
+        "quad",
         this.triangleStrip.vertexBuffer,
         this.triangleStrip.componentsPerVertexAttribute
     );
 
     // Specify the texture unit to be used by the sampler in the fragment shaders
     // (this makes the inputTexture accessible in the shaders via the sampler)
-    program.uniformi('sampler', textureUnitIndex);
+    program.uniformi("sampler", textureUnitIndex);
 
     // Set the float uniform variables
     for (i = 0; i < floatUniforms.length; i++) {
@@ -393,7 +394,7 @@ GOL.prototype.runProgram = function(program, inputTexture, floatUniforms, intUni
 };
 
 /**
- * Step the Game of Life state on the GPU without rendering anything.
+ * Step the GOL state on the GPU, without rendering anything to the screen
  */
 GOL.prototype.step = function() {
 
@@ -404,11 +405,11 @@ GOL.prototype.step = function() {
     this.gl.viewport(0, 0, this.stateWidth, this.stateHeight);
 
     var floatUniforms = [
-        { name: 'stateDimensions', value: new Float32Array([this.stateWidth, this.stateHeight]) }
+        { name: "stateDimensions", value: new Float32Array([this.stateWidth, this.stateHeight]) }
     ];
 
     var intUniforms = [
-        { name: 'enableWrapping', value: (this.enableStateWrapping ? 1 : 0) }
+        { name: "enableWrapping", value: (this.enableStateWrapping ? 1 : 0) }
     ];
 
     this.runProgram(this.programs.gol, this.textures.front, floatUniforms, intUniforms);
@@ -418,7 +419,7 @@ GOL.prototype.step = function() {
 };
 
 /**
- * Render the Game of Life state stored on the GPU.
+ * Render the GOL state (stored on the GPU) to the user's screen (canvas)
  */
 GOL.prototype.draw = function() {
 
@@ -428,11 +429,11 @@ GOL.prototype.draw = function() {
     this.gl.viewport(0, 0, this.viewWidth, this.viewHeight);
 
     var floatUniforms = [
-        { name: 'viewDimensions',    value: new Float32Array([this.viewWidth, this.viewHeight]) },
-        { name: 'colourTopLeft',     value: this.cornerColours.topLeft                          },
-        { name: 'colourTopRight',    value: this.cornerColours.topRight                         },
-        { name: 'colourBottomLeft',  value: this.cornerColours.bottomLeft                       },
-        { name: 'colourBottomRight', value: this.cornerColours.bottomRight                      }
+        { name: "viewDimensions",    value: new Float32Array([this.viewWidth, this.viewHeight]) },
+        { name: "colourTopLeft",     value: this.cornerColours.topLeft                          },
+        { name: "colourTopRight",    value: this.cornerColours.topRight                         },
+        { name: "colourBottomLeft",  value: this.cornerColours.bottomLeft                       },
+        { name: "colourBottomRight", value: this.cornerColours.bottomRight                      }
     ];
 
     var intUniforms = [];
@@ -442,7 +443,7 @@ GOL.prototype.draw = function() {
 };
 
 /**
- * Step the GOL state on the GPU, and then render it
+ * Step the GOL state on the GPU, and then render it to the user's screen
  */
 GOL.prototype.stepAndDraw = function() {
 
