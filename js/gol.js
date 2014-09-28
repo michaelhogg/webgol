@@ -212,6 +212,24 @@ GOL.prototype.createTexture = function() {
 };
 
 /**
+ * Generate state pixel colour
+ * (this matches COLOUR_ALIVE and COLOUR_DEAD in the fragment shaders)
+ *
+ * @param   {boolean} state
+ * @returns {Uint8Array}
+ */
+GOL.prototype.generateStatePixelColour = function(state) {
+
+    return new Uint8Array([
+        (state ? this.PIXEL_CHANNEL_MAX_VALUE : 0),  // red
+        0,                                           // green
+        0,                                           // blue
+        this.PIXEL_CHANNEL_MAX_VALUE                 // alpha
+    ]);
+
+};
+
+/**
  * Get the simulation state.
  *
  * @returns {boolean[]}
@@ -258,17 +276,17 @@ GOL.prototype.get = function() {
 GOL.prototype.set = function(state) {
 
     var rgba = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
-    var i, ii;
+    var i, ii, statePixelColour, c;
 
     for (i = 0; i < state.length; i++) {
 
         ii = i * this.CHANNELS_PER_PIXEL;
 
-        // This matches COLOUR_ALIVE and COLOUR_DEAD in the shaders
-        rgba[ii + 0] = (state[i] ? this.PIXEL_CHANNEL_MAX_VALUE : 0);  // red
-        rgba[ii + 1] = 0;  // green
-        rgba[ii + 2] = 0;  // blue
-        rgba[ii + 3] = this.PIXEL_CHANNEL_MAX_VALUE;  // alpha
+        statePixelColour = this.generateStatePixelColour(state[i]);
+
+        for (c = 0; c < this.CHANNELS_PER_PIXEL; c++) {
+            rgba[ii + c] = statePixelColour[c];
+        }
 
     }
 
