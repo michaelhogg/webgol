@@ -44,13 +44,13 @@ function GOL(canvas, cellSize) {
      * Width of the GOL state (number of cells)
      * @type {number}
      */
-    this.stateWidth = canvas.width / cellSize;
+    this.stateWidth = Math.floor(canvas.width / cellSize);
 
     /**
      * Height of the GOL state (number of cells)
      * @type {number}
      */
-    this.stateHeight = canvas.height / cellSize;
+    this.stateHeight = Math.floor(canvas.height / cellSize);
 
     /**
      * Total number of cells in the GOL state
