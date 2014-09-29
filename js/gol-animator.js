@@ -2,9 +2,9 @@
  * Game Of Life animator
  *
  * @param {GOL}    gol
- * @param {number} fps - Frames per second
+ * @param {number} targetFPS
  */
-function GOLAnimator(gol, fps) {
+function GOLAnimator(gol, targetFPS) {
 
     /**
      * @type {GOL}
@@ -12,10 +12,10 @@ function GOLAnimator(gol, fps) {
     this.gol = gol;
 
     /**
-     * Frames per second
-     * @constant {number}
+     * Target frames-per-second
+     * @type {number}
      */
-    this.FPS = fps;
+    this.targetFPS = targetFPS;
 
     /**
      * ID of the animation timer (if null, then the timer is not running)
@@ -35,7 +35,7 @@ GOLAnimator.prototype.start = function() {
     }
 
     var _this      = this;
-    var frameDelay = 1000 / this.FPS;  // Milliseconds
+    var frameDelay = 1000 / this.targetFPS;  // Milliseconds
 
     this.timerID = setInterval(
         function() {
