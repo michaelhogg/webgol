@@ -84,3 +84,24 @@ GOLAnimator.prototype.toggle = function() {
     }
 
 };
+
+/**
+ * Change the target framerate
+ *
+ * @param {number} targetFPS
+ */
+GOLAnimator.prototype.changeTargetFramerate = function(targetFPS) {
+
+    var wasRunning = this.isRunning();
+
+    if (wasRunning) {
+        this.stop();
+    }
+
+    this.targetFPS = targetFPS;
+
+    if (wasRunning) {
+        this.start();
+    }
+
+};
