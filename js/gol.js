@@ -328,6 +328,21 @@ GOL.prototype.setEmpty = function() {
 };
 
 /**
+ * Set the state of one cell
+ *
+ * @param {number}  x
+ * @param {number}  y
+ * @param {boolean} state
+ */
+GOL.prototype.setCellState = function(x, y, state) {
+
+    var rgba = this.generateStatePixelColour(state);
+
+    this.textures.front.subset(rgba, x, y, 1, 1);
+
+};
+
+/**
  * Swap the texture buffers
  */
 GOL.prototype.swap = function() {
