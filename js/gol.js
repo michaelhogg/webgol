@@ -65,18 +65,6 @@ function GOL(canvas, cellSize) {
     this.enableStateWrapping = true;
 
     /**
-     * Unix timestamp (in seconds) of the latest GOL animation step
-     * @type {number}
-     */
-    this.lasttick = GOL.now();
-
-    /**
-     * Measured frames-per-second (only valid when the animation is running)
-     * @type {number}
-     */
-    this.fps = 0;
-
-    /**
      * Igloo-wrapped WebGLProgram objects
      * @type {Igloo.Program}
      */
@@ -175,17 +163,6 @@ function GOL(canvas, cellSize) {
     this.PIXEL_CHANNEL_MAX_VALUE = 255;  // PixelType is UNSIGNED_BYTE
 
 }
-
-/**
- * Get the current Unix timestamp (in seconds)
- *
- * @returns {number}
- */
-GOL.now = function() {
-
-    return Math.floor(Date.now() / 1000);
-
-};
 
 /**
  * Create a new blank 2D texture to hold a GOL state
@@ -461,13 +438,6 @@ GOL.prototype.draw = function() {
  * Step the GOL state on the GPU, and then render it to the user's screen
  */
 GOL.prototype.stepAndDraw = function() {
-
-    if (GOL.now() != this.lasttick) {
-        this.lasttick = GOL.now();
-        this.fps      = 0;
-    } else {
-        this.fps++;
-    }
 
     this.step();
     this.draw();

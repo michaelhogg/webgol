@@ -18,12 +18,53 @@ function GOLAnimator(gol, targetFPS) {
     this.targetFPS = targetFPS;
 
     /**
+     * Actual frames-per-second
+     * @type {number}
+     */
+    this.actualFPS = 0;
+
+    /**
+     * Unix timestamp (in seconds) of the latest animation step
+     * @type {number}
+     */
+    this.latestStepTimestamp = 0;
+
+    /**
      * ID of the animation timer (if null, then the timer is not running)
      * @type {(number|null)}
      */
     this.timerID = null;
 
 }
+
+/**
+ * Get the current Unix timestamp (in seconds)
+ *
+ * @returns {number}
+ * @static
+ */
+GOLAnimator.now = function() {
+
+    return Math.floor(Date.now() / 1000);
+
+};
+
+/**
+ * Perform one animation step
+ */
+GOLAnimator.prototype.doAnimationStep = function() {
+
+    this.gol.stepAndDraw();
+
+    if (GOLAnimator.now() === this.latestStepTimestamp) {
+        this.actualFPS++;
+    } else {
+        // @todo Display this.actualFPS somewhere
+        this.latestStepTimestamp = GOLAnimator.now();
+        this.actualFPS           = 0;
+    }
+
+};
 
 /**
  * Start the animation
@@ -34,12 +75,15 @@ GOLAnimator.prototype.start = function() {
         return;
     }
 
+    this.actualFPS           = 0;
+    this.latestStepTimestamp = GOLAnimator.now();
+
     var _this      = this;
     var frameDelay = 1000 / this.targetFPS;  // Milliseconds
 
     this.timerID = setInterval(
         function() {
-            _this.gol.stepAndDraw();
+            _this.doAnimationStep();
         },
         frameDelay
     );
