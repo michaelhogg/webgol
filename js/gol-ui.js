@@ -255,6 +255,32 @@ GOLUI.prototype.generateHelpMarkersAndBubbles = function() {
 };
 
 /**
+ * Set the event handler for the control keys
+ */
+GOLUI.prototype.setEventHandlerForControlKeys = function() {
+
+    var _this = this;
+
+    $(document).on("keyup", function(event) {
+        switch (event.which) {
+            case 82:  // r
+                _this.gol.setRandom();
+                _this.gol.draw();
+                break;
+            case 80:  // p
+                _this.golAnimator.toggle();
+                break;
+            case 83:  // s
+                if (!_this.golAnimator.isRunning()) {
+                    _this.gol.stepAndDraw();
+                }
+                break;
+        }
+    });
+
+};
+
+/**
  * Initialise the UI
  *
  * @param {number} defaultTargetFramerate
@@ -274,5 +300,7 @@ GOLUI.prototype.init = function(defaultTargetFramerate) {
     this.setEventHandlerForWrappingSwitchery();
 
     this.generateHelpMarkersAndBubbles();
+
+    this.setEventHandlerForControlKeys();
 
 }

@@ -27,23 +27,6 @@ $(document).ready(function() {
     golAnimator = new GOLAnimator(gol, targetFPS, "divActualFramerate");
     golAnimator.start();
 
-    $(document).on('keyup', function(event) {
-        switch (event.which) {
-            case 82: /* r */
-                gol.setRandom();
-                gol.draw();
-                break;
-            case 80: /* p */
-                golAnimator.toggle();
-                break;
-            case 83: /* s */
-                if (!golAnimator.isRunning()) {
-                    gol.stepAndDraw();
-                }
-                break;
-        }
-    });
-
     golUI = new GOLUI(gol, golAnimator);
     golUI.init(targetFPS);
 
