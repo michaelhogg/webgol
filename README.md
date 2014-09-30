@@ -8,6 +8,7 @@ graphics card using [WebGL](http://en.wikipedia.org/wiki/WebGL). The browser's o
 
 ## Libraries used
 
+* [abpetkov/switchery](https://github.com/abpetkov/switchery)
 * [FortAwesome/Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
 * [jquery/jquery](https://github.com/jquery/jquery)
 * [skeeto/igloojs](https://github.com/skeeto/igloojs)
