@@ -88,11 +88,11 @@ GOLUI.populateMenuWithValues = function($selectMenu, values, defaultValue) {
 };
 
 /**
- * Populate the "target framerate" <select> menu
+ * Configure the "target framerate" <select> menu
  *
  * @param {number} defaultTargetFramerate
  */
-GOLUI.prototype.populateTargetFramerateMenu = function(defaultTargetFramerate) {
+GOLUI.prototype.configureTargetFramerateMenu = function(defaultTargetFramerate) {
 
     var framerates = [
         60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 8, 6, 4, 2, 1, 0.5, 0.25
@@ -103,13 +103,6 @@ GOLUI.prototype.populateTargetFramerateMenu = function(defaultTargetFramerate) {
         framerates,
         defaultTargetFramerate
     );
-
-};
-
-/**
- * Set the event handler for the "target framerate" <select> menu
- */
-GOLUI.prototype.setEventHandlerForTargetFramerateMenu = function() {
 
     var _this = this;
 
@@ -301,9 +294,7 @@ GOLUI.prototype.setEventHandlerForControlKeys = function() {
  */
 GOLUI.prototype.init = function(defaultTargetFramerate) {
 
-    this.populateTargetFramerateMenu(defaultTargetFramerate);
-
-    this.setEventHandlerForTargetFramerateMenu();
+    this.configureTargetFramerateMenu(defaultTargetFramerate);
 
     this.setEventHandlersForControlPanel();
 
