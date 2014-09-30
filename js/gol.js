@@ -320,6 +320,15 @@ GOL.prototype.setCellState = function(x, y, state) {
 };
 
 /**
+ * Toggle the wrapping of the GOL state
+ */
+GOL.prototype.toggleWrapping = function() {
+
+    this.enableStateWrapping = !this.enableStateWrapping;
+
+};
+
+/**
  * Swap the texture buffers
  */
 GOL.prototype.swap = function() {
