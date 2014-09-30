@@ -88,6 +88,37 @@ GOLUI.populateMenuWithValues = function($selectMenu, values, defaultValue) {
 };
 
 /**
+ * Configure the "cell size" <select> menu
+ *
+ * @param {number} defaultCellSize
+ */
+GOLUI.prototype.configureCellSizeMenu = function(defaultCellSize) {
+
+    var cellSizes = [];
+
+    for (var i = 1; i <= 20; i++) {
+        cellSizes.push(i);
+    }
+
+    GOLUI.populateMenuWithValues(
+        $("#selectCellSize"),
+        cellSizes,
+        defaultCellSize
+    );
+
+    var _this = this;
+
+    $("#selectCellSize").on("change", function() {
+
+        var cellSize = parseInt($(this).val());
+
+        window.location.href = "index.html?cs=" + cellSize;
+
+    });
+
+};
+
+/**
  * Configure the "target framerate" <select> menu
  *
  * @param {number} defaultTargetFramerate
@@ -228,6 +259,7 @@ GOLUI.prototype.setEventHandlerForWrappingSwitchery = function() {
 GOLUI.prototype.generateHelpMarkersAndBubbles = function() {
 
     var items = [
+        { id: "CellSize",        html: "The width and height of each cell, in pixels<br>(changing this setting will reload the page,<br>to recreate the WebGL textures)" },
         { id: "TargetFramerate", html: "The number of<br>frames-per-second<br>to attempt to reach" },
         { id: "ActualFramerate", html: "The actual number of<br>frames-per-second<br>being displayed" },
         { id: "Wrapping",        html: "Wrap the screen horizontally<br>(left and right edges joined)<br>and vertically (top and bottom<br>edges joined)" }
@@ -290,9 +322,12 @@ GOLUI.prototype.setEventHandlerForControlKeys = function() {
 /**
  * Initialise the UI
  *
+ * @param {number} defaultCellSize
  * @param {number} defaultTargetFramerate
  */
-GOLUI.prototype.init = function(defaultTargetFramerate) {
+GOLUI.prototype.init = function(defaultCellSize, defaultTargetFramerate) {
+
+    this.configureCellSizeMenu(defaultCellSize);
 
     this.configureTargetFramerateMenu(defaultTargetFramerate);
 

@@ -11,6 +11,15 @@ $(document).ready(function() {
     var canvas   = document.getElementById('golCanvas');
     var cellSize = 4;
 
+    // Set cell size from query string (if supplied)
+    var qsMatches = window.location.search.match(/^\?cs=(\d+)$/);
+    if (qsMatches !== null) {
+        var qsCellSize = parseInt(qsMatches[1]);
+        if (qsCellSize >= 1 && qsCellSize <= 20) {
+            cellSize = qsCellSize;
+        }
+    }
+
     // Resize canvas to fill the window
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -28,6 +37,6 @@ $(document).ready(function() {
     golAnimator.start();
 
     golUI = new GOLUI(gol, golAnimator);
-    golUI.init(targetFPS);
+    golUI.init(cellSize, targetFPS);
 
 });
