@@ -35,6 +35,12 @@ function GOLAnimator(gol, targetFPS) {
      */
     this.timerID = null;
 
+    /**
+     * Milliseconds per second
+     * @constant {number}
+     */
+    this.MS_PER_SECOND = 1000;
+
 }
 
 /**
@@ -44,7 +50,7 @@ function GOLAnimator(gol, targetFPS) {
  */
 GOLAnimator.prototype.now = function() {
 
-    return Math.floor(Date.now() / 1000);
+    return Math.floor(Date.now() / this.MS_PER_SECOND);
 
 };
 
@@ -78,7 +84,7 @@ GOLAnimator.prototype.start = function() {
     this.latestStepTimestamp = this.now();
 
     var _this      = this;
-    var frameDelay = 1000 / this.targetFPS;  // Milliseconds
+    var frameDelay = this.MS_PER_SECOND / this.targetFPS;
 
     this.timerID = setInterval(
         function() {
