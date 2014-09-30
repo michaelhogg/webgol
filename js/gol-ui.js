@@ -65,6 +65,29 @@ GOLUI.populateMenu = function($selectMenu, optionsData, defaultValue) {
 };
 
 /**
+ * Populate a <select> menu using an array of values
+ *
+ * @param {object}              $selectMenu
+ * @param {(string[]|number[])} values
+ * @param {(string|number)}     defaultValue
+ * @static
+ */
+GOLUI.populateMenuWithValues = function($selectMenu, values, defaultValue) {
+
+    var optionsData = [];
+
+    for (var i = 0; i < values.length; i++) {
+        optionsData.push({
+            value: values[i],
+            label: values[i]
+        });
+    }
+
+    GOLUI.populateMenu($selectMenu, optionsData, defaultValue);
+
+};
+
+/**
  * Populate the "target framerate" <select> menu
  *
  * @param {number} defaultTargetFramerate
@@ -75,18 +98,9 @@ GOLUI.prototype.populateTargetFramerateMenu = function(defaultTargetFramerate) {
         60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 8, 6, 4, 2, 1, 0.5, 0.25
     ];
 
-    var optionsData = [];
-
-    for (var i = 0; i < framerates.length; i++) {
-        optionsData.push({
-            value: framerates[i],
-            label: framerates[i]
-        });
-    }
-
-    GOLUI.populateMenu(
+    GOLUI.populateMenuWithValues(
         $("#selectTargetFramerate"),
-        optionsData,
+        framerates,
         defaultTargetFramerate
     );
 
