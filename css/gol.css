@@ -1,4 +1,164 @@
 body {
+  background-color: #000000;
   margin: 0;
-  background: #000000;
+}
+
+.font-preloaders {
+  color: #000000;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+}
+.font-preloaders .light-text, .font-preloaders .normal-text, .font-preloaders .bold-text {
+  font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
+}
+.font-preloaders .light-text {
+  font-weight: 300;
+}
+.font-preloaders .normal-text {
+  font-weight: 400;
+}
+.font-preloaders .bold-text {
+  font-weight: 700;
+}
+
+canvas {
+  left: 0px;
+  position: absolute;
+  top: 0px;
+}
+
+.gear-open-control-panel {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 50px;
+  position: absolute;
+  right: 50px;
+  top: 50px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  -webkit-box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.9);
+  box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.9);
+  -webkit-transition-duration: 0.1s;
+  -moz-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-property: transform;
+  -moz-transition-property: transform;
+  transition-property: transform;
+}
+.gear-open-control-panel:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.control-panel-outer-container {
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.control-panel-outer-container .inner-container {
+  background-color: #222222;
+  margin: 50px auto;
+  padding: 25px;
+  position: relative;
+  width: 300px;
+  -webkit-border-radius: 22px;
+  -moz-border-radius: 22px;
+  border-radius: 22px;
+  -webkit-box-shadow: 0px 10px 50px 20px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 0px 10px 50px 20px rgba(0, 0, 0, 0.9);
+  box-shadow: 0px 10px 50px 20px rgba(0, 0, 0, 0.9);
+}
+
+.cross-close-control-panel {
+  color: #666666;
+  cursor: pointer;
+  font-size: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.cross-close-control-panel:hover {
+  color: #cccccc;
+}
+
+.panel-title {
+  color: #ffffff;
+  font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
+  font-size: 24pt;
+  font-weight: 700;
+  text-align: center;
+}
+
+.panel-table {
+  border-spacing: 0px;
+  margin-top: 10px;
+}
+.panel-table td {
+  color: #ffffff;
+  font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
+  font-size: 12pt;
+  padding: 10px;
+  white-space: nowrap;
+}
+.panel-table td:first-child {
+  font-weight: 300;
+  text-align: right;
+}
+.panel-table td .dynamic-value {
+  background-color: #333333;
+  display: inline-block;
+  font-weight: 400;
+  padding: 5px 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.panel-table td select {
+  background-color: #ffffff;
+  border: 0;
+  font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
+  font-size: 12pt;
+  font-weight: 400;
+}
+.panel-table td span.switchery {
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  transform: scale(0.9);
+  -webkit-transform-origin: left center;
+  -moz-transform-origin: left center;
+  transform-origin: left center;
+}
+.panel-table td.help-cell {
+  position: relative;
+}
+.panel-table td .help-marker {
+  color: #666666;
+  cursor: pointer;
+  font-size: 20px;
+}
+.panel-table td .help-marker:hover {
+  color: #3670e2;
+}
+.panel-table td .help-bubble {
+  background-color: #103070;
+  color: #bccff5;
+  display: none;
+  font-size: 11pt;
+  left: 40px;
+  padding: 15px 18px;
+  position: absolute;
+  top: 10px;
+  z-index: 1000;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -webkit-box-shadow: 0px 6px 10px 5px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 6px 10px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 6px 10px 5px rgba(0, 0, 0, 0.6);
 }

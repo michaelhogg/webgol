@@ -3,8 +3,9 @@
  *
  * @param {GOL}    gol
  * @param {number} targetFPS
+ * @param {string} actualFPSDisplayElementID
  */
-function GOLAnimator(gol, targetFPS) {
+function GOLAnimator(gol, targetFPS, actualFPSDisplayElementID) {
 
     /**
      * @type {GOL}
@@ -16,6 +17,12 @@ function GOLAnimator(gol, targetFPS) {
      * @type {number}
      */
     this.targetFPS = targetFPS;
+
+    /**
+     * jQuery DOM element for displaying actual FPS
+     * @type {object}
+     */
+    this.$actualFPSDisplayElement = $("#" + actualFPSDisplayElementID);
 
     /**
      * Actual frames-per-second
@@ -64,7 +71,7 @@ GOLAnimator.prototype.doAnimationStep = function() {
     if (this.now() === this.latestStepTimestamp) {
         this.actualFPS++;
     } else {
-        // @todo Display this.actualFPS somewhere
+        this.$actualFPSDisplayElement.text(this.actualFPS);
         this.latestStepTimestamp = this.now();
         this.actualFPS           = 0;
     }

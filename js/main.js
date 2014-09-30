@@ -4,6 +4,7 @@ window.onerror = function(errorMessage) {
 
 var gol         = null;
 var golAnimator = null;
+var golUI       = null;
 
 $(document).ready(function() {
 
@@ -21,9 +22,9 @@ $(document).ready(function() {
     gol.setRandom();
     gol.draw();
 
-    var fps = 15;
+    var targetFPS = 15;
 
-    golAnimator = new GOLAnimator(gol, fps);
+    golAnimator = new GOLAnimator(gol, targetFPS, "divActualFramerate");
     golAnimator.start();
 
     $(document).on('keyup', function(event) {
@@ -42,5 +43,8 @@ $(document).ready(function() {
                 break;
         }
     });
+
+    golUI = new GOLUI(gol, golAnimator);
+    golUI.init(targetFPS);
 
 });

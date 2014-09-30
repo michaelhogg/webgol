@@ -1,4 +1,205 @@
+//--------------------  Global variables  --------------------//
+
+$font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
+
+$help-hue:        220;
+$help-saturation: 75%;
+
+
+//--------------------  Mixins  --------------------//
+
+@mixin m-box-shadow($h-offset, $v-offset, $blur-radius, $spread-distance, $color) {
+    -webkit-box-shadow: $h-offset $v-offset $blur-radius $spread-distance $color;
+       -moz-box-shadow: $h-offset $v-offset $blur-radius $spread-distance $color;
+            box-shadow: $h-offset $v-offset $blur-radius $spread-distance $color;
+}
+
+@mixin m-border-radius($radius) {
+    -webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+            border-radius: $radius;
+}
+
+@mixin m-transition-duration($duration) {
+    -webkit-transition-duration: $duration;
+       -moz-transition-duration: $duration;
+            transition-duration: $duration;
+}
+
+@mixin m-transition-property($property) {
+    -webkit-transition-property: $property;
+       -moz-transition-property: $property;
+            transition-property: $property;
+}
+
+@mixin m-transform($transform) {
+    -webkit-transform: $transform;
+       -moz-transform: $transform;
+            transform: $transform;
+}
+
+@mixin m-transform-origin($origin) {
+    -webkit-transform-origin: $origin;
+       -moz-transform-origin: $origin;
+            transform-origin: $origin;
+}
+
+
+//--------------------  Main  --------------------//
+
 body {
-    margin:     0;
-    background: #000000;
+    background-color: #000000;
+    margin:           0;
+}
+
+.font-preloaders {
+    color:    #000000;
+    left:     0px;
+    position: absolute;
+    top:      0px;
+
+    .light-text, .normal-text, .bold-text {
+        font-family: $font-family;
+    }
+
+    .light-text {
+        font-weight: 300;
+    }
+
+    .normal-text {
+        font-weight: 400;
+    }
+
+    .bold-text {
+        font-weight: 700;
+    }
+}
+
+canvas {
+    left:     0px;
+    position: absolute;
+    top:      0px;
+}
+
+.gear-open-control-panel {
+    background-color: hsla(0, 0%, 0%, 0.9);
+    color:            #ffffff;
+    cursor:           pointer;
+    font-size:        50px;
+    position:         absolute;
+    right:            50px;
+    top:              50px;
+    @include m-border-radius(25px);
+    @include m-box-shadow(0px, 0px, 20px, 20px, hsla(0, 0%, 0%, 0.9));
+    @include m-transition-duration(0.1s);
+    @include m-transition-property(transform);
+
+    &:hover {
+        @include m-transform(scale(1.1));
+    }
+}
+
+.control-panel-outer-container {
+    left:     0px;
+    position: absolute;
+    top:      0px;
+    width:    100%;
+
+    .inner-container {
+        background-color: #222222;
+        margin:           50px auto;
+        padding:          25px;
+        position:         relative;
+        width:            300px;
+        @include m-border-radius(22px);
+        @include m-box-shadow(0px, 10px, 50px, 20px, hsla(0, 0%, 0%, 0.9));
+    }
+}
+
+.cross-close-control-panel {
+    color:     #666666;
+    cursor:    pointer;
+    font-size: 30px;
+    position:  absolute;
+    right:     10px;
+    top:       10px;
+
+    &:hover {
+        color: #cccccc;
+    }
+}
+
+.panel-title {
+    color:       #ffffff;
+    font-family: $font-family;
+    font-size:   24pt;
+    font-weight: 700;
+    text-align:  center;
+}
+
+.panel-table {
+    border-spacing: 0px;
+    margin-top:     10px;
+
+    td {
+        color:       #ffffff;
+        font-family: $font-family;
+        font-size:   12pt;
+        padding:     10px;
+        white-space: nowrap;
+
+        &:first-child {
+            font-weight: 300;
+            text-align:  right;
+        }
+
+        .dynamic-value {
+            background-color: #333333;
+            display:          inline-block;
+            font-weight:      400;
+            padding:          5px 10px;
+            @include m-border-radius(5px);
+        }
+
+        select {
+            background-color: #ffffff;
+            border:           0;
+            font-family:      $font-family;
+            font-size:        12pt;
+            font-weight:      400;
+        }
+
+        span.switchery {
+            @include m-transform(scale(0.9));
+            @include m-transform-origin(left center);
+        }
+
+        &.help-cell {
+            position: relative;
+        }
+
+        .help-marker {
+            color:     #666666;
+            cursor:    pointer;
+            font-size: 20px;
+
+            &:hover {
+                color: hsl($help-hue, $help-saturation, 55%);
+            }
+        }
+
+        .help-bubble {
+            background-color: hsl($help-hue, $help-saturation, 25%);
+            color:            hsl($help-hue, $help-saturation, 85%);
+            display:          none;
+            font-size:        11pt;
+            left:             40px;
+            padding:          15px 18px;
+            position:         absolute;
+            top:              10px;
+            z-index:          1000;
+            @include m-border-radius(12px);
+            @include m-box-shadow(0px, 6px, 10px, 5px, hsla(0, 0%, 0%, 0.6));
+        }
+    }
 }

@@ -3,14 +3,62 @@
     <head>
         <title>WebGOL</title>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="lib/font-awesome-4.2.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="lib/switchery-0.6.2/switchery.min.css">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oxygen:300,400,700">
         <link rel="stylesheet" href="css/gol.css">
         <script src="lib/jquery-2.1.1.min.js"></script>
         <script src="lib/igloo-0.1.0.js"></script>
+        <script src="lib/switchery-0.6.2/switchery.min.js"></script>
         <script src="js/gol.js"></script>
         <script src="js/gol-animator.js"></script>
+        <script src="js/gol-ui.js"></script>
         <script src="js/main.js"></script>
     </head>
     <body>
+
+        <div class="font-preloaders">
+            <!-- Preload Font Awesome -->
+            <i class="fa fa-gear"></i>
+            <!-- Preload Google Fonts -->
+            <span class="light-text">WebGOL</span>
+            <span class="normal-text">WebGOL</span>
+            <span class="bold-text">WebGOL</span>
+        </div>
+
         <canvas id="golCanvas" width="1" height="1"></canvas>
+
+        <i class="fa fa-gear gear-open-control-panel" style="display: none;" id="iOpenControlPanel"></i>
+
+        <div class="control-panel-outer-container" style="display: none;" id="divControlPanelOuterContainer">
+            <div class="inner-container">
+
+                <i class="fa fa-times-circle cross-close-control-panel" id="iCloseControlPanel"></i>
+
+                <div class="panel-title">WebGOL</div>
+
+                <table class="panel-table">
+                    <tbody>
+                        <tr>
+                            <td>Target framerate</td>
+                            <td class="help-cell" id="tdHelpCellTargetFramerate"></td>
+                            <td><select id="selectTargetFramerate"></select></td>
+                        </tr>
+                        <tr>
+                            <td>Actual framerate</td>
+                            <td class="help-cell" id="tdHelpCellActualFramerate"></td>
+                            <td><div id="divActualFramerate" class="dynamic-value">&ndash;</div></td>
+                        </tr>
+                        <tr>
+                            <td>Wrapping</td>
+                            <td class="help-cell" id="tdHelpCellWrapping"></td>
+                            <td><input type="checkbox" id="checkboxSwitcheryWrapping"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
     </body>
 </html>
