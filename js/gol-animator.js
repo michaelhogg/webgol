@@ -41,9 +41,8 @@ function GOLAnimator(gol, targetFPS) {
  * Get the current Unix timestamp (in seconds)
  *
  * @returns {number}
- * @static
  */
-GOLAnimator.now = function() {
+GOLAnimator.prototype.now = function() {
 
     return Math.floor(Date.now() / 1000);
 
@@ -56,11 +55,11 @@ GOLAnimator.prototype.doAnimationStep = function() {
 
     this.gol.stepAndDraw();
 
-    if (GOLAnimator.now() === this.latestStepTimestamp) {
+    if (this.now() === this.latestStepTimestamp) {
         this.actualFPS++;
     } else {
         // @todo Display this.actualFPS somewhere
-        this.latestStepTimestamp = GOLAnimator.now();
+        this.latestStepTimestamp = this.now();
         this.actualFPS           = 0;
     }
 
@@ -76,7 +75,7 @@ GOLAnimator.prototype.start = function() {
     }
 
     this.actualFPS           = 0;
-    this.latestStepTimestamp = GOLAnimator.now();
+    this.latestStepTimestamp = this.now();
 
     var _this      = this;
     var frameDelay = 1000 / this.targetFPS;  // Milliseconds
