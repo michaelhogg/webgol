@@ -191,19 +191,19 @@ GOL.prototype.createTexture = function() {
 };
 
 /**
- * Generate state pixel colour
+ * Generate cell state pixel colour
  * (this matches COLOUR_ALIVE and COLOUR_DEAD in the fragment shaders)
  *
- * @param   {boolean} state
+ * @param   {boolean} cellState
  * @returns {Uint8Array}
  */
-GOL.prototype.generateStatePixelColour = function(state) {
+GOL.prototype.generateCellStatePixelColour = function(cellState) {
 
     return new Uint8Array([
-        (state ? this.PIXEL_CHANNEL_MAX_VALUE : 0),  // red
-        0,                                           // green
-        0,                                           // blue
-        this.PIXEL_CHANNEL_MAX_VALUE                 // alpha
+        (cellState ? this.PIXEL_CHANNEL_MAX_VALUE : 0),  // red
+        0,                                               // green
+        0,                                               // blue
+        this.PIXEL_CHANNEL_MAX_VALUE                     // alpha
     ]);
 
 };
@@ -255,16 +255,16 @@ GOL.prototype.get = function() {
 GOL.prototype.set = function(state) {
 
     var rgba = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
-    var i, ii, statePixelColour, c;
+    var i, ii, cellStatePixelColour, c;
 
     for (i = 0; i < state.length; i++) {
 
         ii = i * this.CHANNELS_PER_PIXEL;
 
-        statePixelColour = this.generateStatePixelColour(state[i]);
+        cellStatePixelColour = this.generateCellStatePixelColour(state[i]);
 
         for (c = 0; c < this.CHANNELS_PER_PIXEL; c++) {
-            rgba[ii + c] = statePixelColour[c];
+            rgba[ii + c] = cellStatePixelColour[c];
         }
 
     }
@@ -313,7 +313,7 @@ GOL.prototype.setEmpty = function() {
  */
 GOL.prototype.setCellState = function(x, y, state) {
 
-    var rgba = this.generateStatePixelColour(state);
+    var rgba = this.generateCellStatePixelColour(state);
 
     this.textures.front.subset(rgba, x, y, 1, 1);
 
