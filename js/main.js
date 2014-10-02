@@ -28,7 +28,7 @@ $(document).ready(function() {
     canvas.height -= 6;
 
     gol = new GOL(canvas, cellSize);
-    gol.setRandom();
+    gol.randomiseState();
     gol.draw();
 
     var targetFPS = 15;

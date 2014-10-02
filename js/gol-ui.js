@@ -303,7 +303,7 @@ GOLUI.prototype.setEventHandlerForControlKeys = function() {
     $(document).on("keyup", function(event) {
         switch (event.which) {
             case 82:  // r
-                _this.gol.setRandom();
+                _this.gol.randomiseState();
                 _this.gol.draw();
                 break;
             case 80:  // p

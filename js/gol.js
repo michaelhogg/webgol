@@ -209,15 +209,18 @@ GOL.prototype.generateCellStatePixelColour = function(cellState) {
 };
 
 /**
- * Get the GOL state
+ * Get the GOL state as a GOLGrid object
  *
- * @returns {boolean[]}
+ * @returns {GOLGrid}
  */
-GOL.prototype.get = function() {
+GOL.prototype.getStateAsGOLGrid = function() {
 
-    var rgba  = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
-    var state = [];
+    var golGrid = new GOLGrid();
+    var rgba    = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
     var i, ii, r;
+
+    golGrid.width  = this.stateWidth;
+    golGrid.height = this.stateHeight;
 
     // Make the off-screen framebuffer active
     // and attach the "front" texture for readPixels() to read
@@ -239,32 +242,37 @@ GOL.prototype.get = function() {
         r  = rgba[ii + 0];
 
         // This matches getCellState() in the fragment shaders
-        state[i] = (r === this.PIXEL_CHANNEL_MAX_VALUE);
+        golGrid.cellData[i] = (r === this.PIXEL_CHANNEL_MAX_VALUE);
 
     }
 
-    return state;
+    return golGrid.getVerticallyFlipped();  // Grid coord origin is top-left, but WebGL coord origin is bottom-left
 
 };
 
 /**
- * Set the GOL state
+ * Set the GOL state using a GOLGrid object
  *
- * @param {boolean[]} state
+ * @param {GOLGrid} golGrid
  */
-GOL.prototype.set = function(state) {
+GOL.prototype.setStateUsingGOLGrid = function(golGrid) {
 
-    var rgba = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
-    var i, ii, cellStatePixelColour, c;
+    if (golGrid.width  !== this.stateWidth )  throw new Error("Grid width "  + golGrid.width  + " does not match GOL state width "  + this.stateWidth);
+    if (golGrid.height !== this.stateHeight)  throw new Error("Grid height " + golGrid.height + " does not match GOL state height " + this.stateHeight);
 
-    for (i = 0; i < state.length; i++) {
+    var flippedGrid = golGrid.getVerticallyFlipped();  // Grid coord origin is top-left, but WebGL coord origin is bottom-left
+    var rgba        = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
 
-        ii = i * this.CHANNELS_PER_PIXEL;
+    var i, ii, cellState, pixelColour, c;
 
-        cellStatePixelColour = this.generateCellStatePixelColour(state[i]);
+    for (i = 0; i < flippedGrid.cellData.length; i++) {
+
+        ii          = i * this.CHANNELS_PER_PIXEL;
+        cellState   = flippedGrid.cellData[i];
+        pixelColour = this.generateCellStatePixelColour(cellState);
 
         for (c = 0; c < this.CHANNELS_PER_PIXEL; c++) {
-            rgba[ii + c] = cellStatePixelColour[c];
+            rgba[ii + c] = pixelColour[c];
         }
 
     }
@@ -276,31 +284,28 @@ GOL.prototype.set = function(state) {
 /**
  * Fill the GOL state with random values
  */
-GOL.prototype.setRandom = function() {
+GOL.prototype.randomiseState = function() {
 
-    var aliveProbability = 0.5;
-    var rand             = [];
-
-    for (var i = 0; i < this.totalCells; i++) {
-        rand[i] = Math.random() < aliveProbability ? true : false;
-    }
-
-    this.set(rand);
+    this.setStateUsingGOLGrid(
+        GOLGridFactory.createRandomised(
+            this.stateWidth,
+            this.stateHeight
+        )
+    );
 
 };
 
 /**
  * Clear the GOL state (all cells dead)
  */
-GOL.prototype.setEmpty = function() {
+GOL.prototype.clearState = function() {
 
-    var state = [];
-
-    for (var i = 0; i < this.totalCells; i++) {
-        state[i] = false;
-    }
-
-    this.set(state);
+    this.setStateUsingGOLGrid(
+        GOLGridFactory.createEmpty(
+            this.stateWidth,
+            this.stateHeight
+        )
+    );
 
 };
 
