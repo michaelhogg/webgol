@@ -162,6 +162,28 @@ function GOL(canvas, cellSize) {
      */
     this.PIXEL_CHANNEL_MAX_VALUE = 255;  // PixelType is UNSIGNED_BYTE
 
+    /**
+     * State colour of a dead cell (this matches COLOUR_DEAD in the fragment shaders)
+     * @constant {Uint8Array}
+     */
+    this.COLOUR_DEAD = new Uint8Array([
+        0,                            // red
+        0,                            // green
+        0,                            // blue
+        this.PIXEL_CHANNEL_MAX_VALUE  // alpha
+    ]);
+
+    /**
+     * State colour of a live cell (this matches COLOUR_ALIVE in the fragment shaders)
+     * @constant {Uint8Array}
+     */
+    this.COLOUR_ALIVE = new Uint8Array([
+        this.PIXEL_CHANNEL_MAX_VALUE,  // red
+        0,                             // green
+        0,                             // blue
+        this.PIXEL_CHANNEL_MAX_VALUE   // alpha
+    ]);
+
 }
 
 /**
@@ -187,24 +209,6 @@ GOL.prototype.createTexture = function() {
     texture.blank(this.stateWidth, this.stateHeight);
 
     return texture;
-
-};
-
-/**
- * Generate cell state pixel colour
- * (this matches COLOUR_ALIVE and COLOUR_DEAD in the fragment shaders)
- *
- * @param   {boolean} cellState
- * @returns {Uint8Array}
- */
-GOL.prototype.generateCellStatePixelColour = function(cellState) {
-
-    return new Uint8Array([
-        (cellState ? this.PIXEL_CHANNEL_MAX_VALUE : 0),  // red
-        0,                                               // green
-        0,                                               // blue
-        this.PIXEL_CHANNEL_MAX_VALUE                     // alpha
-    ]);
 
 };
 
@@ -269,7 +273,7 @@ GOL.prototype.setStateUsingGOLGrid = function(golGrid) {
 
         ii          = i * this.CHANNELS_PER_PIXEL;
         cellState   = flippedGrid.cellData[i];
-        pixelColour = this.generateCellStatePixelColour(cellState);
+        pixelColour = (cellState ? this.COLOUR_ALIVE : this.COLOUR_DEAD);
 
         for (c = 0; c < this.CHANNELS_PER_PIXEL; c++) {
             rgba[ii + c] = pixelColour[c];
@@ -318,7 +322,7 @@ GOL.prototype.clearState = function() {
  */
 GOL.prototype.setCellState = function(x, y, state) {
 
-    var rgba = this.generateCellStatePixelColour(state);
+    var rgba = (state ? this.COLOUR_ALIVE : this.COLOUR_DEAD);
 
     this.textures.front.subset(rgba, x, y, 1, 1);
 
