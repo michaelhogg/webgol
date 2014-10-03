@@ -169,34 +169,6 @@ GOLGrid.prototype.paste = function(pasteGrid, pasteX, pasteY) {
 };
 
 /**
- * Return a vertically-flipped copy of this GOLGrid
- * (needed because grid coord origin is top-left, but WebGL coord origin is bottom-left)
- *
- * @returns {GOLGrid}
- */
-GOLGrid.prototype.getVerticallyFlipped = function() {
-
-    var flippedGrid = new GOLGrid();
-    var x, y, flippedY;
-
-    flippedGrid.width  = this.width;
-    flippedGrid.height = this.height;
-
-    for (y = 0; y < this.height; y++) {
-
-        flippedY = (this.height - 1) - y;
-
-        for (x = 0; x < this.width; x++) {
-            flippedGrid.setCell(x, flippedY, this.getCell(x, y));
-        }
-
-    }
-
-    return flippedGrid;
-
-};
-
-/**
  * Get as a text grid
  *
  * @param   {string} liveChar - Character representing a live cell

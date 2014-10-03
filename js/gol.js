@@ -219,12 +219,12 @@ GOL.prototype.createTexture = function() {
  */
 GOL.prototype.getStateAsGOLGrid = function() {
 
-    var golGrid = new GOLGrid();
-    var rgba    = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
-    var i, ii, r;
-
-    golGrid.width  = this.stateWidth;
-    golGrid.height = this.stateHeight;
+    var golGrid  = GOLGridFactory.createEmpty(this.stateWidth, this.stateHeight);
+    var rgba     = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
+    var x        = 0;
+    var y        = 0;
+    var flippedY = this.stateHeight - 1;
+    var i, ii, redChannel, cellState, cellIndex;
 
     // Make the off-screen framebuffer active
     // and attach the "front" texture for readPixels() to read
@@ -242,15 +242,27 @@ GOL.prototype.getStateAsGOLGrid = function() {
 
     for (i = 0; i < this.totalCells; i++) {
 
-        ii = i * this.CHANNELS_PER_PIXEL;
-        r  = rgba[ii + 0];
-
         // This matches getCellState() in the fragment shaders
-        golGrid.cellData[i] = (r === this.PIXEL_CHANNEL_MAX_VALUE);
+        ii         = i * this.CHANNELS_PER_PIXEL;
+        redChannel = rgba[ii + 0];
+        cellState  = (redChannel === this.PIXEL_CHANNEL_MAX_VALUE);
+
+        // Flip vertically (grid coord origin is top-left, but WebGL coord origin is bottom-left)
+        cellIndex = (flippedY * this.stateWidth) + x;
+
+        golGrid.cellData[cellIndex] = cellState;
+
+        x++;
+
+        if (x >= this.stateWidth) {
+            y++;
+            x        = 0;
+            flippedY = (this.stateHeight - 1) - y;
+        }
 
     }
 
-    return golGrid.getVerticallyFlipped();  // Grid coord origin is top-left, but WebGL coord origin is bottom-left
+    return golGrid;
 
 };
 
@@ -264,19 +276,31 @@ GOL.prototype.setStateUsingGOLGrid = function(golGrid) {
     if (golGrid.width  !== this.stateWidth )  throw new Error("Grid width "  + golGrid.width  + " does not match GOL state width "  + this.stateWidth);
     if (golGrid.height !== this.stateHeight)  throw new Error("Grid height " + golGrid.height + " does not match GOL state height " + this.stateHeight);
 
-    var flippedGrid = golGrid.getVerticallyFlipped();  // Grid coord origin is top-left, but WebGL coord origin is bottom-left
-    var rgba        = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
+    var rgba     = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
+    var x        = 0;
+    var y        = 0;
+    var flippedY = this.stateHeight - 1;
+    var i, ii, cellIndex, cellState, pixelColour, c;
 
-    var i, ii, cellState, pixelColour, c;
+    for (i = 0; i < this.totalCells; i++) {
 
-    for (i = 0; i < flippedGrid.cellData.length; i++) {
+        // Flip vertically (grid coord origin is top-left, but WebGL coord origin is bottom-left)
+        cellIndex = (flippedY * this.stateWidth) + x;
 
-        ii          = i * this.CHANNELS_PER_PIXEL;
-        cellState   = flippedGrid.cellData[i];
+        cellState   = golGrid.cellData[cellIndex];
         pixelColour = (cellState ? this.COLOUR_ALIVE : this.COLOUR_DEAD);
+        ii          = i * this.CHANNELS_PER_PIXEL;
 
         for (c = 0; c < this.CHANNELS_PER_PIXEL; c++) {
             rgba[ii + c] = pixelColour[c];
+        }
+
+        x++;
+
+        if (x >= this.stateWidth) {
+            y++;
+            x        = 0;
+            flippedY = (this.stateHeight - 1) - y;
         }
 
     }
