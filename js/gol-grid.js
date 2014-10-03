@@ -22,6 +22,25 @@ function GOLGrid() {
 }
 
 /**
+ * Get a cell's index in the cellData array
+ *
+ * @param   {number} x
+ * @param   {number} y
+ * @returns {number}
+ */
+GOLGrid.prototype.getCellIndex = function(x, y) {
+
+    if (x < 0)  throw new Error("Invalid X coord: " + x);
+    if (y < 0)  throw new Error("Invalid Y coord: " + y);
+
+    if (x >= this.width)   throw new Error("Invalid X coord: " + x + " (width of grid is "  + this.width  + ")");
+    if (y >= this.height)  throw new Error("Invalid Y coord: " + y + " (height of grid is " + this.height + ")");
+
+    return (y * this.width) + x;
+
+};
+
+/**
  * Get a cell's state
  *
  * @param   {number} x
@@ -30,7 +49,7 @@ function GOLGrid() {
  */
 GOLGrid.prototype.getCell = function(x, y) {
 
-    var cellIndex = (y * this.width) + x;
+    var cellIndex = this.getCellIndex(x, y);
 
     return this.cellData[cellIndex];
 
@@ -45,7 +64,7 @@ GOLGrid.prototype.getCell = function(x, y) {
  */
 GOLGrid.prototype.setCell = function(x, y, state) {
 
-    var cellIndex = (y * this.width) + x;
+    var cellIndex = this.getCellIndex(x, y);
 
     this.cellData[cellIndex] = state;
 
