@@ -34,6 +34,10 @@ int getCellState(vec2 offset) {
     if (enableWrapping == true) {
         coord.x = wrapValue(coord.x);  // Wrap horizontally
         coord.y = wrapValue(coord.y);  // Wrap vertically
+    } else {
+        if (coord.x < 0.0 || coord.x > 1.0 || coord.y < 0.0 || coord.y > 1.0) {
+            return CELL_STATE_DEAD;
+        }
     }
 
     vec4 colour = texture2D(sampler, coord);
