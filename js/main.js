@@ -28,6 +28,7 @@ $(document).ready(function() {
     canvas.height -= 6;
 
     gol = new GOL(canvas, cellSize);
+    gol.init();
     gol.randomiseState();
     gol.draw();
 

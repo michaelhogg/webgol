@@ -70,70 +70,6 @@ function GOL(canvas, cellSize) {
     this.enableStateWrapping = true;
 
     /**
-     * Igloo-wrapped WebGLProgram objects
-     * @type {Igloo.Program}
-     */
-    this.programs = {
-        // Throws an error if compiling or linking fails
-        copy: this.igloo.program("glsl/quad.vert", "glsl/copy.frag"),
-        gol:  this.igloo.program("glsl/quad.vert", "glsl/gol.frag")
-    };
-
-    /**
-     * Triangle strip data for the vertex shader
-     */
-    this.triangleStrip = {
-
-        /**
-         * Type of primitives to render
-         * @type {number}
-         */
-        primitivesMode: this.gl.TRIANGLE_STRIP,
-
-        /**
-         * Igloo-wrapped WebGLBuffer object holding vertex attribute data
-         * of a triangle strip which fills the entire render area
-         * @type {Igloo.Buffer}
-         */
-        vertexBuffer: this.igloo.array(
-            new Float32Array([
-                -1, -1,  // Normalised XY coords
-                 1, -1,
-                -1,  1,
-                 1,  1
-            ])
-        ),
-
-        /**
-         * Number of components per vertex attribute
-         * @type {number}
-         */
-        componentsPerVertexAttribute: 2,
-
-        /**
-         * Total number of vertices
-         * @type {number}
-         */
-        totalVertices: 4
-
-    };
-
-    /**
-     * Igloo-wrapped WebGLTexture objects
-     * @type {Igloo.Texture}
-     */
-    this.textures = {
-        front: this.createTexture(),
-        back:  this.createTexture()
-    };
-
-    /**
-     * Igloo-wrapped off-screen WebGLFramebuffer for rendering and reading texture data
-     * @type {Igloo.Framebuffer}
-     */
-    this.offscreenFramebuffer = this.igloo.framebuffer();
-
-    /**
      * Colours of the four corners, in RGBA format
      * @type {Float32Array}
      */
@@ -197,6 +133,79 @@ function GOL(canvas, cellSize) {
     ]);
 
 }
+
+/**
+ * Initialise
+ *
+ * @throws Error if something goes wrong in Igloo
+ */
+GOL.prototype.init = function() {
+
+    /**
+     * Igloo-wrapped WebGLProgram objects
+     * @type {Igloo.Program}
+     */
+    this.programs = {
+        // Throws an error if compiling or linking fails
+        copy: this.igloo.program("glsl/quad.vert", "glsl/copy.frag"),
+        gol:  this.igloo.program("glsl/quad.vert", "glsl/gol.frag")
+    };
+
+    /**
+     * Triangle strip data for the vertex shader
+     */
+    this.triangleStrip = {
+
+        /**
+         * Type of primitives to render
+         * @type {number}
+         */
+        primitivesMode: this.gl.TRIANGLE_STRIP,
+
+        /**
+         * Igloo-wrapped WebGLBuffer object holding vertex attribute data
+         * of a triangle strip which fills the entire render area
+         * @type {Igloo.Buffer}
+         */
+        vertexBuffer: this.igloo.array(
+            new Float32Array([
+                -1, -1,  // Normalised XY coords
+                 1, -1,
+                -1,  1,
+                 1,  1
+            ])
+        ),
+
+        /**
+         * Number of components per vertex attribute
+         * @type {number}
+         */
+        componentsPerVertexAttribute: 2,
+
+        /**
+         * Total number of vertices
+         * @type {number}
+         */
+        totalVertices: 4
+
+    };
+
+    /**
+     * Igloo-wrapped WebGLTexture objects
+     * @type {Igloo.Texture}
+     */
+    this.textures = {
+        front: this.createTexture(),
+        back:  this.createTexture()
+    };
+
+    /**
+     * Igloo-wrapped off-screen WebGLFramebuffer for rendering and reading texture data
+     * @type {Igloo.Framebuffer}
+     */
+    this.offscreenFramebuffer = this.igloo.framebuffer();
+
+};
 
 /**
  * Create a new blank 2D texture to hold a GOL state
