@@ -126,7 +126,7 @@ GOLUI.prototype.configureCellSizeMenu = function(defaultCellSize) {
 GOLUI.prototype.configureTargetFramerateMenu = function(defaultTargetFramerate) {
 
     var framerates = [
-        60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 8, 6, 4, 2, 1, 0.5, 0.25
+        0.25, 0.5, 1, 2, 4, 6, 8, 10, 15, 20, 25, 30, 40, 50, 60
     ];
 
     GOLUI.populateMenuWithValues(
