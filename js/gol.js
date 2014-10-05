@@ -69,6 +69,7 @@ function GOL(canvas, cellSize) {
      * @type {Igloo.Program}
      */
     this.programs = {
+        // Throws an error if compiling or linking fails
         copy: this.igloo.program("glsl/quad.vert", "glsl/copy.frag"),
         gol:  this.igloo.program("glsl/quad.vert", "glsl/gol.frag")
     };
@@ -380,6 +381,7 @@ GOL.prototype.swap = function() {
  * @param {Igloo.Texture} inputTexture
  * @param {object[]}      floatUniforms
  * @param {object[]}      intUniforms
+ * @throws Error if drawing fails
  */
 GOL.prototype.runProgram = function(program, inputTexture, floatUniforms, intUniforms) {
 
@@ -420,6 +422,7 @@ GOL.prototype.runProgram = function(program, inputTexture, floatUniforms, intUni
     }
 
     // Render the triangle strip
+    // (throws an error if something goes wrong)
     program.draw(
         this.triangleStrip.primitivesMode,
         this.triangleStrip.totalVertices
@@ -429,6 +432,8 @@ GOL.prototype.runProgram = function(program, inputTexture, floatUniforms, intUni
 
 /**
  * Step the GOL state on the GPU, without rendering anything to the screen
+ *
+ * @throws Error if program drawing fails
  */
 GOL.prototype.step = function() {
 
@@ -454,6 +459,8 @@ GOL.prototype.step = function() {
 
 /**
  * Render the GOL state (stored on the GPU) to the user's screen (canvas)
+ *
+ * @throws Error if program drawing fails
  */
 GOL.prototype.draw = function() {
 
@@ -478,6 +485,8 @@ GOL.prototype.draw = function() {
 
 /**
  * Step the GOL state on the GPU, and then render it to the user's screen
+ *
+ * @throws Error if program drawing fails
  */
 GOL.prototype.stepAndDraw = function() {
 
