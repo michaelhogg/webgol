@@ -33,37 +33,66 @@
         <i class="fa fa-gear gear-open-control-panel" style="display: none;" id="iOpenControlPanel"></i>
 
         <div class="control-panel-outer-container" style="display: none;" id="divControlPanelOuterContainer">
-            <div class="inner-container">
+            <div class="middle-container">
+                <div class="inner-container">
 
-                <i class="fa fa-times-circle cross-close-control-panel" id="iCloseControlPanel"></i>
+                    <i class="fa fa-times-circle cross-close-control-panel" id="iCloseControlPanel"></i>
 
-                <div class="panel-title">WebGOL</div>
+                    <div class="panel-title">WebGOL</div>
 
-                <table class="panel-table">
-                    <tbody>
-                        <tr>
-                            <td>Cell size</td>
-                            <td class="help-cell" id="tdHelpCellCellSize"></td>
-                            <td><select id="selectCellSize"></select></td>
-                        </tr>
-                        <tr>
-                            <td>Target framerate</td>
-                            <td class="help-cell" id="tdHelpCellTargetFramerate"></td>
-                            <td><select id="selectTargetFramerate"></select></td>
-                        </tr>
-                        <tr>
-                            <td>Actual framerate</td>
-                            <td class="help-cell" id="tdHelpCellActualFramerate"></td>
-                            <td><div id="divActualFramerate" class="dynamic-value">&ndash;</div></td>
-                        </tr>
-                        <tr>
-                            <td>Wrapping</td>
-                            <td class="help-cell" id="tdHelpCellWrapping"></td>
-                            <td><input type="checkbox" id="checkboxSwitcheryWrapping"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <div class="panel-subtitle">
+                        A hardware-accelerated
+                        <a href="http://en.wikipedia.org/wiki/WebGL" target="_blank">WebGL</a>
+                        version of
+                        <a href="http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">
+                            Conway&#8217;s Game of Life
+                        </a>
+                        <a href="https://github.com/michaelhogg/webgol">
+                            <i class="fa fa-info-circle about-icon"></i>About
+                        </a>
+                    </div>
 
+                    <table class="panel-table">
+                        <tbody>
+                            <tr>
+                                <td class="label-cell">Cell size</td>
+                                <td class="help-cell" id="tdHelpCellCellSize"></td>
+                                <td><select id="selectCellSize"></select></td>
+                                <td class="spacer-cell"></td>
+                                <td colspan="3">
+                                          <div class="mode-tab mode-tab-active">Random
+                                    </div><div class="mode-tab">Patterns
+                                    </div><div class="mode-tab">Custom</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-cell">Target framerate</td>
+                                <td class="help-cell" id="tdHelpCellTargetFramerate"></td>
+                                <td><select id="selectTargetFramerate"></select></td>
+                                <td class="spacer-cell"></td>
+                                <td class="label-cell">Mutation rate</td>
+                                <td class="help-cell" id="tdHelpCellRandomModeMutationRate"></td>
+                                <td><select id="selectRandomModeMutationRate"></select></td>
+                            </tr>
+                            <tr>
+                                <td class="label-cell">Actual framerate</td>
+                                <td class="help-cell" id="tdHelpCellActualFramerate"></td>
+                                <td><div id="divActualFramerate" class="dynamic-value">&ndash;</div></td>
+                                <td class="spacer-cell"></td>
+                                <td colspan="3" class="button-cell">
+                                    <button type="button" id="buttonRandomModeRandomise">Randomise</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-cell">Wraparound</td>
+                                <td class="help-cell" id="tdHelpCellWrapping"></td>
+                                <td><input type="checkbox" id="checkboxSwitcheryWrapping"></td>
+                                <td class="spacer-cell"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
         </div>
 
