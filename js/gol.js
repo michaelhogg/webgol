@@ -3,8 +3,13 @@
  *
  * @param {HTMLCanvasElement} canvas   - Render target
  * @param {number}            cellSize - Size of each cell (in pixels)
+ * @throws Error if WebGL fails to initialise
  */
 function GOL(canvas, cellSize) {
+
+    if (!window.WebGLRenderingContext) {
+        throw new Error("Browser does not support WebGLRenderingContext");
+    }
 
     /**
      * Size of each cell (in pixels)
@@ -18,15 +23,15 @@ function GOL(canvas, cellSize) {
      */
     this.igloo = new Igloo(canvas);
 
+    if (!(this.igloo.gl instanceof WebGLRenderingContext)) {
+        throw new Error("Browser does support WebGLRenderingContext, but failed to initialise WebGL");
+    }
+
     /**
      * WebGL rendering context associated with the canvas
      * @type {WebGLRenderingContext}
      */
     this.gl = this.igloo.gl;
-
-    if (!(this.gl instanceof WebGLRenderingContext)) {
-        throw new Error("Failed to initialise WebGL");
-    }
 
     /**
      * Width of the view (canvas)
