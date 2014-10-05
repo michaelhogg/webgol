@@ -1,6 +1,4 @@
-#ifdef GL_ES
 precision mediump float;
-#endif
 
 #define CELL_STATE_DEAD  0
 #define CELL_STATE_ALIVE 1
