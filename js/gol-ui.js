@@ -327,11 +327,13 @@ GOLUI.prototype.setEventHandlerForControlKeys = function() {
  */
 GOLUI.prototype.init = function(defaultCellSize, defaultTargetFramerate) {
 
+    // Configure menus
+
     this.configureCellSizeMenu(defaultCellSize);
 
     this.configureTargetFramerateMenu(defaultTargetFramerate);
 
-    this.setEventHandlersForControlPanel();
+    // "Wrapping" switchery
 
     this.createWrappingSwitchery();
 
@@ -339,8 +341,14 @@ GOLUI.prototype.init = function(defaultCellSize, defaultTargetFramerate) {
 
     this.setEventHandlerForWrappingSwitchery();
 
-    this.generateHelpMarkersAndBubbles();
+    // Event handlers
+
+    this.setEventHandlersForControlPanel();
 
     this.setEventHandlerForControlKeys();
+
+    // Help
+
+    this.generateHelpMarkersAndBubbles();
 
 }
