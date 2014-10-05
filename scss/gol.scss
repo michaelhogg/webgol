@@ -20,6 +20,21 @@ $help-saturation: 75%;
             border-radius: $radius;
 }
 
+@mixin m-border-radii($top-left, $top-right, $bottom-left, $bottom-right) {
+    -webkit-border-top-left-radius: $top-left;
+        -moz-border-radius-topleft: $top-left;
+            border-top-left-radius: $top-left;
+    -webkit-border-top-right-radius: $top-right;
+        -moz-border-radius-topright: $top-right;
+            border-top-right-radius: $top-right;
+    -webkit-border-bottom-left-radius: $bottom-left;
+        -moz-border-radius-bottomleft: $bottom-left;
+            border-bottom-left-radius: $bottom-left;
+    -webkit-border-bottom-right-radius: $bottom-right;
+        -moz-border-radius-bottomright: $bottom-right;
+            border-bottom-right-radius: $bottom-right;
+}
+
 @mixin m-transition-duration($duration) {
     -webkit-transition-duration: $duration;
        -moz-transition-duration: $duration;
