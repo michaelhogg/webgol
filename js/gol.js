@@ -164,6 +164,12 @@ function GOL(canvas, cellSize) {
     this.PIXEL_CHANNEL_MAX_VALUE = 255;  // PixelType is UNSIGNED_BYTE
 
     /**
+     * Number of bits per pixel channel
+     * @constant {number}
+     */
+    this.BITS_PER_PIXEL_CHANNEL = 8;  // PixelType is UNSIGNED_BYTE
+
+    /**
      * State colour of a dead cell (this matches COLOUR_DEAD in the fragment shaders)
      * @constant {Uint8Array}
      */
