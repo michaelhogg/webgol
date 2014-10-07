@@ -22,6 +22,12 @@ function GOLUI(gol, golAnimator) {
      */
     this.wrappingSwitchery = null;
 
+    /**
+     * Switchery object for the "mutation" checkbox
+     * @type {(Switchery|null)}
+     */
+    this.mutationSwitchery = null;
+
 }
 
 /**
@@ -264,6 +270,24 @@ GOLUI.prototype.updateSwitcheryState = function(switchery, newState) {
 };
 
 /**
+ * Configure the "mutation" switchery
+ */
+GOLUI.prototype.configureMutationSwitchery = function() {
+
+    this.mutationSwitchery = this.createSwitchery("checkboxSwitcheryRandomModeMutation");
+
+    var _this = this;
+
+    $("#checkboxSwitcheryRandomModeMutation").on("change", function() {
+        _this.gol.toggleMutation();
+        _this.updateSwitcheryState(_this.mutationSwitchery, _this.gol.enableMutation);
+    });
+
+    this.updateSwitcheryState(this.mutationSwitchery, this.gol.enableMutation);
+
+};
+
+/**
  * Generate the help markers and bubbles
  */
 GOLUI.prototype.generateHelpMarkersAndBubbles = function() {
@@ -272,7 +296,9 @@ GOLUI.prototype.generateHelpMarkersAndBubbles = function() {
         { id: "CellSize",        html: "The width and height of each cell, in pixels<br>(changing this setting will reload the page,<br>to recreate the WebGL textures)" },
         { id: "TargetFramerate", html: "The number of frames-per-second to attempt to reach" },
         { id: "ActualFramerate", html: "The actual number of frames-per-second being displayed" },
-        { id: "Wrapping",        html: "Wrap the screen horizontally (left and right edges joined)<br>and vertically (top and bottom edges joined)" }
+        { id: "Wrapping",        html: "Wrap the screen horizontally (left and right edges joined)<br>and vertically (top and bottom edges joined)" },
+
+        { id: "RandomModeMutation", html: "Randomly add live cells<br>to prevent life from dying out" }
     ];
 
     for (var i = 0; i < items.length; i++) {
@@ -343,9 +369,11 @@ GOLUI.prototype.init = function(defaultCellSize, defaultTargetFramerate) {
 
     this.configureTargetFramerateMenu(defaultTargetFramerate);
 
-    // "Wrapping" switchery
+    // Configure switcherys
 
     this.configureWrappingSwitchery();
+
+    this.configureMutationSwitchery();
 
     // Event handlers
 
