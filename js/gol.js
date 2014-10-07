@@ -132,6 +132,24 @@ function GOL(canvas, cellSize) {
         this.PIXEL_CHANNEL_MAX_VALUE   // alpha
     ]);
 
+    /**
+     * Constant representing Random mode
+     * @constant {number}
+     */
+    this.MODE_RANDOM = 1;
+
+    /**
+     * Constant representing Patterns mode
+     * @constant {number}
+     */
+    this.MODE_PATTERNS = 2;
+
+    /**
+     * Constant representing Custom mode
+     * @constant {number}
+     */
+    this.MODE_CUSTOM = 3;
+
 }
 
 /**
