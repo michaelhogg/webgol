@@ -70,6 +70,12 @@ function GOL(canvas, cellSize) {
     this.enableStateWrapping = true;
 
     /**
+     * Should cells be randomly mutated? (only applicable in Random mode)
+     * @type {boolean}
+     */
+    this.enableMutation = true;
+
+    /**
      * Colours of the four corners, in RGBA format
      * @type {Float32Array}
      */
