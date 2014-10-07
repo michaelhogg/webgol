@@ -413,6 +413,15 @@ GOL.prototype.toggleWrapping = function() {
 };
 
 /**
+ * Toggle whether cells should be randomly mutated (only applicable in Random mode)
+ */
+GOL.prototype.toggleMutation = function() {
+
+    this.enableMutation = !this.enableMutation;
+
+};
+
+/**
  * Swap the texture buffers
  */
 GOL.prototype.swap = function() {
