@@ -270,9 +270,9 @@ GOLUI.prototype.generateHelpMarkersAndBubbles = function() {
 
     var items = [
         { id: "CellSize",        html: "The width and height of each cell, in pixels<br>(changing this setting will reload the page,<br>to recreate the WebGL textures)" },
-        { id: "TargetFramerate", html: "The number of<br>frames-per-second<br>to attempt to reach" },
-        { id: "ActualFramerate", html: "The actual number of<br>frames-per-second<br>being displayed" },
-        { id: "Wrapping",        html: "Wrap the screen horizontally<br>(left and right edges joined)<br>and vertically (top and bottom<br>edges joined)" }
+        { id: "TargetFramerate", html: "The number of frames-per-second to attempt to reach" },
+        { id: "ActualFramerate", html: "The actual number of frames-per-second being displayed" },
+        { id: "Wrapping",        html: "Wrap the screen horizontally (left and right edges joined)<br>and vertically (top and bottom edges joined)" }
     ];
 
     for (var i = 0; i < items.length; i++) {
