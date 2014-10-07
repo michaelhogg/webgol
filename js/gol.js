@@ -1,5 +1,5 @@
 /**
- * Game of Life simulation and display
+ * Game Of Life
  *
  * @param {HTMLCanvasElement} canvas   - Render target
  * @param {number}            cellSize - Size of each cell (in pixels)
@@ -67,7 +67,7 @@ function GOL(canvas, cellSize) {
      * Should the GOL state wrap horizontally and vertically?
      * @type {boolean}
      */
-    this.enableStateWrapping = true;
+    this.enableWrapping = true;
 
     /**
      * Should cells be randomly mutated? (only applicable in Random mode)
@@ -408,7 +408,7 @@ GOL.prototype.setCellState = function(x, y, state) {
  */
 GOL.prototype.toggleWrapping = function() {
 
-    this.enableStateWrapping = !this.enableStateWrapping;
+    this.enableWrapping = !this.enableWrapping;
 
 };
 
@@ -507,7 +507,7 @@ GOL.prototype.step = function() {
     ];
 
     var intUniforms = [
-        { name: "enableWrapping", value: (this.enableStateWrapping ? 1 : 0) }
+        { name: "enableWrapping", value: (this.enableWrapping ? 1 : 0) }
     ];
 
     this.runProgram(this.programs.gol, this.textures.front, floatUniforms, intUniforms);

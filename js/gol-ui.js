@@ -167,10 +167,10 @@ GOLUI.prototype.configureWrappingSwitchery = function() {
 
     $("#checkboxSwitcheryWrapping").on("change", function() {
         _this.gol.toggleWrapping();
-        GOLUIUtils.updateSwitcheryState(_this.wrappingSwitchery, _this.gol.enableStateWrapping);
+        GOLUIUtils.updateSwitcheryState(_this.wrappingSwitchery, _this.gol.enableWrapping);
     });
 
-    GOLUIUtils.updateSwitcheryState(this.wrappingSwitchery, this.gol.enableStateWrapping);
+    GOLUIUtils.updateSwitcheryState(this.wrappingSwitchery, this.gol.enableWrapping);
 
 };
 
