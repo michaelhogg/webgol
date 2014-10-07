@@ -31,69 +31,6 @@ function GOLUI(gol, golAnimator) {
 }
 
 /**
- * Create an <option> jQuery element for a <select> menu
- *
- * @param   {object} optionData
- * @returns {object}
- * @static
- */
-GOLUI.createMenuOption = function(optionData) {
-
-    return $("<option></option>").attr("value", optionData.value).text(optionData.label);
-
-};
-
-/**
- * Populate a <select> menu with options
- *
- * @param {object}          $selectMenu
- * @param {object[]}        optionsData
- * @param {(string|number)} defaultValue
- * @static
- */
-GOLUI.populateMenu = function($selectMenu, optionsData, defaultValue) {
-
-    var i, optionData, $option;
-
-    for (i = 0; i < optionsData.length; i++) {
-
-        optionData = optionsData[i];
-        $option    = GOLUI.createMenuOption(optionData);
-
-        if (optionData.value === defaultValue) {
-            $option.prop("defaultSelected", true);
-        }
-
-        $selectMenu.append($option);
-
-    }
-
-};
-
-/**
- * Populate a <select> menu using an array of values
- *
- * @param {object}              $selectMenu
- * @param {(string[]|number[])} values
- * @param {(string|number)}     defaultValue
- * @static
- */
-GOLUI.populateMenuWithValues = function($selectMenu, values, defaultValue) {
-
-    var optionsData = [];
-
-    for (var i = 0; i < values.length; i++) {
-        optionsData.push({
-            value: values[i],
-            label: values[i]
-        });
-    }
-
-    GOLUI.populateMenu($selectMenu, optionsData, defaultValue);
-
-};
-
-/**
  * Configure the "cell size" <select> menu
  *
  * @param {number} defaultCellSize
@@ -106,7 +43,7 @@ GOLUI.prototype.configureCellSizeMenu = function(defaultCellSize) {
         cellSizes.push(i);
     }
 
-    GOLUI.populateMenuWithValues(
+    GOLUIUtils.populateMenuWithValues(
         $("#selectCellSize"),
         cellSizes,
         defaultCellSize
@@ -135,7 +72,7 @@ GOLUI.prototype.configureTargetFramerateMenu = function(defaultTargetFramerate) 
         0.25, 0.5, 1, 2, 4, 6, 8, 10, 15, 20, 25, 30, 40, 50, 60
     ];
 
-    GOLUI.populateMenuWithValues(
+    GOLUIUtils.populateMenuWithValues(
         $("#selectTargetFramerate"),
         framerates,
         defaultTargetFramerate
@@ -220,52 +157,20 @@ GOLUI.prototype.setEventHandlersForControlPanel = function() {
 };
 
 /**
- * Create a switchery
- *
- * @param   {string} checkboxElementId
- * @returns {Switchery}
- */
-GOLUI.prototype.createSwitchery = function(checkboxElementId) {
-
-    var checkbox = document.getElementById(checkboxElementId);
-    var settings = {
-        color:          "#00c000",  // On
-        secondaryColor: "#c00000"   // Off
-    };
-
-    return new Switchery(checkbox, settings);
-
-};
-
-/**
  * Configure the "wrapping" switchery
  */
 GOLUI.prototype.configureWrappingSwitchery = function() {
 
-    this.wrappingSwitchery = this.createSwitchery("checkboxSwitcheryWrapping");
+    this.wrappingSwitchery = GOLUIUtils.createSwitchery("checkboxSwitcheryWrapping");
 
     var _this = this;
 
     $("#checkboxSwitcheryWrapping").on("change", function() {
         _this.gol.toggleWrapping();
-        _this.updateSwitcheryState(_this.wrappingSwitchery, _this.gol.enableStateWrapping);
+        GOLUIUtils.updateSwitcheryState(_this.wrappingSwitchery, _this.gol.enableStateWrapping);
     });
 
-    this.updateSwitcheryState(this.wrappingSwitchery, this.gol.enableStateWrapping);
-
-};
-
-/**
- * Update the state of a switchery
- *
- * @param {Switchery} switchery
- * @param {boolean}   newState
- */
-GOLUI.prototype.updateSwitcheryState = function(switchery, newState) {
-
-    if (switchery.isChecked() !== newState) {
-        switchery.setPosition(true);  // Toggle state
-    }
+    GOLUIUtils.updateSwitcheryState(this.wrappingSwitchery, this.gol.enableStateWrapping);
 
 };
 
@@ -274,16 +179,16 @@ GOLUI.prototype.updateSwitcheryState = function(switchery, newState) {
  */
 GOLUI.prototype.configureMutationSwitchery = function() {
 
-    this.mutationSwitchery = this.createSwitchery("checkboxSwitcheryRandomModeMutation");
+    this.mutationSwitchery = GOLUIUtils.createSwitchery("checkboxSwitcheryRandomModeMutation");
 
     var _this = this;
 
     $("#checkboxSwitcheryRandomModeMutation").on("change", function() {
         _this.gol.toggleMutation();
-        _this.updateSwitcheryState(_this.mutationSwitchery, _this.gol.enableMutation);
+        GOLUIUtils.updateSwitcheryState(_this.mutationSwitchery, _this.gol.enableMutation);
     });
 
-    this.updateSwitcheryState(this.mutationSwitchery, this.gol.enableMutation);
+    GOLUIUtils.updateSwitcheryState(this.mutationSwitchery, this.gol.enableMutation);
 
 };
 
