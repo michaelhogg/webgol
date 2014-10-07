@@ -242,20 +242,23 @@ GOLUI.prototype.configureWrappingSwitchery = function() {
 
     $("#checkboxSwitcheryWrapping").on("change", function() {
         _this.gol.toggleWrapping();
-        _this.updateWrappingSwitcheryState();
+        _this.updateSwitcheryState(_this.wrappingSwitchery, _this.gol.enableStateWrapping);
     });
 
-    this.updateWrappingSwitcheryState();
+    this.updateSwitcheryState(this.wrappingSwitchery, this.gol.enableStateWrapping);
 
 };
 
 /**
- * Update the state of the "wrapping" switchery
+ * Update the state of a switchery
+ *
+ * @param {Switchery} switchery
+ * @param {boolean}   newState
  */
-GOLUI.prototype.updateWrappingSwitcheryState = function() {
+GOLUI.prototype.updateSwitcheryState = function(switchery, newState) {
 
-    if (this.wrappingSwitchery.isChecked() !== this.gol.enableStateWrapping) {
-        this.wrappingSwitchery.setPosition(true);  // Toggle state
+    if (switchery.isChecked() !== newState) {
+        switchery.setPosition(true);  // Toggle state
     }
 
 };
