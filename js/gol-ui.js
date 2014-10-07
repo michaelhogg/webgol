@@ -214,17 +214,29 @@ GOLUI.prototype.setEventHandlersForControlPanel = function() {
 };
 
 /**
- * Create the "wrapping" switchery
+ * Create a switchery
+ *
+ * @param   {string} checkboxElementId
+ * @returns {Switchery}
  */
-GOLUI.prototype.createWrappingSwitchery = function() {
+GOLUI.prototype.createSwitchery = function(checkboxElementId) {
 
-    var checkbox = document.getElementById("checkboxSwitcheryWrapping");
+    var checkbox = document.getElementById(checkboxElementId);
     var settings = {
         color:          "#00c000",  // On
         secondaryColor: "#c00000"   // Off
     };
 
-    this.wrappingSwitchery = new Switchery(checkbox, settings);
+    return new Switchery(checkbox, settings);
+
+};
+
+/**
+ * Create the "wrapping" switchery
+ */
+GOLUI.prototype.createWrappingSwitchery = function() {
+
+    this.wrappingSwitchery = this.createSwitchery("checkboxSwitcheryWrapping");
 
 };
 
