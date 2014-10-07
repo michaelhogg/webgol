@@ -232,11 +232,20 @@ GOLUI.prototype.createSwitchery = function(checkboxElementId) {
 };
 
 /**
- * Create the "wrapping" switchery
+ * Configure the "wrapping" switchery
  */
-GOLUI.prototype.createWrappingSwitchery = function() {
+GOLUI.prototype.configureWrappingSwitchery = function() {
 
     this.wrappingSwitchery = this.createSwitchery("checkboxSwitcheryWrapping");
+
+    var _this = this;
+
+    $("#checkboxSwitcheryWrapping").on("change", function() {
+        _this.gol.toggleWrapping();
+        _this.updateWrappingSwitcheryState();
+    });
+
+    this.updateWrappingSwitcheryState();
 
 };
 
@@ -248,20 +257,6 @@ GOLUI.prototype.updateWrappingSwitcheryState = function() {
     if (this.wrappingSwitchery.isChecked() !== this.gol.enableStateWrapping) {
         this.wrappingSwitchery.setPosition(true);  // Toggle state
     }
-
-};
-
-/**
- * Set the event handler for the "wrapping" switchery
- */
-GOLUI.prototype.setEventHandlerForWrappingSwitchery = function() {
-
-    var _this = this;
-
-    $("#checkboxSwitcheryWrapping").on("change", function() {
-        _this.gol.toggleWrapping();
-        _this.updateWrappingSwitcheryState();
-    });
 
 };
 
@@ -347,11 +342,7 @@ GOLUI.prototype.init = function(defaultCellSize, defaultTargetFramerate) {
 
     // "Wrapping" switchery
 
-    this.createWrappingSwitchery();
-
-    this.updateWrappingSwitcheryState();
-
-    this.setEventHandlerForWrappingSwitchery();
+    this.configureWrappingSwitchery();
 
     // Event handlers
 
