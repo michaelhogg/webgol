@@ -13,9 +13,9 @@ function GOL(canvas, cellSize) {
 
     /**
      * Size of each cell (in pixels)
-     * @type {number}
+     * @constant {number}
      */
-    this.cellSize = cellSize;
+    this.CELL_SIZE = cellSize;
 
     /**
      * Igloo object (WebGL wrapper API)
