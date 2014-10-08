@@ -172,12 +172,6 @@ function GOL(canvas, cellSize) {
 GOL.prototype.init = function() {
 
     /**
-     * Current mode
-     * @type {number}
-     */
-    this.currentMode = this.MODE_RANDOM;
-
-    /**
      * Igloo-wrapped WebGLProgram objects
      * @type {Igloo.Program}
      */
@@ -240,6 +234,15 @@ GOL.prototype.init = function() {
      * @type {Igloo.Framebuffer}
      */
     this.offscreenFramebuffer = this.igloo.framebuffer();
+
+    /**
+     * Current mode
+     * @type {number}
+     */
+    this.currentMode = this.MODE_RANDOM;
+
+    this.randomiseState();
+    this.renderState();
 
 };
 

@@ -29,8 +29,6 @@ $(document).ready(function() {
 
     gol = new GOL(canvas, cellSize);
     gol.init();
-    gol.randomiseState();
-    gol.renderState();
 
     var targetFPS = 15;
 
