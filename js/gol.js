@@ -568,6 +568,13 @@ GOL.prototype.draw = function() {
 GOL.prototype.stepAndDraw = function() {
 
     this.step();
+
+    if (this.currentMode === this.MODE_RANDOM) {
+        for (var i = 0; i < this.MUTATION_RATE; i++) {
+            this.mutateRandomCell();
+        }
+    }
+
     this.draw();
 
 };
