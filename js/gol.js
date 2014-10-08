@@ -410,6 +410,18 @@ GOL.prototype.setCellState = function(x, y, state) {
 };
 
 /**
+ * Mutate a random cell
+ */
+GOL.prototype.mutateRandomCell = function() {
+
+    var x = Math.floor(Math.random() * this.stateWidth);
+    var y = Math.floor(Math.random() * this.stateHeight);
+
+    this.setCellState(x, y, true);
+
+};
+
+/**
  * Toggle the wrapping of the GOL state
  */
 GOL.prototype.toggleWrapping = function() {
