@@ -156,6 +156,12 @@ function GOL(canvas, cellSize) {
      */
     this.MODE_CUSTOM = 3;
 
+    /**
+     * Number of cells to mutate per step (only applicable in Random mode)
+     * @constant {number}
+     */
+    this.MUTATION_RATE = Math.ceil(0.00001 * this.totalCells);
+
 }
 
 /**
