@@ -569,7 +569,7 @@ GOL.prototype.calculateAndRenderNextState = function() {
 
     this.calculateNextState();
 
-    if (this.currentMode === this.MODE_RANDOM) {
+    if (this.currentMode === this.MODE_RANDOM && this.enableMutation) {
         for (var i = 0; i < this.MUTATION_RATE; i++) {
             this.mutateRandomCell();
         }
