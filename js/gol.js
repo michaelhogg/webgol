@@ -512,7 +512,7 @@ GOL.prototype.runProgram = function(program, inputTexture, floatUniforms, intUni
  *
  * @throws Error if program drawing fails
  */
-GOL.prototype.step = function() {
+GOL.prototype.calculateNextState = function() {
 
     // Render to the off-screen framebuffer
     // and write the rendered image to the "back" texture
@@ -567,7 +567,7 @@ GOL.prototype.draw = function() {
  */
 GOL.prototype.calculateAndRenderNextState = function() {
 
-    this.step();
+    this.calculateNextState();
 
     if (this.currentMode === this.MODE_RANDOM) {
         for (var i = 0; i < this.MUTATION_RATE; i++) {
