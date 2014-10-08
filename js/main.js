@@ -36,6 +36,6 @@ $(document).ready(function() {
     golAnimator.start();
 
     golUI = new GOLUI(gol, golAnimator);
-    golUI.init(cellSize, targetFPS);
+    golUI.init(targetFPS);
 
 });

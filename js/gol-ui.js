@@ -32,10 +32,8 @@ function GOLUI(gol, golAnimator) {
 
 /**
  * Configure the "cell size" <select> menu
- *
- * @param {number} defaultCellSize
  */
-GOLUI.prototype.configureCellSizeMenu = function(defaultCellSize) {
+GOLUI.prototype.configureCellSizeMenu = function() {
 
     var cellSizes = [];
 
@@ -46,7 +44,7 @@ GOLUI.prototype.configureCellSizeMenu = function(defaultCellSize) {
     GOLUIUtils.populateMenuWithValues(
         $("#selectCellSize"),
         cellSizes,
-        defaultCellSize
+        this.gol.CELL_SIZE
     );
 
     var _this = this;
@@ -263,14 +261,13 @@ GOLUI.prototype.setEventHandlerForControlKeys = function() {
 /**
  * Initialise the UI
  *
- * @param {number} defaultCellSize
  * @param {number} defaultTargetFramerate
  */
-GOLUI.prototype.init = function(defaultCellSize, defaultTargetFramerate) {
+GOLUI.prototype.init = function(defaultTargetFramerate) {
 
     // Configure menus
 
-    this.configureCellSizeMenu(defaultCellSize);
+    this.configureCellSizeMenu();
 
     this.configureTargetFramerateMenu(defaultTargetFramerate);
 
