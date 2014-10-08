@@ -66,7 +66,7 @@ GOLAnimator.prototype.now = function() {
  */
 GOLAnimator.prototype.doAnimationStep = function() {
 
-    this.gol.stepAndDraw();
+    this.gol.calculateAndRenderNextState();
 
     if (this.now() === this.latestStepTimestamp) {
         this.actualFPS++;

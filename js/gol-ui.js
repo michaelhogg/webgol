@@ -252,7 +252,7 @@ GOLUI.prototype.setEventHandlerForControlKeys = function() {
                 break;
             case 83:  // s
                 if (!_this.golAnimator.isRunning()) {
-                    _this.gol.stepAndDraw();
+                    _this.gol.calculateAndRenderNextState();
                 }
                 break;
         }

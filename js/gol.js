@@ -561,11 +561,11 @@ GOL.prototype.draw = function() {
 };
 
 /**
- * Step the GOL state on the GPU, and then render it to the user's screen
+ * Calculate the next GOL state, and render it to the screen
  *
  * @throws Error if program drawing fails
  */
-GOL.prototype.stepAndDraw = function() {
+GOL.prototype.calculateAndRenderNextState = function() {
 
     this.step();
 
