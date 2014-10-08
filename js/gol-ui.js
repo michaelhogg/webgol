@@ -245,7 +245,7 @@ GOLUI.prototype.setEventHandlerForControlKeys = function() {
         switch (event.which) {
             case 82:  // r
                 _this.gol.randomiseState();
-                _this.gol.draw();
+                _this.gol.renderState();
                 break;
             case 80:  // p
                 _this.golAnimator.toggle();

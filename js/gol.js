@@ -539,7 +539,7 @@ GOL.prototype.calculateNextState = function() {
  *
  * @throws Error if program drawing fails
  */
-GOL.prototype.draw = function() {
+GOL.prototype.renderState = function() {
 
     // Render to the default framebuffer (the user's screen)
     this.igloo.defaultFramebuffer.bind();
@@ -575,6 +575,6 @@ GOL.prototype.calculateAndRenderNextState = function() {
         }
     }
 
-    this.draw();
+    this.renderState();
 
 };
