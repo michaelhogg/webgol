@@ -167,9 +167,16 @@ function GOL(canvas, cellSize) {
 /**
  * Initialise
  *
- * @throws Error if something goes wrong in Igloo
+ * @throws Error if something goes wrong
  */
 GOL.prototype.init = function() {
+
+    var shaderSources = {
+        // Throws an error if source code fetch fails
+        vertex:       GOLUtils.fetchShaderSourceCode("glsl/quad.vert"),
+        golFragment:  GOLUtils.fetchShaderSourceCode("glsl/gol.frag" ),
+        copyFragment: GOLUtils.fetchShaderSourceCode("glsl/copy.frag")
+    };
 
     /**
      * Igloo-wrapped WebGLProgram objects
@@ -177,8 +184,8 @@ GOL.prototype.init = function() {
      */
     this.programs = {
         // Throws an error if compiling or linking fails
-        copy: this.igloo.program("glsl/quad.vert", "glsl/copy.frag"),
-        gol:  this.igloo.program("glsl/quad.vert", "glsl/gol.frag")
+        gol:  new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.golFragment),
+        copy: new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.copyFragment)
     };
 
     /**
