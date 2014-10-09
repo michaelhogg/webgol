@@ -173,9 +173,9 @@ GOL.prototype.init = function() {
 
     var shaderSources = {
         // Throws an error if source code fetch fails
-        vertex:       GOLUtils.fetchShaderSourceCode("glsl/quad.vert"),
-        golFragment:  GOLUtils.fetchShaderSourceCode("glsl/gol.frag" ),
-        copyFragment: GOLUtils.fetchShaderSourceCode("glsl/copy.frag")
+        vertex:       GOLUtils.fetchShaderSourceCode("glsl/triangle-strip.vert"),
+        golFragment:  GOLUtils.fetchShaderSourceCode("glsl/gol.frag"           ),
+        copyFragment: GOLUtils.fetchShaderSourceCode("glsl/copy.frag"          )
     };
 
     /**
