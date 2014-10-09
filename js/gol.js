@@ -173,9 +173,9 @@ GOL.prototype.init = function() {
 
     var shaderSources = {
         // Throws an error if source code fetch fails
-        vertex:       GOLUtils.fetchShaderSourceCode("glsl/triangle-strip.vert"),
-        golFragment:  GOLUtils.fetchShaderSourceCode("glsl/gol.frag"           ),
-        copyFragment: GOLUtils.fetchShaderSourceCode("glsl/copy.frag"          )
+        vertex:         GOLUtils.fetchShaderSourceCode("glsl/triangle-strip.vert"),
+        golFragment:    GOLUtils.fetchShaderSourceCode("glsl/gol.frag"           ),
+        renderFragment: GOLUtils.fetchShaderSourceCode("glsl/render.frag"        )
     };
 
     /**
@@ -184,8 +184,8 @@ GOL.prototype.init = function() {
      */
     this.programs = {
         // Throws an error if compiling or linking fails
-        gol:  new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.golFragment),
-        copy: new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.copyFragment)
+        gol:    new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.golFragment),
+        render: new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.renderFragment)
     };
 
     /**
@@ -569,7 +569,7 @@ GOL.prototype.renderState = function() {
 
     var intUniforms = [];
 
-    this.runProgram(this.programs.copy, this.textures.front, floatUniforms, intUniforms);
+    this.runProgram(this.programs.render, this.textures.front, floatUniforms, intUniforms);
 
 };
 
