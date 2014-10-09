@@ -273,18 +273,48 @@ GOL.prototype.createTexture = function() {
 };
 
 /**
+ * Iterate over all the cells in the GOL state
+ *
+ * @param {function} callback - Called for each cell
+ */
+GOL.prototype.iterateOverAllCells = function(callback) {
+
+    var x        = 0;
+    var y        = 0;
+    var flippedY = this.STATE_HEIGHT - 1;
+    var i, cellIndex, pixelIndex;
+
+    for (i = 0; i < this.TOTAL_CELLS; i++) {
+
+        // Flip vertically (state coord origin is top-left, but WebGL coord origin is bottom-left)
+        cellIndex = (flippedY * this.STATE_WIDTH) + x;
+
+        pixelIndex = i * this.CHANNELS_PER_PIXEL;
+
+        callback.call(this, cellIndex, pixelIndex);
+
+        x++;
+
+        if (x >= this.STATE_WIDTH) {
+            y++;
+            x        = 0;
+            flippedY = (this.STATE_HEIGHT - 1) - y;
+        }
+
+    }
+
+};
+
+/**
  * Get the GOL state as a GOLGrid object
  *
  * @returns {GOLGrid}
  */
 GOL.prototype.getStateAsGOLGrid = function() {
 
-    var golGrid  = GOLGridFactory.createEmpty(this.STATE_WIDTH, this.STATE_HEIGHT);
-    var rgba     = new Uint8Array(this.TOTAL_CELLS * this.CHANNELS_PER_PIXEL);
-    var x        = 0;
-    var y        = 0;
-    var flippedY = this.STATE_HEIGHT - 1;
-    var i, ii, redChannel, cellState, cellIndex;
+    var golGrid = GOLGridFactory.createEmpty(this.STATE_WIDTH, this.STATE_HEIGHT);
+    var rgba    = new Uint8Array(this.TOTAL_CELLS * this.CHANNELS_PER_PIXEL);
+    var redChannel, cellState;
 
     // Make the off-screen framebuffer active
     // and attach the "front" texture for readPixels() to read
@@ -300,27 +330,15 @@ GOL.prototype.getStateAsGOLGrid = function() {
         rgba                       // array to receive pixel data
     );
 
-    for (i = 0; i < this.TOTAL_CELLS; i++) {
+    this.iterateOverAllCells(function(cellIndex, pixelIndex) {
 
         // This matches getCellState() in the fragment shaders
-        ii         = i * this.CHANNELS_PER_PIXEL;
-        redChannel = rgba[ii + 0];
+        redChannel = rgba[pixelIndex + 0];
         cellState  = (redChannel === this.PIXEL_CHANNEL_MAX_VALUE);
-
-        // Flip vertically (grid coord origin is top-left, but WebGL coord origin is bottom-left)
-        cellIndex = (flippedY * this.STATE_WIDTH) + x;
 
         golGrid.cellData[cellIndex] = cellState;
 
-        x++;
-
-        if (x >= this.STATE_WIDTH) {
-            y++;
-            x        = 0;
-            flippedY = (this.STATE_HEIGHT - 1) - y;
-        }
-
-    }
+    });
 
     return golGrid;
 
@@ -336,34 +354,19 @@ GOL.prototype.setStateUsingGOLGrid = function(golGrid) {
     if (golGrid.width  !== this.STATE_WIDTH )  throw new Error("Grid width "  + golGrid.width  + " does not match GOL state width "  + this.STATE_WIDTH);
     if (golGrid.height !== this.STATE_HEIGHT)  throw new Error("Grid height " + golGrid.height + " does not match GOL state height " + this.STATE_HEIGHT);
 
-    var rgba     = new Uint8Array(this.TOTAL_CELLS * this.CHANNELS_PER_PIXEL);
-    var x        = 0;
-    var y        = 0;
-    var flippedY = this.STATE_HEIGHT - 1;
-    var i, ii, cellIndex, cellState, pixelColour, c;
+    var rgba = new Uint8Array(this.TOTAL_CELLS * this.CHANNELS_PER_PIXEL);
+    var cellState, pixelColour, c;
 
-    for (i = 0; i < this.TOTAL_CELLS; i++) {
-
-        // Flip vertically (grid coord origin is top-left, but WebGL coord origin is bottom-left)
-        cellIndex = (flippedY * this.STATE_WIDTH) + x;
+    this.iterateOverAllCells(function(cellIndex, pixelIndex) {
 
         cellState   = golGrid.cellData[cellIndex];
         pixelColour = (cellState ? this.COLOUR_ALIVE : this.COLOUR_DEAD);
-        ii          = i * this.CHANNELS_PER_PIXEL;
 
         for (c = 0; c < this.CHANNELS_PER_PIXEL; c++) {
-            rgba[ii + c] = pixelColour[c];
+            rgba[pixelIndex + c] = pixelColour[c];
         }
 
-        x++;
-
-        if (x >= this.STATE_WIDTH) {
-            y++;
-            x        = 0;
-            flippedY = (this.STATE_HEIGHT - 1) - y;
-        }
-
-    }
+    });
 
     this.textures.front.subset(rgba, 0, 0, this.STATE_WIDTH, this.STATE_HEIGHT);
 
