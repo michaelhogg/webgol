@@ -35,15 +35,15 @@ function GOL(canvas, cellSize) {
 
     /**
      * Width of the view (canvas)
-     * @type {number}
+     * @constant {number}
      */
-    this.viewWidth = canvas.width;
+    this.VIEW_WIDTH = canvas.width;
 
     /**
      * Height of the view (canvas)
-     * @type {number}
+     * @constant {number}
      */
-    this.viewHeight = canvas.height;
+    this.VIEW_HEIGHT = canvas.height;
 
     /**
      * Width of the GOL state (number of cells)
@@ -547,14 +547,14 @@ GOL.prototype.renderState = function() {
     // Render to the default framebuffer (the user's screen)
     this.igloo.defaultFramebuffer.bind();
 
-    this.gl.viewport(0, 0, this.viewWidth, this.viewHeight);
+    this.gl.viewport(0, 0, this.VIEW_WIDTH, this.VIEW_HEIGHT);
 
     var floatUniforms = [
-        { name: "viewDimensions",    value: new Float32Array([this.viewWidth, this.viewHeight]) },
-        { name: "colourTopLeft",     value: this.cornerColours.topLeft                          },
-        { name: "colourTopRight",    value: this.cornerColours.topRight                         },
-        { name: "colourBottomLeft",  value: this.cornerColours.bottomLeft                       },
-        { name: "colourBottomRight", value: this.cornerColours.bottomRight                      }
+        { name: "viewDimensions",    value: new Float32Array([this.VIEW_WIDTH, this.VIEW_HEIGHT]) },
+        { name: "colourTopLeft",     value: this.cornerColours.topLeft                            },
+        { name: "colourTopRight",    value: this.cornerColours.topRight                           },
+        { name: "colourBottomLeft",  value: this.cornerColours.bottomLeft                         },
+        { name: "colourBottomRight", value: this.cornerColours.bottomRight                        }
     ];
 
     var intUniforms = [];
