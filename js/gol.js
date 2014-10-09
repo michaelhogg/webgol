@@ -173,9 +173,9 @@ GOL.prototype.init = function() {
 
     var shaderSources = {
         // Throws an error if source code fetch fails
-        vertex:         GOLUtils.fetchShaderSourceCode("glsl/triangle-strip.vert"),
-        golFragment:    GOLUtils.fetchShaderSourceCode("glsl/gol.frag"           ),
-        renderFragment: GOLUtils.fetchShaderSourceCode("glsl/render.frag"        )
+        vertex:            GOLUtils.fetchShaderSourceCode("glsl/triangle-strip.vert"),
+        nextStateFragment: GOLUtils.fetchShaderSourceCode("glsl/next-state.frag"    ),
+        renderFragment:    GOLUtils.fetchShaderSourceCode("glsl/render.frag"        )
     };
 
     /**
@@ -184,8 +184,8 @@ GOL.prototype.init = function() {
      */
     this.programs = {
         // Throws an error if compiling or linking fails
-        gol:    new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.golFragment),
-        render: new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.renderFragment)
+        nextState: new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.nextStateFragment),
+        render:    new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.renderFragment   )
     };
 
     /**
@@ -541,7 +541,7 @@ GOL.prototype.calculateNextState = function() {
         { name: "enableWrapping", value: (this.enableWrapping ? 1 : 0) }
     ];
 
-    this.runProgram(this.programs.gol, this.textures.front, floatUniforms, intUniforms);
+    this.runProgram(this.programs.nextState, this.textures.front, floatUniforms, intUniforms);
 
     this.swap();
 
