@@ -59,9 +59,9 @@ function GOL(canvas, cellSize) {
 
     /**
      * Total number of cells in the GOL state
-     * @type {number}
+     * @constant {number}
      */
-    this.totalCells = this.STATE_WIDTH * this.STATE_HEIGHT;
+    this.TOTAL_CELLS = this.STATE_WIDTH * this.STATE_HEIGHT;
 
     /**
      * Should the GOL state wrap horizontally and vertically?
@@ -160,7 +160,7 @@ function GOL(canvas, cellSize) {
      * Number of cells to mutate per step (only applicable in Random mode)
      * @constant {number}
      */
-    this.MUTATION_RATE = Math.ceil(0.00001 * this.totalCells);
+    this.MUTATION_RATE = Math.ceil(0.00001 * this.TOTAL_CELLS);
 
 }
 
@@ -280,7 +280,7 @@ GOL.prototype.createTexture = function() {
 GOL.prototype.getStateAsGOLGrid = function() {
 
     var golGrid  = GOLGridFactory.createEmpty(this.STATE_WIDTH, this.STATE_HEIGHT);
-    var rgba     = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
+    var rgba     = new Uint8Array(this.TOTAL_CELLS * this.CHANNELS_PER_PIXEL);
     var x        = 0;
     var y        = 0;
     var flippedY = this.STATE_HEIGHT - 1;
@@ -300,7 +300,7 @@ GOL.prototype.getStateAsGOLGrid = function() {
         rgba                       // array to receive pixel data
     );
 
-    for (i = 0; i < this.totalCells; i++) {
+    for (i = 0; i < this.TOTAL_CELLS; i++) {
 
         // This matches getCellState() in the fragment shaders
         ii         = i * this.CHANNELS_PER_PIXEL;
@@ -336,13 +336,13 @@ GOL.prototype.setStateUsingGOLGrid = function(golGrid) {
     if (golGrid.width  !== this.STATE_WIDTH )  throw new Error("Grid width "  + golGrid.width  + " does not match GOL state width "  + this.STATE_WIDTH);
     if (golGrid.height !== this.STATE_HEIGHT)  throw new Error("Grid height " + golGrid.height + " does not match GOL state height " + this.STATE_HEIGHT);
 
-    var rgba     = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
+    var rgba     = new Uint8Array(this.TOTAL_CELLS * this.CHANNELS_PER_PIXEL);
     var x        = 0;
     var y        = 0;
     var flippedY = this.STATE_HEIGHT - 1;
     var i, ii, cellIndex, cellState, pixelColour, c;
 
-    for (i = 0; i < this.totalCells; i++) {
+    for (i = 0; i < this.TOTAL_CELLS; i++) {
 
         // Flip vertically (grid coord origin is top-left, but WebGL coord origin is bottom-left)
         cellIndex = (flippedY * this.STATE_WIDTH) + x;
