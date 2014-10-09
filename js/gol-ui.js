@@ -199,10 +199,6 @@ GOLUI.prototype.setEventHandlerForControlKeys = function() {
 
     $(document).on("keyup", function(event) {
         switch (event.which) {
-            case 82:  // r
-                _this.gol.randomiseState();
-                _this.gol.renderState();
-                break;
             case 80:  // p
                 _this.golAnimator.toggle();
                 break;
@@ -212,6 +208,20 @@ GOLUI.prototype.setEventHandlerForControlKeys = function() {
                 }
                 break;
         }
+    });
+
+};
+
+/**
+ * Set the event handler for the "Random mode: Randomise" button
+ */
+GOLUI.prototype.setEventHandlerForRandomModeRandomiseButton = function() {
+
+    var _this = this;
+
+    $("#buttonRandomModeRandomise").on("click", function() {
+        _this.gol.randomiseState();
+        _this.gol.renderState();
     });
 
 };
@@ -282,6 +292,8 @@ GOLUI.prototype.init = function(defaultTargetFramerate) {
     this.setEventHandlersForControlPanel();
 
     this.setEventHandlerForControlKeys();
+
+    this.setEventHandlerForRandomModeRandomiseButton();
 
     // Help
 
