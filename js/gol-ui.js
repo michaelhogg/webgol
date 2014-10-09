@@ -89,6 +89,42 @@ GOLUI.prototype.configureTargetFramerateMenu = function(defaultTargetFramerate) 
 };
 
 /**
+ * Configure the "wrapping" switchery
+ */
+GOLUI.prototype.configureWrappingSwitchery = function() {
+
+    this.wrappingSwitchery = GOLUIUtils.createSwitchery("checkboxSwitcheryWrapping");
+
+    var _this = this;
+
+    $("#checkboxSwitcheryWrapping").on("change", function() {
+        _this.gol.toggleWrapping();
+        GOLUIUtils.updateSwitcheryState(_this.wrappingSwitchery, _this.gol.enableWrapping);
+    });
+
+    GOLUIUtils.updateSwitcheryState(this.wrappingSwitchery, this.gol.enableWrapping);
+
+};
+
+/**
+ * Configure the "mutation" switchery
+ */
+GOLUI.prototype.configureMutationSwitchery = function() {
+
+    this.mutationSwitchery = GOLUIUtils.createSwitchery("checkboxSwitcheryRandomModeMutation");
+
+    var _this = this;
+
+    $("#checkboxSwitcheryRandomModeMutation").on("change", function() {
+        _this.gol.toggleMutation();
+        GOLUIUtils.updateSwitcheryState(_this.mutationSwitchery, _this.gol.enableMutation);
+    });
+
+    GOLUIUtils.updateSwitcheryState(this.mutationSwitchery, this.gol.enableMutation);
+
+};
+
+/**
  * Set the event handlers for the control panel
  */
 GOLUI.prototype.setEventHandlersForControlPanel = function() {
@@ -155,38 +191,28 @@ GOLUI.prototype.setEventHandlersForControlPanel = function() {
 };
 
 /**
- * Configure the "wrapping" switchery
+ * Set the event handler for the control keys
  */
-GOLUI.prototype.configureWrappingSwitchery = function() {
-
-    this.wrappingSwitchery = GOLUIUtils.createSwitchery("checkboxSwitcheryWrapping");
+GOLUI.prototype.setEventHandlerForControlKeys = function() {
 
     var _this = this;
 
-    $("#checkboxSwitcheryWrapping").on("change", function() {
-        _this.gol.toggleWrapping();
-        GOLUIUtils.updateSwitcheryState(_this.wrappingSwitchery, _this.gol.enableWrapping);
+    $(document).on("keyup", function(event) {
+        switch (event.which) {
+            case 82:  // r
+                _this.gol.randomiseState();
+                _this.gol.renderState();
+                break;
+            case 80:  // p
+                _this.golAnimator.toggle();
+                break;
+            case 83:  // s
+                if (!_this.golAnimator.isRunning()) {
+                    _this.gol.calculateAndRenderNextState();
+                }
+                break;
+        }
     });
-
-    GOLUIUtils.updateSwitcheryState(this.wrappingSwitchery, this.gol.enableWrapping);
-
-};
-
-/**
- * Configure the "mutation" switchery
- */
-GOLUI.prototype.configureMutationSwitchery = function() {
-
-    this.mutationSwitchery = GOLUIUtils.createSwitchery("checkboxSwitcheryRandomModeMutation");
-
-    var _this = this;
-
-    $("#checkboxSwitcheryRandomModeMutation").on("change", function() {
-        _this.gol.toggleMutation();
-        GOLUIUtils.updateSwitcheryState(_this.mutationSwitchery, _this.gol.enableMutation);
-    });
-
-    GOLUIUtils.updateSwitcheryState(this.mutationSwitchery, this.gol.enableMutation);
 
 };
 
@@ -229,32 +255,6 @@ GOLUI.prototype.generateHelpMarkersAndBubbles = function() {
         })(items[i]);
 
     }
-
-};
-
-/**
- * Set the event handler for the control keys
- */
-GOLUI.prototype.setEventHandlerForControlKeys = function() {
-
-    var _this = this;
-
-    $(document).on("keyup", function(event) {
-        switch (event.which) {
-            case 82:  // r
-                _this.gol.randomiseState();
-                _this.gol.renderState();
-                break;
-            case 80:  // p
-                _this.golAnimator.toggle();
-                break;
-            case 83:  // s
-                if (!_this.golAnimator.isRunning()) {
-                    _this.gol.calculateAndRenderNextState();
-                }
-                break;
-        }
-    });
 
 };
 
