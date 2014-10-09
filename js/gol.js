@@ -47,21 +47,21 @@ function GOL(canvas, cellSize) {
 
     /**
      * Width of the GOL state (number of cells)
-     * @type {number}
+     * @constant {number}
      */
-    this.stateWidth = Math.floor(canvas.width / cellSize);
+    this.STATE_WIDTH = Math.floor(canvas.width / cellSize);
 
     /**
      * Height of the GOL state (number of cells)
-     * @type {number}
+     * @constant {number}
      */
-    this.stateHeight = Math.floor(canvas.height / cellSize);
+    this.STATE_HEIGHT = Math.floor(canvas.height / cellSize);
 
     /**
      * Total number of cells in the GOL state
      * @type {number}
      */
-    this.totalCells = this.stateWidth * this.stateHeight;
+    this.totalCells = this.STATE_WIDTH * this.STATE_HEIGHT;
 
     /**
      * Should the GOL state wrap horizontally and vertically?
@@ -266,7 +266,7 @@ GOL.prototype.createTexture = function() {
     var texture = this.igloo.texture(imageSource, this.TEXTURE_PIXELFORMAT, wrapMode, minifyMagnifyFilter);
 
     // Set size and fill with 0
-    texture.blank(this.stateWidth, this.stateHeight);
+    texture.blank(this.STATE_WIDTH, this.STATE_HEIGHT);
 
     return texture;
 
@@ -279,11 +279,11 @@ GOL.prototype.createTexture = function() {
  */
 GOL.prototype.getStateAsGOLGrid = function() {
 
-    var golGrid  = GOLGridFactory.createEmpty(this.stateWidth, this.stateHeight);
+    var golGrid  = GOLGridFactory.createEmpty(this.STATE_WIDTH, this.STATE_HEIGHT);
     var rgba     = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
     var x        = 0;
     var y        = 0;
-    var flippedY = this.stateHeight - 1;
+    var flippedY = this.STATE_HEIGHT - 1;
     var i, ii, redChannel, cellState, cellIndex;
 
     // Make the off-screen framebuffer active
@@ -293,8 +293,8 @@ GOL.prototype.getStateAsGOLGrid = function() {
     this.gl.readPixels(
         0,                         // x
         0,                         // y
-        this.stateWidth,           // width
-        this.stateHeight,          // height
+        this.STATE_WIDTH,          // width
+        this.STATE_HEIGHT,         // height
         this.TEXTURE_PIXELFORMAT,  // PixelFormat
         this.TEXTURE_PIXELTYPE,    // PixelType
         rgba                       // array to receive pixel data
@@ -308,16 +308,16 @@ GOL.prototype.getStateAsGOLGrid = function() {
         cellState  = (redChannel === this.PIXEL_CHANNEL_MAX_VALUE);
 
         // Flip vertically (grid coord origin is top-left, but WebGL coord origin is bottom-left)
-        cellIndex = (flippedY * this.stateWidth) + x;
+        cellIndex = (flippedY * this.STATE_WIDTH) + x;
 
         golGrid.cellData[cellIndex] = cellState;
 
         x++;
 
-        if (x >= this.stateWidth) {
+        if (x >= this.STATE_WIDTH) {
             y++;
             x        = 0;
-            flippedY = (this.stateHeight - 1) - y;
+            flippedY = (this.STATE_HEIGHT - 1) - y;
         }
 
     }
@@ -333,19 +333,19 @@ GOL.prototype.getStateAsGOLGrid = function() {
  */
 GOL.prototype.setStateUsingGOLGrid = function(golGrid) {
 
-    if (golGrid.width  !== this.stateWidth )  throw new Error("Grid width "  + golGrid.width  + " does not match GOL state width "  + this.stateWidth);
-    if (golGrid.height !== this.stateHeight)  throw new Error("Grid height " + golGrid.height + " does not match GOL state height " + this.stateHeight);
+    if (golGrid.width  !== this.STATE_WIDTH )  throw new Error("Grid width "  + golGrid.width  + " does not match GOL state width "  + this.STATE_WIDTH);
+    if (golGrid.height !== this.STATE_HEIGHT)  throw new Error("Grid height " + golGrid.height + " does not match GOL state height " + this.STATE_HEIGHT);
 
     var rgba     = new Uint8Array(this.totalCells * this.CHANNELS_PER_PIXEL);
     var x        = 0;
     var y        = 0;
-    var flippedY = this.stateHeight - 1;
+    var flippedY = this.STATE_HEIGHT - 1;
     var i, ii, cellIndex, cellState, pixelColour, c;
 
     for (i = 0; i < this.totalCells; i++) {
 
         // Flip vertically (grid coord origin is top-left, but WebGL coord origin is bottom-left)
-        cellIndex = (flippedY * this.stateWidth) + x;
+        cellIndex = (flippedY * this.STATE_WIDTH) + x;
 
         cellState   = golGrid.cellData[cellIndex];
         pixelColour = (cellState ? this.COLOUR_ALIVE : this.COLOUR_DEAD);
@@ -357,15 +357,15 @@ GOL.prototype.setStateUsingGOLGrid = function(golGrid) {
 
         x++;
 
-        if (x >= this.stateWidth) {
+        if (x >= this.STATE_WIDTH) {
             y++;
             x        = 0;
-            flippedY = (this.stateHeight - 1) - y;
+            flippedY = (this.STATE_HEIGHT - 1) - y;
         }
 
     }
 
-    this.textures.front.subset(rgba, 0, 0, this.stateWidth, this.stateHeight);
+    this.textures.front.subset(rgba, 0, 0, this.STATE_WIDTH, this.STATE_HEIGHT);
 
 };
 
@@ -376,8 +376,8 @@ GOL.prototype.randomiseState = function() {
 
     this.setStateUsingGOLGrid(
         GOLGridFactory.createRandomised(
-            this.stateWidth,
-            this.stateHeight
+            this.STATE_WIDTH,
+            this.STATE_HEIGHT
         )
     );
 
@@ -390,8 +390,8 @@ GOL.prototype.clearState = function() {
 
     this.setStateUsingGOLGrid(
         GOLGridFactory.createEmpty(
-            this.stateWidth,
-            this.stateHeight
+            this.STATE_WIDTH,
+            this.STATE_HEIGHT
         )
     );
 
@@ -417,8 +417,8 @@ GOL.prototype.setCellState = function(x, y, state) {
  */
 GOL.prototype.mutateRandomCell = function() {
 
-    var x = Math.floor(Math.random() * this.stateWidth);
-    var y = Math.floor(Math.random() * this.stateHeight);
+    var x = Math.floor(Math.random() * this.STATE_WIDTH);
+    var y = Math.floor(Math.random() * this.STATE_HEIGHT);
 
     this.setCellState(x, y, true);
 
@@ -521,10 +521,10 @@ GOL.prototype.calculateNextState = function() {
     // and write the rendered image to the "back" texture
     this.offscreenFramebuffer.attach(this.textures.back);
 
-    this.gl.viewport(0, 0, this.stateWidth, this.stateHeight);
+    this.gl.viewport(0, 0, this.STATE_WIDTH, this.STATE_HEIGHT);
 
     var floatUniforms = [
-        { name: "stateDimensions", value: new Float32Array([this.stateWidth, this.stateHeight]) }
+        { name: "stateDimensions", value: new Float32Array([this.STATE_WIDTH, this.STATE_HEIGHT]) }
     ];
 
     var intUniforms = [
