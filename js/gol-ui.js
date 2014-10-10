@@ -223,7 +223,7 @@ GOLUI.prototype.configureCloseControlPanel = function() {
 /**
  * Set the event handler for the control keys
  */
-GOLUI.prototype.setEventHandlerForControlKeys = function() {
+GOLUI.prototype.configureControlKeys = function() {
 
     var _this = this;
 
@@ -245,7 +245,7 @@ GOLUI.prototype.setEventHandlerForControlKeys = function() {
 /**
  * Set the event handler for the "Random mode: Randomise" button
  */
-GOLUI.prototype.setEventHandlerForRandomModeRandomiseButton = function() {
+GOLUI.prototype.configureRandomModeRandomiseButton = function() {
 
     var _this = this;
 
@@ -325,9 +325,9 @@ GOLUI.prototype.init = function(defaultTargetFramerate) {
 
     this.configureCloseControlPanel();
 
-    this.setEventHandlerForControlKeys();
+    this.configureControlKeys();
 
-    this.setEventHandlerForRandomModeRandomiseButton();
+    this.configureRandomModeRandomiseButton();
 
     // Help
 
