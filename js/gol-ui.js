@@ -33,10 +33,10 @@ function GOLUI(gol, golAnimator) {
      * @type {object}
      */
     this.state = {
-        isGearHelpDisplayed:  true,
-        isGearDisplayed:      true,
-        isPanelDisplayed:     false,
-        gearFadeoutTimeoutID: null
+        isGearHelpDisplayed:     true,
+        isGearDisplayed:         true,
+        isControlPanelDisplayed: false,
+        gearFadeoutTimeoutID:    null
     };
 
 }
@@ -144,7 +144,7 @@ GOLUI.prototype.configureCanvasMousemove = function() {
 
     $("#golCanvas").on("mousemove", function() {
 
-        if (_this.state.isPanelDisplayed) {
+        if (_this.state.isControlPanelDisplayed) {
             return;
         }
 
@@ -195,9 +195,9 @@ GOLUI.prototype.configureOpenControlPanel = function() {
         $("#iOpenControlPanel").fadeOut(200);
         $("#divControlPanelOuterContainer").fadeIn(200);
 
-        _this.state.isGearHelpDisplayed = false;
-        _this.state.isGearDisplayed     = false;
-        _this.state.isPanelDisplayed    = true;
+        _this.state.isGearHelpDisplayed     = false;
+        _this.state.isGearDisplayed         = false;
+        _this.state.isControlPanelDisplayed = true;
 
     });
 
@@ -214,7 +214,7 @@ GOLUI.prototype.configureCloseControlPanel = function() {
 
         $("#divControlPanelOuterContainer").fadeOut(200);
 
-        _this.state.isPanelDisplayed = false;
+        _this.state.isControlPanelDisplayed = false;
 
     });
 
