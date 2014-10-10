@@ -56,9 +56,8 @@ canvas {
 }
 
 .control-panel-outer-container {
-  left: 0px;
-  position: absolute;
-  top: 0px;
+  margin-top: 50px;
+  overflow: hidden;
   width: 100%;
 }
 .control-panel-outer-container .middle-container {
@@ -72,7 +71,6 @@ canvas {
   padding: 25px;
   position: relative;
   right: 50%;
-  top: 50px;
   -webkit-border-radius: 22px;
   -moz-border-radius: 22px;
   border-radius: 22px;
