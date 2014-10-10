@@ -237,6 +237,12 @@ GOLUI.prototype.configureControlKeys = function() {
                     _this.gol.calculateAndRenderNextState();
                 }
                 break;
+            case 27:  // esc
+                if (_this.state.isControlPanelDisplayed) {
+                    $("#divControlPanelOuterContainer").fadeOut(200);
+                    _this.state.isControlPanelDisplayed = false;
+                }
+                break;
         }
     });
 
