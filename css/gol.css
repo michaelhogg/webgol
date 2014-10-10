@@ -55,6 +55,29 @@ canvas {
   transform: scale(1.1);
 }
 
+.gear-help-bubble {
+  background-color: #222222;
+  color: #ffffff;
+  font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
+  font-size: 12pt;
+  font-weight: 400;
+  padding: 15px 20px;
+  position: absolute;
+  right: 120px;
+  top: 47px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -webkit-box-shadow: 0px 4px 10px 8px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 0px 4px 10px 8px rgba(0, 0, 0, 0.9);
+  box-shadow: 0px 4px 10px 8px rgba(0, 0, 0, 0.9);
+}
+.gear-help-bubble .fa-arrow-right {
+  font-size: 20pt;
+  margin-left: 8px;
+  vertical-align: -10%;
+}
+
 .control-panel-outer-container {
   padding-top: 50px;
   padding-bottom: 70px;

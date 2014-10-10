@@ -130,7 +130,8 @@ GOLUI.prototype.configureMutationSwitchery = function() {
 GOLUI.prototype.setEventHandlersForControlPanel = function() {
 
     var state = {
-        isGearDisplayed:      false,
+        isGearHelpDisplayed:  true,
+        isGearDisplayed:      true,
         isPanelDisplayed:     false,
         gearFadeoutTimeoutID: null
     };
@@ -148,16 +149,19 @@ GOLUI.prototype.setEventHandlersForControlPanel = function() {
 
         if (state.gearFadeoutTimeoutID !== null) {
             clearTimeout(state.gearFadeoutTimeoutID);
+            state.gearFadeoutTimeoutID = null;
         }
 
-        state.gearFadeoutTimeoutID = setTimeout(
-            function() {
-                $("#iOpenControlPanel").fadeOut(1000);
-                state.isGearDisplayed      = false;
-                state.gearFadeoutTimeoutID = null;
-            },
-            1000
-        );
+        if (!state.isGearHelpDisplayed) {
+            state.gearFadeoutTimeoutID = setTimeout(
+                function() {
+                    $("#iOpenControlPanel").fadeOut(1000);
+                    state.isGearDisplayed      = false;
+                    state.gearFadeoutTimeoutID = null;
+                },
+                1000
+            );
+        }
 
     });
 
@@ -172,11 +176,13 @@ GOLUI.prototype.setEventHandlersForControlPanel = function() {
 
     $("#iOpenControlPanel").on("click", function() {
 
+        $("#divGearHelpBubble").fadeOut(200);
         $("#iOpenControlPanel").fadeOut(200);
         $("#divControlPanelOuterContainer").fadeIn(200);
 
-        state.isGearDisplayed  = false;
-        state.isPanelDisplayed = true;
+        state.isGearHelpDisplayed = false;
+        state.isGearDisplayed     = false;
+        state.isPanelDisplayed    = true;
 
     });
 
