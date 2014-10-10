@@ -28,6 +28,17 @@ function GOLUI(gol, golAnimator) {
      */
     this.mutationSwitchery = null;
 
+    /**
+     * Object storing the current state of the UI
+     * @type {object}
+     */
+    this.state = {
+        isGearHelpDisplayed:  true,
+        isGearDisplayed:      true,
+        isPanelDisplayed:     false,
+        gearFadeoutTimeoutID: null
+    };
+
 }
 
 /**
@@ -129,35 +140,30 @@ GOLUI.prototype.configureMutationSwitchery = function() {
  */
 GOLUI.prototype.setEventHandlersForControlPanel = function() {
 
-    var state = {
-        isGearHelpDisplayed:  true,
-        isGearDisplayed:      true,
-        isPanelDisplayed:     false,
-        gearFadeoutTimeoutID: null
-    };
+    var _this = this;
 
     $("#golCanvas").on("mousemove", function() {
 
-        if (state.isPanelDisplayed) {
+        if (_this.state.isPanelDisplayed) {
             return;
         }
 
-        if (!state.isGearDisplayed) {
+        if (!_this.state.isGearDisplayed) {
             $("#iOpenControlPanel").fadeIn(200);
-            state.isGearDisplayed = true;
+            _this.state.isGearDisplayed = true;
         }
 
-        if (state.gearFadeoutTimeoutID !== null) {
-            clearTimeout(state.gearFadeoutTimeoutID);
-            state.gearFadeoutTimeoutID = null;
+        if (_this.state.gearFadeoutTimeoutID !== null) {
+            clearTimeout(_this.state.gearFadeoutTimeoutID);
+            _this.state.gearFadeoutTimeoutID = null;
         }
 
-        if (!state.isGearHelpDisplayed) {
-            state.gearFadeoutTimeoutID = setTimeout(
+        if (!_this.state.isGearHelpDisplayed) {
+            _this.state.gearFadeoutTimeoutID = setTimeout(
                 function() {
                     $("#iOpenControlPanel").fadeOut(1000);
-                    state.isGearDisplayed      = false;
-                    state.gearFadeoutTimeoutID = null;
+                    _this.state.isGearDisplayed      = false;
+                    _this.state.gearFadeoutTimeoutID = null;
                 },
                 1000
             );
@@ -167,9 +173,9 @@ GOLUI.prototype.setEventHandlersForControlPanel = function() {
 
     $("#iOpenControlPanel").on("mousemove", function() {
 
-        if (state.gearFadeoutTimeoutID !== null) {
-            clearTimeout(state.gearFadeoutTimeoutID);
-            state.gearFadeoutTimeoutID = null;
+        if (_this.state.gearFadeoutTimeoutID !== null) {
+            clearTimeout(_this.state.gearFadeoutTimeoutID);
+            _this.state.gearFadeoutTimeoutID = null;
         }
 
     });
@@ -180,9 +186,9 @@ GOLUI.prototype.setEventHandlersForControlPanel = function() {
         $("#iOpenControlPanel").fadeOut(200);
         $("#divControlPanelOuterContainer").fadeIn(200);
 
-        state.isGearHelpDisplayed = false;
-        state.isGearDisplayed     = false;
-        state.isPanelDisplayed    = true;
+        _this.state.isGearHelpDisplayed = false;
+        _this.state.isGearDisplayed     = false;
+        _this.state.isPanelDisplayed    = true;
 
     });
 
@@ -190,7 +196,7 @@ GOLUI.prototype.setEventHandlersForControlPanel = function() {
 
         $("#divControlPanelOuterContainer").fadeOut(200);
 
-        state.isPanelDisplayed = false;
+        _this.state.isPanelDisplayed = false;
 
     });
 
