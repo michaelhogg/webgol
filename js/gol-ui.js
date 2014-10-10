@@ -136,9 +136,9 @@ GOLUI.prototype.configureMutationSwitchery = function() {
 };
 
 /**
- * Set the event handlers for the control panel
+ * Set the mousemove event handler for the canvas
  */
-GOLUI.prototype.setEventHandlersForControlPanel = function() {
+GOLUI.prototype.configureCanvasMousemove = function() {
 
     var _this = this;
 
@@ -171,6 +171,15 @@ GOLUI.prototype.setEventHandlersForControlPanel = function() {
 
     });
 
+};
+
+/**
+ * Set the event handlers for the "open control panel" gear
+ */
+GOLUI.prototype.configureOpenControlPanel = function() {
+
+    var _this = this;
+
     $("#iOpenControlPanel").on("mousemove", function() {
 
         if (_this.state.gearFadeoutTimeoutID !== null) {
@@ -191,6 +200,15 @@ GOLUI.prototype.setEventHandlersForControlPanel = function() {
         _this.state.isPanelDisplayed    = true;
 
     });
+
+};
+
+/**
+ * Set the event handlers for the "close control panel" cross
+ */
+GOLUI.prototype.configureCloseControlPanel = function() {
+
+    var _this = this;
 
     $("#iCloseControlPanel").on("click", function() {
 
@@ -299,9 +317,13 @@ GOLUI.prototype.init = function(defaultTargetFramerate) {
 
     this.configureMutationSwitchery();
 
-    // Event handlers
+    // Set event handlers
 
-    this.setEventHandlersForControlPanel();
+    this.configureCanvasMousemove();
+
+    this.configureOpenControlPanel();
+
+    this.configureCloseControlPanel();
 
     this.setEventHandlerForControlKeys();
 
