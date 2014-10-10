@@ -56,7 +56,8 @@ canvas {
 }
 
 .control-panel-outer-container {
-  margin-top: 50px;
+  padding-top: 50px;
+  padding-bottom: 70px;
   overflow: hidden;
   width: 100%;
 }

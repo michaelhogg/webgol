@@ -118,9 +118,10 @@ canvas {
 }
 
 .control-panel-outer-container {
-    margin-top: 50px;
-    overflow:   hidden;
-    width:      100%;
+    padding-top:    50px;
+    padding-bottom: 70px;
+    overflow:       hidden;
+    width:          100%;
 
     .middle-container {
         display:  inline-block;
