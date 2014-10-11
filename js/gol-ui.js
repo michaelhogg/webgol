@@ -193,7 +193,7 @@ GOLUI.prototype.configureOpenControlPanel = function() {
 
         $("#divGearHelpBubble").fadeOut(200);
         $("#iOpenControlPanel").fadeOut(200);
-        $("#divControlPanelOuterContainer").fadeIn(200);
+        $("#divControlPanel").fadeIn(200);
 
         _this.state.isGearHelpDisplayed     = false;
         _this.state.isGearDisplayed         = false;
@@ -212,7 +212,7 @@ GOLUI.prototype.configureCloseControlPanel = function() {
 
     $("#iCloseControlPanel").on("click", function() {
 
-        $("#divControlPanelOuterContainer").fadeOut(200);
+        $("#divControlPanel").fadeOut(200);
 
         _this.state.isControlPanelDisplayed = false;
 
@@ -239,7 +239,7 @@ GOLUI.prototype.configureControlKeys = function() {
                 break;
             case 27:  // esc
                 if (_this.state.isControlPanelDisplayed) {
-                    $("#divControlPanelOuterContainer").fadeOut(200);
+                    $("#divControlPanel").fadeOut(200);
                     _this.state.isControlPanelDisplayed = false;
                 }
                 break;
