@@ -102,8 +102,7 @@ canvas {
   -moz-box-shadow: 0px 10px 50px 20px rgba(0, 0, 0, 0.9);
   box-shadow: 0px 10px 50px 20px rgba(0, 0, 0, 0.9);
 }
-
-.cross-close-control-panel {
+.panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle {
   color: #666666;
   cursor: pointer;
   font-size: 30px;
@@ -111,7 +110,7 @@ canvas {
   right: 10px;
   top: 10px;
 }
-.cross-close-control-panel:hover {
+.panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle:hover {
   color: #cccccc;
 }
 
