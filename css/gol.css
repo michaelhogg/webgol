@@ -103,7 +103,7 @@ canvas {
   box-shadow: 0px 10px 50px 20px rgba(0, 0, 0, 0.9);
 }
 .panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle {
-  color: #666666;
+  color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
   font-size: 30px;
   position: absolute;
@@ -111,7 +111,7 @@ canvas {
   top: 10px;
 }
 .panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle:hover {
-  color: #cccccc;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .panel-title {
