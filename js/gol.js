@@ -182,11 +182,15 @@ GOL.prototype.init = function() {
      * Igloo-wrapped WebGLProgram objects
      * @type {Igloo.Program}
      */
-    this.programs = {
-        // Throws an error if compiling or linking fails
-        nextState: new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.nextStateFragment),
-        render:    new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.renderFragment   )
-    };
+    try {
+        this.programs = {
+            // Throws an error if compiling or linking fails
+            nextState: new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.nextStateFragment),
+            render:    new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.renderFragment   )
+        };
+    } catch (e) {
+        throw new Error("Error compiling or linking WebGLProgram: " + e.message);
+    }
 
     /**
      * Triangle strip data for the vertex shader
