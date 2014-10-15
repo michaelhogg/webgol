@@ -305,6 +305,16 @@ GOLUI.prototype.generateHelpMarkersAndBubbles = function() {
 };
 
 /**
+ * Fade in the "open control panel" gear and its help bubble
+ */
+GOLUI.prototype.showOpenControlPanel = function() {
+
+    $("#iOpenControlPanel").fadeIn(1000);
+    $("#divGearHelpBubble").fadeIn(1000);
+
+};
+
+/**
  * Initialise the UI
  *
  * @param {number} defaultTargetFramerate
@@ -335,8 +345,10 @@ GOLUI.prototype.init = function(defaultTargetFramerate) {
 
     this.configureRandomModeRandomiseButton();
 
-    // Help
+    // Miscellaneous
 
     this.generateHelpMarkersAndBubbles();
+
+    this.showOpenControlPanel();
 
 }
