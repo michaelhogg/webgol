@@ -8,7 +8,7 @@ var golUI       = null;
 
 $(document).ready(function() {
 
-    var canvas   = document.getElementById('golCanvas');
+    var canvas   = document.getElementById("golCanvas");
     var cellSize = 4;
 
     // Set cell size from query string (if supplied)

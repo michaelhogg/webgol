@@ -58,8 +58,6 @@ GOLUI.prototype.configureCellSizeMenu = function() {
         this.gol.CELL_SIZE
     );
 
-    var _this = this;
-
     $("#selectCellSize").on("change", function() {
 
         var cellSize = parseInt($(this).val());
@@ -347,4 +345,4 @@ GOLUI.prototype.init = function() {
 
     this.showOpenControlPanel();
 
-}
+};
