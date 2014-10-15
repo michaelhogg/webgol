@@ -1,0 +1,38 @@
+{
+
+    /*--- Enforcing options ---*/
+    "bitwise":   true,  // Prohibit the use of bitwise operators such as ^ (XOR), | (OR)
+    "camelcase": true,  // Force all variable names to use either camelCase or SCREAMING_SNAKE_CASE
+    "eqeqeq":    true,  // Prohibit the use of == and != in favour of === and !==
+    "forin":     true,  // Require all "for in" loops to filter object's items with hasOwnProperty()
+    "freeze":    true,  // Prohibit overwriting prototypes of native objects such as Array, Date
+    "immed":     true,  // Prohibit the use of immediate function invocations without wrapping them in parentheses
+    "latedef":   true,  // Prohibit the use of a variable before it was defined
+    "newcap":    true,  // Names of constructor functions must be capitalised
+    "noarg":     true,  // Prohibit the use of arguments.caller and arguments.callee
+    "noempty":   true,  // Warn about empty blocks
+    "nonbsp":    true,  // Warn about "non-breaking whitespace" characters
+    "nonew":     true,  // Prohibit calling a constructor function without assigning its result to a variable
+    "undef":     true,  // Prohibit the use of explicitly undeclared variables
+    "unused":    true,  // Warn about variables which are defined but never used
+
+    /*--- Relaxing options ---*/
+    "loopfunc":  true,  // Suppress warnings about defining functions inside loops
+
+    /*--- Globals ---*/
+    "browser": true,
+    "jquery":  true,
+    "globals": {
+        "GOL":            false,
+        "GOLAnimator":    false,
+        "GOLGrid":        false,
+        "GOLGridFactory": true,
+        "GOLUI":          false,
+        "GOLUIUtils":     true,
+        "GOLUtils":       true,
+        "Igloo":          false,
+        "Switchery":      false,
+        "WebGLRenderingContext": false
+    }
+
+}
