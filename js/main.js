@@ -33,9 +33,10 @@ $(document).ready(function() {
     var targetFPS = 15;
 
     golAnimator = new GOLAnimator(gol, targetFPS, "divActualFramerate");
-    golAnimator.start();
 
     golUI = new GOLUI(gol, golAnimator);
     golUI.init(targetFPS);
+
+    golAnimator.start();
 
 });
