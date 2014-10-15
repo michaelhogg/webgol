@@ -2,10 +2,9 @@
  * Game Of Life animator
  *
  * @param {GOL}    gol
- * @param {number} targetFPS
  * @param {string} actualFPSDisplayElementID
  */
-function GOLAnimator(gol, targetFPS, actualFPSDisplayElementID) {
+function GOLAnimator(gol, actualFPSDisplayElementID) {
 
     /**
      * @type {GOL}
@@ -16,7 +15,7 @@ function GOLAnimator(gol, targetFPS, actualFPSDisplayElementID) {
      * Target frames-per-second
      * @type {number}
      */
-    this.targetFPS = targetFPS;
+    this.targetFPS = 15;
 
     /**
      * jQuery DOM element for displaying actual FPS

@@ -30,12 +30,10 @@ $(document).ready(function() {
     gol = new GOL(canvas, cellSize);
     gol.init();
 
-    var targetFPS = 15;
-
-    golAnimator = new GOLAnimator(gol, targetFPS, "divActualFramerate");
+    golAnimator = new GOLAnimator(gol, "divActualFramerate");
 
     golUI = new GOLUI(gol, golAnimator);
-    golUI.init(targetFPS);
+    golUI.init();
 
     golAnimator.start();
 

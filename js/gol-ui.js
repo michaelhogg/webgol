@@ -72,10 +72,8 @@ GOLUI.prototype.configureCellSizeMenu = function() {
 
 /**
  * Configure the "target framerate" <select> menu
- *
- * @param {number} defaultTargetFramerate
  */
-GOLUI.prototype.configureTargetFramerateMenu = function(defaultTargetFramerate) {
+GOLUI.prototype.configureTargetFramerateMenu = function() {
 
     var framerates = [
         0.25, 0.5, 1, 2, 4, 6, 8, 10, 15, 20, 25, 30, 40, 50, 60
@@ -84,7 +82,7 @@ GOLUI.prototype.configureTargetFramerateMenu = function(defaultTargetFramerate) 
     GOLUIUtils.populateMenuWithValues(
         $("#selectTargetFramerate"),
         framerates,
-        defaultTargetFramerate
+        this.golAnimator.targetFPS
     );
 
     var _this = this;
@@ -316,16 +314,14 @@ GOLUI.prototype.showOpenControlPanel = function() {
 
 /**
  * Initialise the UI
- *
- * @param {number} defaultTargetFramerate
  */
-GOLUI.prototype.init = function(defaultTargetFramerate) {
+GOLUI.prototype.init = function() {
 
     // Configure menus
 
     this.configureCellSizeMenu();
 
-    this.configureTargetFramerateMenu(defaultTargetFramerate);
+    this.configureTargetFramerateMenu();
 
     // Configure switcherys
 
