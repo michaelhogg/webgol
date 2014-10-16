@@ -279,6 +279,15 @@ GOL.prototype.createTexture = function() {
     // Set size and fill with 0
     texture.blank(this.STATE_WIDTH, this.STATE_HEIGHT);
 
+    switch (this.gl.getError()) {
+        case this.gl.NO_ERROR:
+            break;
+        case this.gl.INVALID_VALUE:
+            throw new Error("Failed to create texture (requested texture size " + this.STATE_WIDTH + " x " + this.STATE_HEIGHT + " was probably too big)");
+        default:
+            throw new Error("Failed to create texture (unknown error)");
+    }
+
     return texture;
 
 };
