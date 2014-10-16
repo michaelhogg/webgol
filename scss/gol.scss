@@ -10,6 +10,9 @@ $help-saturation: 75%;
 $link-and-tab-hue:        205;
 $link-and-tab-saturation: 100%;
 
+$support-hue:        200;
+$support-saturation: 100%;
+
 
 //--------------------  Mixins  --------------------//
 
@@ -142,7 +145,11 @@ canvas {
                 background-color: $dark-grey-background-color;
             }
 
-            .fa-times-circle {
+            &.support-panel {
+                background-color: hsl($support-hue, $support-saturation, 15%);
+            }
+
+            .fa-times-circle {  // Close panel
                 color:     hsla(0, 0%, 100%, 0.4);
                 cursor:    pointer;
                 font-size: 30px;
@@ -164,6 +171,14 @@ canvas {
     font-size:   35pt;
     font-weight: 700;
     text-align:  center;
+
+    .fa-frown-o {  // Error
+        margin-left: 8px;
+    }
+
+    .fa-wrench {  // Troubleshooting
+        margin-right: 8px;
+    }
 }
 
 .panel-subtitle {
@@ -189,6 +204,36 @@ canvas {
         margin-left:    30px;
         margin-right:   8px;
         vertical-align: -15%;
+    }
+}
+
+.support-panel-scrolling-contents {
+    color:       #ffffff;
+    font-family: $font-family;
+    font-size:   12pt;
+    font-weight: 400;
+    margin:      20px 10px 10px 10px;
+    max-height:  250px;
+    max-width:   600px;
+    overflow-y:  auto;
+
+    .support-heading {
+        font-size:   15pt;
+        font-weight: 700;
+        margin-top:  1em;
+    }
+
+    .support-subcontainer {
+        margin-top: 1em;
+    }
+
+    a {
+        color:           hsl($support-hue, $support-saturation, 66%);
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 

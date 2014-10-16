@@ -88,6 +88,9 @@ canvas {
 .panel-outer-container .panel-middle-container .panel-inner-container.control-panel {
   background-color: #222222;
 }
+.panel-outer-container .panel-middle-container .panel-inner-container.support-panel {
+  background-color: #00334d;
+}
 .panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle {
   color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
@@ -106,6 +109,12 @@ canvas {
   font-size: 35pt;
   font-weight: 700;
   text-align: center;
+}
+.panel-title .fa-frown-o {
+  margin-left: 8px;
+}
+.panel-title .fa-wrench {
+  margin-right: 8px;
 }
 
 .panel-subtitle {
@@ -129,6 +138,32 @@ canvas {
   margin-left: 30px;
   margin-right: 8px;
   vertical-align: -15%;
+}
+
+.support-panel-scrolling-contents {
+  color: #ffffff;
+  font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
+  font-size: 12pt;
+  font-weight: 400;
+  margin: 20px 10px 10px 10px;
+  max-height: 250px;
+  max-width: 600px;
+  overflow-y: auto;
+}
+.support-panel-scrolling-contents .support-heading {
+  font-size: 15pt;
+  font-weight: 700;
+  margin-top: 1em;
+}
+.support-panel-scrolling-contents .support-subcontainer {
+  margin-top: 1em;
+}
+.support-panel-scrolling-contents a {
+  color: #52c5ff;
+  text-decoration: none;
+}
+.support-panel-scrolling-contents a:hover {
+  text-decoration: underline;
 }
 
 .panel-table {

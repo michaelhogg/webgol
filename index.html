@@ -94,5 +94,54 @@
             </div>
         </div>
 
+        <div class="panel-outer-container" style="display: none;" id="divSupportPanel">
+            <div class="panel-middle-container">
+                <div class="panel-inner-container support-panel">
+
+                    <i class="fa fa-times-circle" style="display: none;" id="iCloseSupportPanel"></i>
+
+                    <div class="panel-title" id="divSupportPanelTitleError">
+                        Error
+                        <i class="fa fa-frown-o"></i>
+                    </div>
+
+                    <div class="panel-title" id="divSupportPanelTitleTroubleshooting">
+                        <i class="fa fa-wrench"></i>
+                        Troubleshooting
+                    </div>
+
+                    <div class="support-panel-scrolling-contents">
+
+                        <div id="divSupportPanelMessage"></div>
+
+                        <div class="support-subcontainer" id="divSupportPanelBrowserHelpContainer">
+                            Follow
+                            <a href="http://gamemodels3d.com/en/faq/" target="_blank">these instructions</a>
+                            to enable WebGL in your browser
+                        </div>
+
+                        <div class="support-subcontainer" id="divSupportPanelWebGLContainer">
+                            The following troubleshooting information may be helpful:
+                            <div class="support-heading">WebGL info</div>
+                            <ul id="ulSupportPanelWebGLInfo"></ul>
+                            <div id="divSupportPanelWebGLWarningsContainer">
+                                <div class="support-heading">WebGL warnings</div>
+                                <ul id="ulSupportPanelWebGLWarnings"></ul>
+                            </div>
+                        </div>
+
+                        <div class="support-subcontainer">
+                            If you believe you&#8217;ve found a bug in WebGOL, please
+                            <a href="https://github.com/michaelhogg/webgol/issues" target="_blank">
+                                create an issue on GitHub
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
