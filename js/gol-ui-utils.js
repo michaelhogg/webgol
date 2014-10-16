@@ -4,6 +4,26 @@
 var GOLUIUtils = {
 
     /**
+     * Create an array of <li> jQuery elements for a <ul> or <ol> list
+     *
+     * @param   {string[]} listStrings
+     * @returns {object[]}
+     */
+    createListElements: function(listStrings) {
+
+        var listElements = [];
+
+        for (var i = 0; i < listStrings.length; i++) {
+            listElements.push(
+                $("<li></li>").text(listStrings[i])
+            );
+        }
+
+        return listElements;
+
+    },
+
+    /**
      * Create an <option> jQuery element for a <select> menu
      *
      * @param   {object} optionData
