@@ -429,6 +429,12 @@ GOL.prototype.clearState = function() {
  */
 GOL.prototype.setCellState = function(x, y, state) {
 
+    if (x < 0)  throw new Error("Invalid X coord: " + x);
+    if (y < 0)  throw new Error("Invalid Y coord: " + y);
+
+    if (x >= this.STATE_WIDTH)   throw new Error("Invalid X coord: " + x + " (width of state is "  + this.STATE_WIDTH  + ")");
+    if (y >= this.STATE_HEIGHT)  throw new Error("Invalid Y coord: " + y + " (height of state is " + this.STATE_HEIGHT + ")");
+
     var rgba = (state ? this.COLOUR_ALIVE : this.COLOUR_DEAD);
 
     this.textures.front.subset(rgba, x, y, 1, 1);
