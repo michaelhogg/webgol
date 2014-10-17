@@ -88,6 +88,15 @@ GOLUI.showSupportPanel = function(isError, supportMessage, showBrowserHelp, gol)
 };
 
 /**
+ * Close the support panel
+ */
+GOLUI.prototype.closeSupportPanel = function() {
+
+    $("#divSupportPanel").fadeOut(200);
+
+};
+
+/**
  * Close the control panel
  */
 GOLUI.prototype.closeControlPanel = function() {
