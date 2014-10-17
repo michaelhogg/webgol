@@ -1,10 +1,10 @@
-window.onerror = function(errorMessage) {
-    alert("Something went wrong :(\n\n" + errorMessage);
-};
-
 var gol         = null;
 var golAnimator = null;
 var golUI       = null;
+
+window.onerror = function(errorMessage) {
+    GOLUI.showSupportPanel(true, errorMessage, false, gol);
+};
 
 $(document).ready(function() {
 
@@ -27,8 +27,22 @@ $(document).ready(function() {
     // Seems necessary to prevent window scrollbars appearing
     canvas.height -= 6;
 
-    gol = new GOL(canvas, cellSize);
-    gol.init();
+    try {
+        gol = new GOL(canvas, cellSize);
+    } catch (e) {
+        // Error when starting WebGL
+        GOLUI.showSupportPanel(true, e.message, true, null);
+        return;
+    }
+
+    try {
+        gol.init();
+    } catch (e) {
+        // Error when: fetching shader source code,
+        // compiling/linking WebGLProgram, rendering, etc
+        GOLUI.showSupportPanel(true, e.message, false, gol);
+        return;
+    }
 
     golAnimator = new GOLAnimator(gol, "divActualFramerate");
 
