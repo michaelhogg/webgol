@@ -88,6 +88,17 @@ GOLUI.showSupportPanel = function(isError, supportMessage, showBrowserHelp, gol)
 };
 
 /**
+ * Close the control panel
+ */
+GOLUI.prototype.closeControlPanel = function() {
+
+    $("#divControlPanel").fadeOut(200);
+
+    this.state.isControlPanelDisplayed = false;
+
+};
+
+/**
  * Configure the "cell size" <select> menu
  */
 GOLUI.prototype.configureCellSizeMenu = function() {
@@ -253,11 +264,7 @@ GOLUI.prototype.configureCloseControlPanel = function() {
     var _this = this;
 
     $("#iCloseControlPanel").on("click", function() {
-
-        $("#divControlPanel").fadeOut(200);
-
-        _this.state.isControlPanelDisplayed = false;
-
+        _this.closeControlPanel();
     });
 
 };
@@ -281,8 +288,7 @@ GOLUI.prototype.configureControlKeys = function() {
                 break;
             case 27:  // esc
                 if (_this.state.isControlPanelDisplayed) {
-                    $("#divControlPanel").fadeOut(200);
-                    _this.state.isControlPanelDisplayed = false;
+                    _this.closeControlPanel();
                 }
                 break;
         }
