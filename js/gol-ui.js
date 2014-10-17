@@ -103,6 +103,18 @@ GOLUI.prototype.configureSupportPanel = function() {
 };
 
 /**
+ * Can the support panel be closed?
+ *
+ * @returns {boolean}
+ */
+GOLUI.prototype.canSupportPanelBeClosed = function() {
+
+    return $("#divSupportPanel"   ).is(":visible") &&
+           $("#iCloseSupportPanel").is(":visible");
+
+};
+
+/**
  * Close the support panel
  */
 GOLUI.prototype.closeSupportPanel = function() {
