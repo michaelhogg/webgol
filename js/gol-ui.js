@@ -88,6 +88,21 @@ GOLUI.showSupportPanel = function(isError, supportMessage, showBrowserHelp, gol)
 };
 
 /**
+ * Configure the support panel
+ */
+GOLUI.prototype.configureSupportPanel = function() {
+
+    var _this = this;
+
+    $("#iCloseSupportPanel").show();
+
+    $("#iCloseSupportPanel").on("click", function() {
+        _this.closeSupportPanel();
+    });
+
+};
+
+/**
  * Close the support panel
  */
 GOLUI.prototype.closeSupportPanel = function() {
@@ -375,6 +390,10 @@ GOLUI.prototype.showOpenControlPanel = function() {
  * Initialise the UI
  */
 GOLUI.prototype.init = function() {
+
+    // Configure support panel
+
+    this.configureSupportPanel();
 
     // Configure menus
 
