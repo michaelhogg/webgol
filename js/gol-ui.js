@@ -42,6 +42,22 @@ function GOLUI(gol, golAnimator) {
 }
 
 /**
+ * Duration of a fast fade (in milliseconds)
+ *
+ * @constant {number}
+ * @static
+ */
+GOLUI.FAST_FADE_DURATION = 200;
+
+/**
+ * Duration of a slow fade (in milliseconds)
+ *
+ * @constant {number}
+ * @static
+ */
+GOLUI.SLOW_FADE_DURATION = 1000;
+
+/**
  * Show the support panel
  *
  * @param {boolean}    isError
@@ -83,7 +99,7 @@ GOLUI.showSupportPanel = function(isError, supportMessage, showBrowserHelp, gol)
 
     $("#divSupportPanelWebGLContainer").toggle(showWebglContainer);
 
-    $("#divSupportPanel").fadeIn(200);
+    $("#divSupportPanel").fadeIn(GOLUI.FAST_FADE_DURATION);
 
 };
 
@@ -119,7 +135,7 @@ GOLUI.prototype.canSupportPanelBeClosed = function() {
  */
 GOLUI.prototype.closeSupportPanel = function() {
 
-    $("#divSupportPanel").fadeOut(200);
+    $("#divSupportPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
 
 };
 
@@ -128,7 +144,7 @@ GOLUI.prototype.closeSupportPanel = function() {
  */
 GOLUI.prototype.closeControlPanel = function() {
 
-    $("#divControlPanel").fadeOut(200);
+    $("#divControlPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
 
     this.state.isControlPanelDisplayed = false;
 
@@ -238,7 +254,7 @@ GOLUI.prototype.configureCanvasMousemove = function() {
         }
 
         if (!_this.state.isGearDisplayed) {
-            $("#iOpenControlPanel").fadeIn(200);
+            $("#iOpenControlPanel").fadeIn(GOLUI.FAST_FADE_DURATION);
             _this.state.isGearDisplayed = true;
         }
 
@@ -250,7 +266,7 @@ GOLUI.prototype.configureCanvasMousemove = function() {
         if (!_this.state.isGearHelpDisplayed) {
             _this.state.gearFadeoutTimeoutID = setTimeout(
                 function() {
-                    $("#iOpenControlPanel").fadeOut(1000);
+                    $("#iOpenControlPanel").fadeOut(GOLUI.SLOW_FADE_DURATION);
                     _this.state.isGearDisplayed      = false;
                     _this.state.gearFadeoutTimeoutID = null;
                 },
@@ -280,9 +296,9 @@ GOLUI.prototype.configureOpenControlPanel = function() {
 
     $("#iOpenControlPanel").on("click", function() {
 
-        $("#divGearHelpBubble").fadeOut(200);
-        $("#iOpenControlPanel").fadeOut(200);
-        $("#divControlPanel").fadeIn(200);
+        $("#divGearHelpBubble").fadeOut(GOLUI.FAST_FADE_DURATION);
+        $("#iOpenControlPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
+        $("#divControlPanel"  ).fadeIn( GOLUI.FAST_FADE_DURATION);
 
         _this.state.isGearHelpDisplayed     = false;
         _this.state.isGearDisplayed         = false;
@@ -408,8 +424,8 @@ GOLUI.prototype.generateHelpMarkersAndBubbles = function() {
  */
 GOLUI.prototype.showOpenControlPanel = function() {
 
-    $("#iOpenControlPanel").fadeIn(1000);
-    $("#divGearHelpBubble").fadeIn(1000);
+    $("#iOpenControlPanel").fadeIn(GOLUI.SLOW_FADE_DURATION);
+    $("#divGearHelpBubble").fadeIn(GOLUI.SLOW_FADE_DURATION);
 
 };
 
