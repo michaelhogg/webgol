@@ -335,6 +335,19 @@ GOLUI.prototype.configureControlKeys = function() {
 };
 
 /**
+ * Set the event handler for the "Troubleshooting" button
+ */
+GOLUI.prototype.configureTroubleshootingButton = function() {
+
+    var _this = this;
+
+    $("#buttonTroubleshooting").on("click", function() {
+        GOLUI.showSupportPanel(false, "Experiencing problems with WebGOL?", true, _this.gol);
+    });
+
+};
+
+/**
  * Set the event handler for the "Random mode: Randomise" button
  */
 GOLUI.prototype.configureRandomModeRandomiseButton = function() {
@@ -430,6 +443,8 @@ GOLUI.prototype.init = function() {
     this.configureCloseControlPanel();
 
     this.configureControlKeys();
+
+    this.configureTroubleshootingButton();
 
     this.configureRandomModeRandomiseButton();
 
