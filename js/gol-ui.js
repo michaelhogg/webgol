@@ -42,6 +42,52 @@ function GOLUI(gol, golAnimator) {
 }
 
 /**
+ * Show the support panel
+ *
+ * @param {boolean}    isError
+ * @param {string}     supportMessage
+ * @param {boolean}    showBrowserHelp
+ * @param {(GOL|null)} gol
+ * @static
+ */
+GOLUI.showSupportPanel = function(isError, supportMessage, showBrowserHelp, gol) {
+
+    $("#divSupportPanelTitleError"          ).toggle( isError);
+    $("#divSupportPanelTitleTroubleshooting").toggle(!isError);
+    $("#divSupportPanelBrowserHelpContainer").toggle(showBrowserHelp);
+
+    $("#divSupportPanelMessage").text(supportMessage);
+
+    var showWebglContainer = false;
+
+    if (gol !== null) {
+        try {
+
+            var webglInfo     = GOLUtils.getWebglInfo(gol);
+            var webglWarnings = GOLUtils.getWebglWarnings(gol);
+
+            var infoListElements    = GOLUIUtils.createListElements(webglInfo);
+            var warningListElements = GOLUIUtils.createListElements(webglWarnings);
+
+            $("#ulSupportPanelWebGLInfo"    ).html("").append(infoListElements);
+            $("#ulSupportPanelWebGLWarnings").html("").append(warningListElements);
+
+            $("#divSupportPanelWebGLWarningsContainer").toggle(webglWarnings.length > 0);
+
+            showWebglContainer = true;
+
+        } catch (e) {
+            // Ignore error
+        }
+    }
+
+    $("#divSupportPanelWebGLContainer").toggle(showWebglContainer);
+
+    $("#divSupportPanel").fadeIn(200);
+
+};
+
+/**
  * Configure the "cell size" <select> menu
  */
 GOLUI.prototype.configureCellSizeMenu = function() {
