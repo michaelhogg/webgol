@@ -323,7 +323,9 @@ GOLUI.prototype.configureControlKeys = function() {
                 }
                 break;
             case 27:  // esc
-                if (_this.state.isControlPanelDisplayed) {
+                if (_this.canSupportPanelBeClosed()) {
+                    _this.closeSupportPanel();
+                } else if (_this.state.isControlPanelDisplayed) {
                     _this.closeControlPanel();
                 }
                 break;
