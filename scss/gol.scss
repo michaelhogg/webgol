@@ -4,6 +4,8 @@ $font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
 
 $dark-grey-background-color: #222222;
 
+$unhovered-icon-color: hsla(0, 0%, 100%, 0.3);
+
 $help-hue:        60;
 $help-saturation: 75%;
 
@@ -150,7 +152,7 @@ canvas {
             }
 
             .fa-times-circle {  // Close panel
-                color:     hsla(0, 0%, 100%, 0.4);
+                color:     $unhovered-icon-color;
                 cursor:    pointer;
                 font-size: 30px;
                 position:  absolute;
@@ -298,7 +300,7 @@ canvas {
         }
 
         .help-marker {
-            color:     #666666;
+            color:     $unhovered-icon-color;
             cursor:    pointer;
             font-size: 20px;
 

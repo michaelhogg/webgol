@@ -92,7 +92,7 @@ canvas {
   background-color: #00334d;
 }
 .panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.3);
   cursor: pointer;
   font-size: 30px;
   position: absolute;
@@ -225,7 +225,7 @@ canvas {
   transform-origin: left center;
 }
 .panel-table td .help-marker {
-  color: #666666;
+  color: rgba(255, 255, 255, 0.3);
   cursor: pointer;
   font-size: 20px;
 }
