@@ -91,6 +91,10 @@ canvas {
 .panel-outer-container .panel-middle-container .panel-inner-container.support-panel {
   background-color: #00334d;
 }
+.panel-outer-container .panel-middle-container .panel-inner-container.keyboard-shortcuts-panel {
+  background-color: #26004d;
+  min-width: 600px;
+}
 .panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle {
   color: rgba(255, 255, 255, 0.3);
   cursor: pointer;
@@ -114,6 +118,9 @@ canvas {
   margin-left: 8px;
 }
 .panel-title .fa-wrench {
+  margin-right: 8px;
+}
+.panel-title .fa-keyboard-o {
   margin-right: 8px;
 }
 
@@ -290,4 +297,12 @@ canvas {
 }
 .panel-table td .mode-tab:not(.mode-tab-active):hover {
   background-color: rgba(0, 104, 179, 0.65);
+}
+
+.keyboard-shortcuts-panel .panel-table td:first-child {
+  font-weight: 700;
+  text-align: right;
+}
+.keyboard-shortcuts-panel .panel-table td:last-child {
+  font-weight: 300;
 }

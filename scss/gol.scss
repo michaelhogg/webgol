@@ -153,6 +153,11 @@ canvas {
                 background-color: hsl($support-hue, $support-saturation, 15%);
             }
 
+            &.keyboard-shortcuts-panel {
+                background-color: hsl(270, 100%, 15%);
+                min-width:        600px;
+            }
+
             .fa-times-circle {  // Close panel
                 color:     $unhovered-icon-color;
                 cursor:    pointer;
@@ -181,6 +186,10 @@ canvas {
     }
 
     .fa-wrench {  // Troubleshooting
+        margin-right: 8px;
+    }
+
+    .fa-keyboard-o {  // Keyboard shortcuts
         margin-right: 8px;
     }
 }
@@ -350,4 +359,17 @@ canvas {
             }
         }
     }
+}
+
+.keyboard-shortcuts-panel .panel-table td {
+
+    &:first-child {
+        font-weight: 700;
+        text-align:  right;
+    }
+
+    &:last-child {
+        font-weight: 300;
+    }
+
 }
