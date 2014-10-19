@@ -60,13 +60,13 @@ canvas {
 }
 
 .panel-outer-container {
+  bottom: 0px;
   left: 0px;
   overflow: hidden;
-  padding-bottom: 70px;
   padding-top: 50px;
   position: absolute;
+  right: 0px;
   top: 0px;
-  width: 100%;
 }
 .panel-outer-container .panel-middle-container {
   display: inline-block;

@@ -120,13 +120,13 @@ canvas {
 }
 
 .panel-outer-container {
-    left:           0px;
-    overflow:       hidden;
-    padding-bottom: 70px;
-    padding-top:    50px;
-    position:       absolute;
-    top:            0px;
-    width:          100%;
+    bottom:      0px;
+    left:        0px;
+    overflow:    hidden;
+    padding-top: 50px;
+    position:    absolute;
+    right:       0px;
+    top:         0px;
 
     .panel-middle-container {
         display:  inline-block;
