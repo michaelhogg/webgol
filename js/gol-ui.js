@@ -249,10 +249,6 @@ GOLUI.prototype.configureCanvasMousemove = function() {
 
     $("#golCanvas").on("mousemove", function() {
 
-        if (_this.state.isControlPanelDisplayed) {
-            return;
-        }
-
         if (!_this.state.isGearDisplayed) {
             $("#iOpenControlPanel").fadeIn(GOLUI.FAST_FADE_DURATION);
             _this.state.isGearDisplayed = true;
