@@ -81,9 +81,9 @@ canvas {
   -webkit-border-radius: 22px;
   -moz-border-radius: 22px;
   border-radius: 22px;
-  -webkit-box-shadow: 0px 10px 50px 20px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 0px 10px 50px 20px rgba(0, 0, 0, 0.9);
-  box-shadow: 0px 10px 50px 20px rgba(0, 0, 0, 0.9);
+  -webkit-box-shadow: 0px 15px 60px 40px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 15px 60px 40px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 15px 60px 40px rgba(0, 0, 0, 0.75);
 }
 .panel-outer-container .panel-middle-container .panel-inner-container.control-panel {
   background-color: #222222;
