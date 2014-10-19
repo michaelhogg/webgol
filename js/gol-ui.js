@@ -33,10 +33,11 @@ function GOLUI(gol, golAnimator) {
      * @type {object}
      */
     this.state = {
-        isGearHelpDisplayed:     true,
-        isGearDisplayed:         true,
-        isControlPanelDisplayed: false,
-        gearFadeoutTimeoutID:    null
+        isGearHelpDisplayed:               true,
+        isGearDisplayed:                   true,
+        isControlPanelDisplayed:           false,
+        gearFadeoutTimeoutID:              null,
+        isKeyboardShortcutsPanelDisplayed: false
     };
 
 }
@@ -147,6 +148,30 @@ GOLUI.prototype.closeControlPanel = function() {
     $("#divControlPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
 
     this.state.isControlPanelDisplayed = false;
+
+};
+
+/**
+ * Close the keyboard shortcuts panel
+ */
+GOLUI.prototype.closeKeyboardShortcutsPanel = function() {
+
+    $("#divKeyboardShortcutsPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
+
+    this.state.isKeyboardShortcutsPanelDisplayed = false;
+
+};
+
+/**
+ * Configure the keyboard shortcuts panel
+ */
+GOLUI.prototype.configureKeyboardShortcutsPanel = function() {
+
+    var _this = this;
+
+    $("#iCloseKeyboardShortcutsPanel").on("click", function() {
+        _this.closeKeyboardShortcutsPanel();
+    });
 
 };
 
@@ -337,6 +362,8 @@ GOLUI.prototype.configureControlKeys = function() {
             case 27:  // esc
                 if (_this.canSupportPanelBeClosed()) {
                     _this.closeSupportPanel();
+                } else if (_this.state.isKeyboardShortcutsPanelDisplayed) {
+                    _this.closeKeyboardShortcutsPanel();
                 } else if (_this.state.isControlPanelDisplayed) {
                     _this.closeControlPanel();
                 }
@@ -430,9 +457,11 @@ GOLUI.prototype.showOpenControlPanel = function() {
  */
 GOLUI.prototype.init = function() {
 
-    // Configure support panel
+    // Configure panels
 
     this.configureSupportPanel();
+
+    this.configureKeyboardShortcutsPanel();
 
     // Configure menus
 
