@@ -100,8 +100,8 @@ canvas {
   cursor: pointer;
   font-size: 30px;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 20px;
+  top: 20px;
 }
 .panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle:hover {
   color: rgba(255, 255, 255, 0.8);
