@@ -11,8 +11,8 @@ $gear-shadow-color: hsla(0, 0%, 0%, 0.9);
 $help-hue:        60;
 $help-saturation: 75%;
 
-$link-and-tab-hue:        205;
-$link-and-tab-saturation: 100%;
+$control-hue:        205;
+$control-saturation: 100%;
 
 $support-hue:        200;
 $support-saturation: 100%;
@@ -204,7 +204,7 @@ canvas {
     white-space: nowrap;
 
     a {
-        color:           hsl($link-and-tab-hue, $link-and-tab-saturation, 70%);
+        color:           hsl($control-hue, $control-saturation, 70%);
         text-decoration: none;
 
         &:hover {
@@ -335,7 +335,7 @@ canvas {
         }
 
         .mode-tab {
-            background-color: hsla($link-and-tab-hue, $link-and-tab-saturation, 35%, 0.5);
+            background-color: hsla($control-hue, $control-saturation, 35%, 0.5);
             cursor:           pointer;
             display:          inline-block;
             font-weight:      700;
@@ -351,11 +351,11 @@ canvas {
             }
 
             &.mode-tab-active {
-                background-color: hsl($link-and-tab-hue, $link-and-tab-saturation, 35%);
+                background-color: hsl($control-hue, $control-saturation, 35%);
             }
 
             &:not(.mode-tab-active):hover {
-                background-color: hsla($link-and-tab-hue, $link-and-tab-saturation, 35%, 0.65);
+                background-color: hsla($control-hue, $control-saturation, 35%, 0.65);
             }
         }
     }
