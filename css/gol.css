@@ -95,16 +95,24 @@ canvas {
   background-color: #26004d;
   min-width: 600px;
 }
-.panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle {
+.panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle, .panel-outer-container .panel-middle-container .panel-inner-container .fa-bars {
   color: rgba(255, 255, 255, 0.3);
   cursor: pointer;
   font-size: 30px;
   position: absolute;
-  right: 20px;
   top: 20px;
 }
-.panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle:hover {
+.panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle:hover, .panel-outer-container .panel-middle-container .panel-inner-container .fa-bars:hover {
   color: rgba(255, 255, 255, 0.8);
+}
+.panel-outer-container .panel-middle-container .panel-inner-container .fa-times-circle {
+  right: 20px;
+}
+.panel-outer-container .panel-middle-container .panel-inner-container .fa-bars {
+  left: 20px;
+}
+.panel-outer-container .panel-middle-container .panel-inner-container .fa-bars.control-menu-open {
+  color: #66bfff;
 }
 
 .panel-title {

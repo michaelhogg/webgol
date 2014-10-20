@@ -164,16 +164,27 @@ canvas {
                 min-width:        600px;
             }
 
-            .fa-times-circle {  // Close panel
+            .fa-times-circle, .fa-bars {  // Icons: close panel & control menu
                 color:     $unhovered-icon-color;
                 cursor:    pointer;
                 font-size: 30px;
                 position:  absolute;
-                right:     20px;
                 top:       20px;
 
                 &:hover {
                     color: hsla(0, 0%, 100%, 0.8);
+                }
+            }
+
+            .fa-times-circle {  // Icon: close panel
+                right: 20px;
+            }
+
+            .fa-bars {  // Icon: control menu
+                left: 20px;
+
+                &.control-menu-open {
+                    color: create-control-color(70%);
                 }
             }
         }
