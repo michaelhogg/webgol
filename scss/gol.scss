@@ -8,14 +8,20 @@ $unhovered-icon-color: hsla(0, 0%, 100%, 0.3);
 
 $gear-shadow-color: hsla(0, 0%, 0%, 0.9);
 
-$help-hue:        60;
-$help-saturation: 75%;
 
-$control-hue:        205;
-$control-saturation: 100%;
+//--------------------  Functions  --------------------//
 
-$support-hue:        200;
-$support-saturation: 100%;
+@function create-help-color($lightness, $alpha: 1.0) {
+    @return hsla(60, 75%, $lightness, $alpha);
+}
+
+@function create-control-color($lightness, $alpha: 1.0) {
+    @return hsla(205, 100%, $lightness, $alpha);
+}
+
+@function create-support-color($lightness, $alpha: 1.0) {
+    @return hsla(200, 100%, $lightness, $alpha);
+}
 
 
 //--------------------  Mixins  --------------------//
@@ -150,7 +156,7 @@ canvas {
             }
 
             &.support-panel {
-                background-color: hsl($support-hue, $support-saturation, 15%);
+                background-color: create-support-color(15%);
             }
 
             &.keyboard-shortcuts-panel {
@@ -204,7 +210,7 @@ canvas {
     white-space: nowrap;
 
     a {
-        color:           hsl($control-hue, $control-saturation, 70%);
+        color:           create-control-color(70%);
         text-decoration: none;
 
         &:hover {
@@ -241,7 +247,7 @@ canvas {
     }
 
     a {
-        color:           hsl($support-hue, $support-saturation, 66%);
+        color:           create-support-color(66%);
         text-decoration: none;
 
         &:hover {
@@ -316,12 +322,12 @@ canvas {
             font-size: 20px;
 
             &:hover {
-                color: hsl($help-hue, $help-saturation, 55%);
+                color: create-help-color(55%);
             }
         }
 
         .help-bubble {
-            background-color: hsl($help-hue, $help-saturation, 25%);
+            background-color: create-help-color(25%);
             color:            #ffffff;
             display:          none;
             font-size:        11pt;
@@ -335,7 +341,7 @@ canvas {
         }
 
         .mode-tab {
-            background-color: hsla($control-hue, $control-saturation, 35%, 0.5);
+            background-color: create-control-color(35%, 0.5);
             cursor:           pointer;
             display:          inline-block;
             font-weight:      700;
@@ -351,11 +357,11 @@ canvas {
             }
 
             &.mode-tab-active {
-                background-color: hsl($control-hue, $control-saturation, 35%);
+                background-color: create-control-color(35%);
             }
 
             &:not(.mode-tab-active):hover {
-                background-color: hsla($control-hue, $control-saturation, 35%, 0.65);
+                background-color: create-control-color(35%, 0.65);
             }
         }
     }
