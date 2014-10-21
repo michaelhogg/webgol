@@ -1,5 +1,7 @@
 # WebGOL
 
+![Screenshot](screenshot.png)
+
 http://michaelhogg.github.io/webgol/
 
 A [WebGL](http://en.wikipedia.org/wiki/WebGL) implementation of
