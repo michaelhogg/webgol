@@ -33,10 +33,10 @@ function GOLUI(gol, golAnimator) {
      * @type {object}
      */
     this.state = {
-        isGearHelpDisplayed:               true,
-        isGearDisplayed:                   true,
+        hasUserOpenedControlPanelYet:      false,
+        isToolbarDisplayed:                false,
         isControlPanelDisplayed:           false,
-        gearFadeoutTimeoutID:              null,
+        toolbarFadeoutTimeoutID:           null,
         isControlMenuDisplayed:            false,
         isKeyboardShortcutsPanelDisplayed: false
     };
@@ -317,56 +317,26 @@ GOLUI.prototype.configureCanvasMousemove = function() {
 
     $("#golCanvas").on("mousemove", function() {
 
-        if (!_this.state.isGearDisplayed) {
-            $("#iOpenControlPanel").fadeIn(GOLUI.FAST_FADE_DURATION);
-            _this.state.isGearDisplayed = true;
+        if (!_this.state.isToolbarDisplayed) {
+            $("#divToolbar").fadeIn(GOLUI.FAST_FADE_DURATION);
+            _this.state.isToolbarDisplayed = true;
         }
 
-        if (_this.state.gearFadeoutTimeoutID !== null) {
-            clearTimeout(_this.state.gearFadeoutTimeoutID);
-            _this.state.gearFadeoutTimeoutID = null;
+        if (_this.state.toolbarFadeoutTimeoutID !== null) {
+            clearTimeout(_this.state.toolbarFadeoutTimeoutID);
+            _this.state.toolbarFadeoutTimeoutID = null;
         }
 
-        if (!_this.state.isGearHelpDisplayed) {
-            _this.state.gearFadeoutTimeoutID = setTimeout(
+        if (_this.state.hasUserOpenedControlPanelYet) {
+            _this.state.toolbarFadeoutTimeoutID = setTimeout(
                 function() {
-                    $("#iOpenControlPanel").fadeOut(GOLUI.SLOW_FADE_DURATION);
-                    _this.state.isGearDisplayed      = false;
-                    _this.state.gearFadeoutTimeoutID = null;
+                    $("#divToolbar").fadeOut(GOLUI.SLOW_FADE_DURATION);
+                    _this.state.isToolbarDisplayed      = false;
+                    _this.state.toolbarFadeoutTimeoutID = null;
                 },
-                1000
+                1500
             );
         }
-
-    });
-
-};
-
-/**
- * Set the event handlers for the "open control panel" gear
- */
-GOLUI.prototype.configureOpenControlPanel = function() {
-
-    var _this = this;
-
-    $("#iOpenControlPanel").on("mousemove", function() {
-
-        if (_this.state.gearFadeoutTimeoutID !== null) {
-            clearTimeout(_this.state.gearFadeoutTimeoutID);
-            _this.state.gearFadeoutTimeoutID = null;
-        }
-
-    });
-
-    $("#iOpenControlPanel").on("click", function() {
-
-        $("#divGearHelpBubble").fadeOut(GOLUI.FAST_FADE_DURATION);
-        $("#iOpenControlPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
-        $("#divControlPanel"  ).fadeIn( GOLUI.FAST_FADE_DURATION);
-
-        _this.state.isGearHelpDisplayed     = false;
-        _this.state.isGearDisplayed         = false;
-        _this.state.isControlPanelDisplayed = true;
 
     });
 
@@ -396,6 +366,7 @@ GOLUI.prototype.configureControlKeys = function() {
         switch (event.which) {
             case 80:  // p
                 _this.golAnimator.toggle();
+                _this.updateToolbar();
                 break;
             case 83:  // s
                 if (!_this.golAnimator.isRunning()) {
@@ -473,12 +444,64 @@ GOLUI.prototype.generateHelpMarkersAndBubbles = function() {
 };
 
 /**
- * Fade in the "open control panel" gear and its help bubble
+ * Update the toolbar
  */
-GOLUI.prototype.showOpenControlPanel = function() {
+GOLUI.prototype.updateToolbar = function() {
 
-    $("#iOpenControlPanel").fadeIn(GOLUI.SLOW_FADE_DURATION);
-    $("#divGearHelpBubble").fadeIn(GOLUI.SLOW_FADE_DURATION);
+    var isRunning = this.golAnimator.isRunning();
+
+    $("#iToolbarPlay" ).toggle(!isRunning);
+    $("#iToolbarPause").toggle( isRunning);
+
+    $("#iToolbarStepForwards").toggleClass("tool-disabled", isRunning);
+
+};
+
+/**
+ * Configure the toolbar
+ */
+GOLUI.prototype.configureToolbar = function() {
+
+    var _this = this;
+
+    this.state.isToolbarDisplayed = true;
+
+    $("#divToolbar").fadeIn(GOLUI.SLOW_FADE_DURATION);
+
+    $("#divToolbar").on("mousemove", function() {
+
+        if (_this.state.toolbarFadeoutTimeoutID !== null) {
+            clearTimeout(_this.state.toolbarFadeoutTimeoutID);
+            _this.state.toolbarFadeoutTimeoutID = null;
+        }
+
+    });
+
+    $("#iToolbarPlay, #iToolbarPause").on("click", function() {
+
+        _this.golAnimator.toggle();
+        _this.updateToolbar();
+
+    });
+
+    $("#iToolbarStepForwards").on("click", function() {
+
+        if (!_this.golAnimator.isRunning()) {
+            _this.gol.calculateAndRenderNextState();
+        }
+
+    });
+
+    $("#iToolbarOpenControlPanel").on("click", function() {
+
+        $("#divToolbar"     ).fadeOut(GOLUI.FAST_FADE_DURATION);
+        $("#divControlPanel").fadeIn( GOLUI.FAST_FADE_DURATION);
+
+        _this.state.isToolbarDisplayed           = false;
+        _this.state.isControlPanelDisplayed      = true;
+        _this.state.hasUserOpenedControlPanelYet = true;
+
+    });
 
 };
 
@@ -511,8 +534,6 @@ GOLUI.prototype.init = function() {
 
     this.configureCanvasMousemove();
 
-    this.configureOpenControlPanel();
-
     this.configureCloseControlPanel();
 
     this.configureControlKeys();
@@ -523,6 +544,6 @@ GOLUI.prototype.init = function() {
 
     this.generateHelpMarkersAndBubbles();
 
-    this.showOpenControlPanel();
+    this.configureToolbar();
 
 };
