@@ -383,3 +383,47 @@ canvas {
     }
 
 }
+
+.control-menu-container {
+    left:     20px;
+    position: absolute;
+    top:      55px;
+    z-index:  2000;
+    @include m-border-radius(4px);
+    @include m-box-shadow(0px, 4px, 15px, 5px, hsla(0, 0%, 0%, 0.6));
+
+    a {
+        text-decoration: none;
+    }
+
+    .control-menu-item {
+        background-color: #ffffff;
+        color:            #000000;
+        cursor:           pointer;
+        font-family:      $font-family;
+        font-size:        12pt;
+        padding:          7px 13px;
+        white-space:      nowrap;
+
+        .fa {
+            margin-right: 5px;
+        }
+
+        &.first-item {
+            @include m-border-radii(4px, 4px, 0px, 0px);
+        }
+
+        &.last-item {
+            @include m-border-radii(0px, 0px, 4px, 4px);
+        }
+
+        &:not(.first-item) {
+            border-top: 1px solid #dddddd;
+        }
+
+        &:hover {
+            background-color: create-control-color(35%);
+            color:            #ffffff;
+        }
+    }
+}
