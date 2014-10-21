@@ -37,6 +37,7 @@ function GOLUI(gol, golAnimator) {
         isGearDisplayed:                   true,
         isControlPanelDisplayed:           false,
         gearFadeoutTimeoutID:              null,
+        isControlMenuDisplayed:            false,
         isKeyboardShortcutsPanelDisplayed: false
     };
 
@@ -171,6 +172,48 @@ GOLUI.prototype.configureKeyboardShortcutsPanel = function() {
 
     $("#iCloseKeyboardShortcutsPanel").on("click", function() {
         _this.closeKeyboardShortcutsPanel();
+    });
+
+};
+
+/**
+ * Update the control menu
+ */
+GOLUI.prototype.updateControlMenu = function() {
+
+    $("#divControlMenuContainer").toggle(this.state.isControlMenuDisplayed);
+
+    $("#iControlMenuIcon").toggleClass("control-menu-open", this.state.isControlMenuDisplayed);
+
+};
+
+/**
+ * Configure the control menu
+ */
+GOLUI.prototype.configureControlMenu = function() {
+
+    var _this = this;
+
+    $("#iControlMenuIcon").on("click", function(event) {
+        event.stopPropagation();  // Stop event from bubbling up to the document on-click handler
+        _this.state.isControlMenuDisplayed = !_this.state.isControlMenuDisplayed;
+        _this.updateControlMenu();
+    });
+
+    $(document).on("click", function() {
+        if (_this.state.isControlMenuDisplayed) {
+            _this.state.isControlMenuDisplayed = false;
+            _this.updateControlMenu();
+        }
+    });
+
+    $("#divControlMenuKeyboardShortcuts").on("click", function() {
+        _this.state.isKeyboardShortcutsPanelDisplayed = true;
+        $("#divKeyboardShortcutsPanel").fadeIn(GOLUI.FAST_FADE_DURATION);
+    });
+
+    $("#divControlMenuTroubleshooting").on("click", function() {
+        GOLUI.showSupportPanel(false, "Experiencing problems with WebGOL?", true, _this.gol);
     });
 
 };
@@ -451,6 +494,8 @@ GOLUI.prototype.init = function() {
     this.configureKeyboardShortcutsPanel();
 
     // Configure menus
+
+    this.configureControlMenu();
 
     this.configureCellSizeMenu();
 
