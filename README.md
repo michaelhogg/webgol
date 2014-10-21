@@ -53,6 +53,19 @@ GOL can be considered to be a
 in that each cell's next state can be calculated independently, and so "little or
 no effort is required to separate the problem into a number of parallel tasks".
 
+WebGOL is an example of
+[GPGPU](http://en.wikipedia.org/wiki/General-purpose_computing_on_graphics_processing_units)
+(general-purpose computing on GPUs). Check out
+[this excellent article](https://www.tacc.utexas.edu/news/feature-stories/2010/8-things-you-should-know-about-gpgpu-technology)
+for more information:
+
+> GPGPU is a methodology for high-performance computing that uses GPUs to crunch data.
+> Algorithms well-suited to GPGPU implementation are those that exhibit two properties:
+>
+>  * Data parallel – A processor can execute the operation on different data elements simultaneously.
+>  * Throughput intensive – The algorithm is going to process lots of data elements,
+>    so there will be plenty to operate on in parallel.
+
 
 ## Implementation
 
