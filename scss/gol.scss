@@ -6,8 +6,6 @@ $dark-grey-background-color: #222222;
 
 $unhovered-icon-color: hsla(0, 0%, 100%, 0.3);
 
-$gear-shadow-color: hsla(0, 0%, 0%, 0.9);
-
 
 //--------------------  Functions  --------------------//
 
@@ -91,41 +89,46 @@ canvas {
     top:      0px;
 }
 
-.gear-open-control-panel {
-    background-color: $gear-shadow-color;
-    color:            #ffffff;
-    cursor:           pointer;
-    font-size:        50px;
+.toolbar {
+    background-color: $dark-grey-background-color;
+    cursor:           default;
+    padding:          15px 15px;
     position:         absolute;
     right:            50px;
     top:              50px;
-    @include m-border-radius(25px);
-    @include m-box-shadow(0px, 0px, 20px, 20px, $gear-shadow-color);
-    @include m-transition-duration(0.1s);
-    @include m-transition-property(transform);
-
-    &:hover {
-        @include m-transform(scale(1.1));
-    }
-}
-
-.gear-help-bubble {
-    background-color: $dark-grey-background-color;
-    color:            #ffffff;
-    font-family:      $font-family;
-    font-size:        12pt;
-    font-weight:      400;
-    padding:          15px 20px;
-    position:         absolute;
-    right:            120px;
-    top:              47px;
     @include m-border-radius(12px);
-    @include m-box-shadow(0px, 4px, 10px, 8px, $gear-shadow-color);
+    @include m-box-shadow(0px, 6px, 30px, 20px, hsla(0, 0%, 0%, 0.9));
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
 
-    .fa-arrow-right {
-        font-size:      20pt;
-        margin-left:    8px;
-        vertical-align: -10%;
+    .fa {
+        color:     #cccccc;
+        font-size: 40px;
+
+        &:not(:first-child) {
+            margin-left: 10px;
+        }
+
+        &.fa-step-forward {
+            @include m-transform(scale(1, 0.8));
+        }
+
+        &.fa-pause, &.fa-play {
+            @include m-transform(scale(0.75, 0.8));
+        }
+
+        &.tool-disabled {
+            opacity: 0.15;
+        }
+
+        &:not(.tool-disabled) {
+            cursor: pointer;
+
+            &:hover {
+                color: #ffffff;
+            }
+        }
     }
 }
 
