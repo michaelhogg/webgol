@@ -83,6 +83,26 @@ body {
     margin:           0;
 }
 
+.font-preloaders {
+    color:       #000000;
+    font-family: $font-family;
+    left:        0px;
+    position:    absolute;
+    top:         0px;
+
+    .light-text {
+        font-weight: 300;
+    }
+
+    .normal-text {
+        font-weight: 400;
+    }
+
+    .bold-text {
+        font-weight: 700;
+    }
+}
+
 canvas {
     left:     0px;
     position: absolute;

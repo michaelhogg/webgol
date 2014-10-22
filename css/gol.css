@@ -3,6 +3,23 @@ body {
   margin: 0;
 }
 
+.font-preloaders {
+  color: #000000;
+  font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+}
+.font-preloaders .light-text {
+  font-weight: 300;
+}
+.font-preloaders .normal-text {
+  font-weight: 400;
+}
+.font-preloaders .bold-text {
+  font-weight: 700;
+}
+
 canvas {
   left: 0px;
   position: absolute;
