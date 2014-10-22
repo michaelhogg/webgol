@@ -3,7 +3,7 @@ var golAnimator = null;
 var golUI       = null;
 
 window.onerror = function(errorMessage) {
-    GOLUI.showSupportPanel(true, errorMessage, false, gol);
+    GOLUIPanelSupport.show(true, errorMessage, false, gol);
 };
 
 $(document).ready(function() {
@@ -31,7 +31,7 @@ $(document).ready(function() {
         gol = new GOL(canvas, cellSize);
     } catch (e) {
         // Error when starting WebGL
-        GOLUI.showSupportPanel(true, e.message, true, null);
+        GOLUIPanelSupport.show(true, e.message, true, null);
         return;
     }
 
@@ -40,7 +40,7 @@ $(document).ready(function() {
     } catch (e) {
         // Error when: fetching shader source code,
         // compiling/linking WebGLProgram, rendering, etc
-        GOLUI.showSupportPanel(true, e.message, false, gol);
+        GOLUIPanelSupport.show(true, e.message, false, gol);
         return;
     }
 

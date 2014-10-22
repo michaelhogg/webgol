@@ -28,6 +28,7 @@
         "GOLGrid":                false,
         "GOLGridFactory":         true,
         "GOLUI":                  false,
+        "GOLUIPanelSupport":      true,
         "GOLUISwitcheryMutation": false,
         "GOLUISwitcheryWrapping": false,
         "GOLUIUtils":             true,

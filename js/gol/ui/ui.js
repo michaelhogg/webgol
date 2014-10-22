@@ -48,88 +48,6 @@ GOLUI.FAST_FADE_DURATION = 200;
 GOLUI.SLOW_FADE_DURATION = 1000;
 
 /**
- * Show the support panel
- *
- * @param {boolean}    isError
- * @param {string}     supportMessage
- * @param {boolean}    showBrowserHelp
- * @param {(GOL|null)} gol
- * @static
- */
-GOLUI.showSupportPanel = function(isError, supportMessage, showBrowserHelp, gol) {
-
-    $("#divSupportPanelTitleError"          ).toggle( isError);
-    $("#divSupportPanelTitleTroubleshooting").toggle(!isError);
-    $("#divSupportPanelBrowserHelpContainer").toggle(showBrowserHelp);
-
-    $("#divSupportPanelMessage").text(supportMessage);
-
-    var showWebglContainer = false;
-
-    if (gol !== null) {
-        try {
-
-            var webglInfo     = GOLUtils.getWebglInfo(gol);
-            var webglWarnings = GOLUtils.getWebglWarnings(gol);
-
-            var infoListElements    = GOLUIUtils.createListElements(webglInfo);
-            var warningListElements = GOLUIUtils.createListElements(webglWarnings);
-
-            $("#ulSupportPanelWebGLInfo"    ).html("").append(infoListElements);
-            $("#ulSupportPanelWebGLWarnings").html("").append(warningListElements);
-
-            $("#divSupportPanelWebGLWarningsContainer").toggle(webglWarnings.length > 0);
-
-            showWebglContainer = true;
-
-        } catch (e) {
-            // Ignore error
-        }
-    }
-
-    $("#divSupportPanelWebGLContainer").toggle(showWebglContainer);
-
-    $("#divSupportPanel").fadeIn(GOLUI.FAST_FADE_DURATION);
-
-};
-
-/**
- * Configure the support panel
- */
-GOLUI.prototype.configureSupportPanel = function() {
-
-    var _this = this;
-
-    $("#iCloseSupportPanel").show();
-
-    $("#iCloseSupportPanel").on("click", function() {
-        _this.closeSupportPanel();
-    });
-
-};
-
-/**
- * Can the support panel be closed?
- *
- * @returns {boolean}
- */
-GOLUI.prototype.canSupportPanelBeClosed = function() {
-
-    return $("#divSupportPanel"   ).is(":visible") &&
-           $("#iCloseSupportPanel").is(":visible");
-
-};
-
-/**
- * Close the support panel
- */
-GOLUI.prototype.closeSupportPanel = function() {
-
-    $("#divSupportPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
-
-};
-
-/**
  * Close the control panel
  */
 GOLUI.prototype.closeControlPanel = function() {
@@ -201,7 +119,7 @@ GOLUI.prototype.configureControlMenu = function() {
     });
 
     $("#divControlMenuTroubleshooting").on("click", function() {
-        GOLUI.showSupportPanel(false, "Experiencing problems with WebGOL?", true, _this.gol);
+        GOLUIPanelSupport.show(false, "Experiencing problems with WebGOL?", true, _this.gol);
     });
 
 };
@@ -326,8 +244,8 @@ GOLUI.prototype.configureControlKeys = function() {
                 }
                 break;
             case 27:  // esc
-                if (_this.canSupportPanelBeClosed()) {
-                    _this.closeSupportPanel();
+                if (GOLUIPanelSupport.canBeClosed()) {
+                    GOLUIPanelSupport.close();
                 } else if (_this.state.isKeyboardShortcutsPanelDisplayed) {
                     _this.closeKeyboardShortcutsPanel();
                 } else if (_this.state.isControlPanelDisplayed) {
@@ -462,9 +380,9 @@ GOLUI.prototype.configureToolbar = function() {
  */
 GOLUI.prototype.init = function() {
 
-    // Configure panels
+    // Panels
 
-    this.configureSupportPanel();
+    GOLUIPanelSupport.initCloseButton();
 
     this.configureKeyboardShortcutsPanel();
 
