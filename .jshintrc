@@ -23,16 +23,18 @@
     "browser": true,
     "jquery":  true,
     "globals": {
-        "GOL":            false,
-        "GOLAnimator":    false,
-        "GOLGrid":        false,
-        "GOLGridFactory": true,
-        "GOLUI":          false,
-        "GOLUIUtils":     true,
-        "GOLUtils":       true,
-        "Igloo":          false,
-        "Switchery":      false,
-        "WebGLRenderingContext": false
+        "GOL":                    false,
+        "GOLAnimator":            false,
+        "GOLGrid":                false,
+        "GOLGridFactory":         true,
+        "GOLUI":                  false,
+        "GOLUISwitcheryMutation": false,
+        "GOLUISwitcheryWrapping": false,
+        "GOLUIUtils":             true,
+        "GOLUtils":               true,
+        "Igloo":                  false,
+        "Switchery":              false,
+        "WebGLRenderingContext":  false
     }
 
 }

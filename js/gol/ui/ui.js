@@ -17,18 +17,6 @@ function GOLUI(gol, golAnimator) {
     this.golAnimator = golAnimator;
 
     /**
-     * Switchery object for the "wrapping" checkbox
-     * @type {(Switchery|null)}
-     */
-    this.wrappingSwitchery = null;
-
-    /**
-     * Switchery object for the "mutation" checkbox
-     * @type {(Switchery|null)}
-     */
-    this.mutationSwitchery = null;
-
-    /**
      * Object storing the current state of the UI
      * @type {object}
      */
@@ -273,42 +261,6 @@ GOLUI.prototype.configureTargetFramerateMenu = function() {
 };
 
 /**
- * Configure the "wrapping" switchery
- */
-GOLUI.prototype.configureWrappingSwitchery = function() {
-
-    this.wrappingSwitchery = GOLUIUtils.createSwitchery("checkboxSwitcheryWrapping");
-
-    var _this = this;
-
-    $("#checkboxSwitcheryWrapping").on("change", function() {
-        _this.gol.toggleWrapping();
-        GOLUIUtils.updateSwitcheryState(_this.wrappingSwitchery, _this.gol.enableWrapping);
-    });
-
-    GOLUIUtils.updateSwitcheryState(this.wrappingSwitchery, this.gol.enableWrapping);
-
-};
-
-/**
- * Configure the "mutation" switchery
- */
-GOLUI.prototype.configureMutationSwitchery = function() {
-
-    this.mutationSwitchery = GOLUIUtils.createSwitchery("checkboxSwitcheryRandomModeMutation");
-
-    var _this = this;
-
-    $("#checkboxSwitcheryRandomModeMutation").on("change", function() {
-        _this.gol.toggleMutation();
-        GOLUIUtils.updateSwitcheryState(_this.mutationSwitchery, _this.gol.enableMutation);
-    });
-
-    GOLUIUtils.updateSwitcheryState(this.mutationSwitchery, this.gol.enableMutation);
-
-};
-
-/**
  * Set the mousemove event handler for the canvas
  */
 GOLUI.prototype.configureCanvasMousemove = function() {
@@ -524,11 +476,13 @@ GOLUI.prototype.init = function() {
 
     this.configureTargetFramerateMenu();
 
-    // Configure switcherys
+    // Switcherys
 
-    this.configureWrappingSwitchery();
+    var wrappingSwitchery = new GOLUISwitcheryWrapping(this.gol);
+    var mutationSwitchery = new GOLUISwitcheryMutation(this.gol);
 
-    this.configureMutationSwitchery();
+    wrappingSwitchery.init();
+    mutationSwitchery.init();
 
     // Set event handlers
 
