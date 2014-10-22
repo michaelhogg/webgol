@@ -1,3 +1,6 @@
+/* ----- JSHint ----- */
+/* exported GOLUIHelp */
+
 /**
  * Game Of Life user interface: Help
  */

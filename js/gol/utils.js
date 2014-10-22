@@ -1,3 +1,6 @@
+/* ---- JSHint ----- */
+/* exported GOLUtils */
+
 /**
  * Game Of Life utilities
  */
@@ -20,7 +23,7 @@ var GOLUtils = {
             url:      url,
             async:    false,
             dataType: "text",
-            success:  function(data, textStatus, jqXHR) {
+            success:  function(data) {
                 successful = true;
                 sourceCode = data;
             },
