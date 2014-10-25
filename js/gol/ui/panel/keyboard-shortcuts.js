@@ -25,9 +25,9 @@ GOLUIPanelKeyboardShortcuts.prototype.init = function() {
 };
 
 /**
- * Show
+ * Open
  */
-GOLUIPanelKeyboardShortcuts.prototype.show = function() {
+GOLUIPanelKeyboardShortcuts.prototype.open = function() {
 
     $("#divKeyboardShortcutsPanel").fadeIn(GOLUI.FAST_FADE_DURATION);
 

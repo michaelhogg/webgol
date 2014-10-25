@@ -94,11 +94,11 @@ GOLUI.prototype.configureControlMenu = function() {
     });
 
     $("#divControlMenuKeyboardShortcuts").on("click", function() {
-        _this.panelKeyboardShortcuts.show();
+        _this.panelKeyboardShortcuts.open();
     });
 
     $("#divControlMenuTroubleshooting").on("click", function() {
-        GOLUIPanelSupport.show(false, "Experiencing problems with WebGOL?", true, _this.gol);
+        GOLUIPanelSupport.open(false, "Experiencing problems with WebGOL?", true, _this.gol);
     });
 
 };

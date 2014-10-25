@@ -4,14 +4,14 @@
 var GOLUIPanelSupport = {
 
     /**
-     * Show
+     * Open
      *
      * @param {boolean}    isError
      * @param {string}     supportMessage
      * @param {boolean}    showBrowserHelp
      * @param {(GOL|null)} gol
      */
-    show: function(isError, supportMessage, showBrowserHelp, gol) {
+    open: function(isError, supportMessage, showBrowserHelp, gol) {
 
         $("#divSupportPanelTitleError"          ).toggle( isError);
         $("#divSupportPanelTitleTroubleshooting").toggle(!isError);
