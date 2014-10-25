@@ -17,16 +17,20 @@ function GOLUI(gol, golAnimator) {
     this.golAnimator = golAnimator;
 
     /**
+     * @type {(GOLUIPanelKeyboardShortcuts|null)}
+     */
+    this.panelKeyboardShortcuts = null;
+
+    /**
      * Object storing the current state of the UI
      * @type {object}
      */
     this.state = {
-        hasUserOpenedControlPanelYet:      false,
-        isToolbarDisplayed:                false,
-        isControlPanelDisplayed:           false,
-        toolbarFadeoutTimeoutID:           null,
-        isControlMenuDisplayed:            false,
-        isKeyboardShortcutsPanelDisplayed: false
+        hasUserOpenedControlPanelYet: false,
+        isToolbarDisplayed:           false,
+        isControlPanelDisplayed:      false,
+        toolbarFadeoutTimeoutID:      null,
+        isControlMenuDisplayed:       false
     };
 
 }
@@ -55,30 +59,6 @@ GOLUI.prototype.closeControlPanel = function() {
     $("#divControlPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
 
     this.state.isControlPanelDisplayed = false;
-
-};
-
-/**
- * Close the keyboard shortcuts panel
- */
-GOLUI.prototype.closeKeyboardShortcutsPanel = function() {
-
-    $("#divKeyboardShortcutsPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
-
-    this.state.isKeyboardShortcutsPanelDisplayed = false;
-
-};
-
-/**
- * Configure the keyboard shortcuts panel
- */
-GOLUI.prototype.configureKeyboardShortcutsPanel = function() {
-
-    var _this = this;
-
-    $("#iCloseKeyboardShortcutsPanel").on("click", function() {
-        _this.closeKeyboardShortcutsPanel();
-    });
 
 };
 
@@ -114,8 +94,7 @@ GOLUI.prototype.configureControlMenu = function() {
     });
 
     $("#divControlMenuKeyboardShortcuts").on("click", function() {
-        _this.state.isKeyboardShortcutsPanelDisplayed = true;
-        $("#divKeyboardShortcutsPanel").fadeIn(GOLUI.FAST_FADE_DURATION);
+        _this.panelKeyboardShortcuts.show();
     });
 
     $("#divControlMenuTroubleshooting").on("click", function() {
@@ -246,8 +225,8 @@ GOLUI.prototype.configureControlKeys = function() {
             case 27:  // esc
                 if (GOLUIPanelSupport.canBeClosed()) {
                     GOLUIPanelSupport.close();
-                } else if (_this.state.isKeyboardShortcutsPanelDisplayed) {
-                    _this.closeKeyboardShortcutsPanel();
+                } else if (_this.panelKeyboardShortcuts.isDisplayed) {
+                    _this.panelKeyboardShortcuts.close();
                 } else if (_this.state.isControlPanelDisplayed) {
                     _this.closeControlPanel();
                 }
@@ -342,7 +321,8 @@ GOLUI.prototype.init = function() {
 
     GOLUIPanelSupport.initCloseButton();
 
-    this.configureKeyboardShortcutsPanel();
+    this.panelKeyboardShortcuts = new GOLUIPanelKeyboardShortcuts();
+    this.panelKeyboardShortcuts.init();
 
     // Configure menus
 
