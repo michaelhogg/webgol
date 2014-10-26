@@ -30,6 +30,7 @@
         "GOLUI":                       false,
         "GOLUIHelp":                   true,
         "GOLUIMenuApplication":        false,
+        "GOLUIMenuCellSize":           false,
         "GOLUIPanelControl":           false,
         "GOLUIPanelKeyboardShortcuts": false,
         "GOLUIPanelSupport":           true,

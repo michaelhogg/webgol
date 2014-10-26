@@ -55,33 +55,6 @@ GOLUI.FAST_FADE_DURATION = 200;
 GOLUI.SLOW_FADE_DURATION = 1000;
 
 /**
- * Configure the "cell size" <select> menu
- */
-GOLUI.prototype.configureCellSizeMenu = function() {
-
-    var cellSizes = [];
-
-    for (var i = 1; i <= 20; i++) {
-        cellSizes.push(i);
-    }
-
-    GOLUIUtils.populateMenuWithValues(
-        $("#selectCellSize"),
-        cellSizes,
-        this.gol.CELL_SIZE
-    );
-
-    $("#selectCellSize").on("change", function() {
-
-        var cellSize = parseInt($(this).val());
-
-        window.location.href = "index.html?cs=" + cellSize;
-
-    });
-
-};
-
-/**
  * Configure the "target framerate" <select> menu
  */
 GOLUI.prototype.configureTargetFramerateMenu = function() {
@@ -268,10 +241,10 @@ GOLUI.prototype.init = function() {
     // Menus
 
     var menuApplication = new GOLUIMenuApplication(this.panelKeyboardShortcuts);
+    var menuCellSize    = new GOLUIMenuCellSize(this.gol);
 
     menuApplication.init();
-
-    this.configureCellSizeMenu();
+    menuCellSize.init();
 
     this.configureTargetFramerateMenu();
 
