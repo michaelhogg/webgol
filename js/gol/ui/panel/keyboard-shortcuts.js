@@ -4,10 +4,10 @@
 function GOLUIPanelKeyboardShortcuts() {
 
     /**
-     * Is the panel displayed?
+     * Is the panel open?
      * @type {boolean}
      */
-    this.isDisplayed = false;
+    this.isOpen = false;
 
 }
 
@@ -31,7 +31,7 @@ GOLUIPanelKeyboardShortcuts.prototype.open = function() {
 
     $("#divKeyboardShortcutsPanel").fadeIn(GOLUI.FAST_FADE_DURATION);
 
-    this.isDisplayed = true;
+    this.isOpen = true;
 
 };
 
@@ -42,6 +42,6 @@ GOLUIPanelKeyboardShortcuts.prototype.close = function() {
 
     $("#divKeyboardShortcutsPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
 
-    this.isDisplayed = false;
+    this.isOpen = false;
 
 };

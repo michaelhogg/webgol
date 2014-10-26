@@ -205,9 +205,9 @@ GOLUI.prototype.configureControlKeys = function() {
             case 27:  // esc
                 if (GOLUIPanelSupport.canBeClosed()) {
                     GOLUIPanelSupport.close();
-                } else if (_this.panelKeyboardShortcuts.isDisplayed) {
+                } else if (_this.panelKeyboardShortcuts.isOpen) {
                     _this.panelKeyboardShortcuts.close();
-                } else if (_this.panelControl.isDisplayed) {
+                } else if (_this.panelControl.isOpen) {
                     _this.panelControl.close();
                 }
                 break;

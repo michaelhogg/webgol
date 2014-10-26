@@ -4,10 +4,10 @@
 function GOLUIPanelControl() {
 
     /**
-     * Is the panel displayed?
+     * Is the panel open?
      * @type {boolean}
      */
-    this.isDisplayed = false;
+    this.isOpen = false;
 
 }
 
@@ -31,7 +31,7 @@ GOLUIPanelControl.prototype.open = function() {
 
     $("#divControlPanel").fadeIn(GOLUI.FAST_FADE_DURATION);
 
-    this.isDisplayed = true;
+    this.isOpen = true;
 
 };
 
@@ -42,6 +42,6 @@ GOLUIPanelControl.prototype.close = function() {
 
     $("#divControlPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
 
-    this.isDisplayed = false;
+    this.isOpen = false;
 
 };
