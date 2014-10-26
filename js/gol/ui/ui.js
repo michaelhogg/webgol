@@ -33,8 +33,7 @@ function GOLUI(gol, golAnimator) {
     this.state = {
         hasUserOpenedControlPanelYet: false,
         isToolbarDisplayed:           false,
-        toolbarFadeoutTimeoutID:      null,
-        isControlMenuDisplayed:       false
+        toolbarFadeoutTimeoutID:      null
     };
 
 }
@@ -54,47 +53,6 @@ GOLUI.FAST_FADE_DURATION = 200;
  * @static
  */
 GOLUI.SLOW_FADE_DURATION = 1000;
-
-/**
- * Update the control menu
- */
-GOLUI.prototype.updateControlMenu = function() {
-
-    $("#divControlMenuContainer").toggle(this.state.isControlMenuDisplayed);
-
-    $("#iControlMenuIcon").toggleClass("control-menu-open", this.state.isControlMenuDisplayed);
-
-};
-
-/**
- * Configure the control menu
- */
-GOLUI.prototype.configureControlMenu = function() {
-
-    var _this = this;
-
-    $("#iControlMenuIcon").on("click", function(event) {
-        event.stopPropagation();  // Stop event from bubbling up to the document on-click handler
-        _this.state.isControlMenuDisplayed = !_this.state.isControlMenuDisplayed;
-        _this.updateControlMenu();
-    });
-
-    $(document).on("click", function() {
-        if (_this.state.isControlMenuDisplayed) {
-            _this.state.isControlMenuDisplayed = false;
-            _this.updateControlMenu();
-        }
-    });
-
-    $("#divControlMenuKeyboardShortcuts").on("click", function() {
-        _this.panelKeyboardShortcuts.open();
-    });
-
-    $("#divControlMenuTroubleshooting").on("click", function() {
-        GOLUIPanelSupport.open(false, "Experiencing problems with WebGOL?", true, _this.gol);
-    });
-
-};
 
 /**
  * Configure the "cell size" <select> menu
@@ -309,7 +267,9 @@ GOLUI.prototype.init = function() {
 
     // Configure menus
 
-    this.configureControlMenu();
+    var menuControl = new GOLUIMenuControl(this.panelKeyboardShortcuts);
+
+    menuControl.init();
 
     this.configureCellSizeMenu();
 
