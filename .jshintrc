@@ -29,6 +29,7 @@
         "GOLGridFactory":              true,
         "GOLUI":                       false,
         "GOLUIHelp":                   true,
+        "GOLUIPanelControl":           false,
         "GOLUIPanelKeyboardShortcuts": false,
         "GOLUIPanelSupport":           true,
         "GOLUISwitcheryMutation":      false,

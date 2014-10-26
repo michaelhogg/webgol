@@ -17,6 +17,11 @@ function GOLUI(gol, golAnimator) {
     this.golAnimator = golAnimator;
 
     /**
+     * @type {(GOLUIPanelControl|null)}
+     */
+    this.panelControl = null;
+
+    /**
      * @type {(GOLUIPanelKeyboardShortcuts|null)}
      */
     this.panelKeyboardShortcuts = null;
@@ -28,7 +33,6 @@ function GOLUI(gol, golAnimator) {
     this.state = {
         hasUserOpenedControlPanelYet: false,
         isToolbarDisplayed:           false,
-        isControlPanelDisplayed:      false,
         toolbarFadeoutTimeoutID:      null,
         isControlMenuDisplayed:       false
     };
@@ -50,17 +54,6 @@ GOLUI.FAST_FADE_DURATION = 200;
  * @static
  */
 GOLUI.SLOW_FADE_DURATION = 1000;
-
-/**
- * Close the control panel
- */
-GOLUI.prototype.closeControlPanel = function() {
-
-    $("#divControlPanel").fadeOut(GOLUI.FAST_FADE_DURATION);
-
-    this.state.isControlPanelDisplayed = false;
-
-};
 
 /**
  * Update the control menu
@@ -192,19 +185,6 @@ GOLUI.prototype.configureCanvasMousemove = function() {
 };
 
 /**
- * Set the event handlers for the "close control panel" cross
- */
-GOLUI.prototype.configureCloseControlPanel = function() {
-
-    var _this = this;
-
-    $("#iCloseControlPanel").on("click", function() {
-        _this.closeControlPanel();
-    });
-
-};
-
-/**
  * Set the event handler for the control keys
  */
 GOLUI.prototype.configureControlKeys = function() {
@@ -227,8 +207,8 @@ GOLUI.prototype.configureControlKeys = function() {
                     GOLUIPanelSupport.close();
                 } else if (_this.panelKeyboardShortcuts.isDisplayed) {
                     _this.panelKeyboardShortcuts.close();
-                } else if (_this.state.isControlPanelDisplayed) {
-                    _this.closeControlPanel();
+                } else if (_this.panelControl.isDisplayed) {
+                    _this.panelControl.close();
                 }
                 break;
         }
@@ -301,12 +281,12 @@ GOLUI.prototype.configureToolbar = function() {
 
     $("#iToolbarOpenControlPanel").on("click", function() {
 
-        $("#divToolbar"     ).fadeOut(GOLUI.FAST_FADE_DURATION);
-        $("#divControlPanel").fadeIn( GOLUI.FAST_FADE_DURATION);
+        $("#divToolbar").fadeOut(GOLUI.FAST_FADE_DURATION);
 
         _this.state.isToolbarDisplayed           = false;
-        _this.state.isControlPanelDisplayed      = true;
         _this.state.hasUserOpenedControlPanelYet = true;
+
+        _this.panelControl.open();
 
     });
 
@@ -320,6 +300,9 @@ GOLUI.prototype.init = function() {
     // Panels
 
     GOLUIPanelSupport.initCloseButton();
+
+    this.panelControl = new GOLUIPanelControl();
+    this.panelControl.init();
 
     this.panelKeyboardShortcuts = new GOLUIPanelKeyboardShortcuts();
     this.panelKeyboardShortcuts.init();
@@ -343,8 +326,6 @@ GOLUI.prototype.init = function() {
     // Set event handlers
 
     this.configureCanvasMousemove();
-
-    this.configureCloseControlPanel();
 
     this.configureControlKeys();
 
