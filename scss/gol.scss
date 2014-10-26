@@ -187,7 +187,7 @@ canvas {
                 min-width:        600px;
             }
 
-            .fa-times-circle, .fa-bars {  // Icons: close panel & control menu
+            .fa-times-circle, .fa-bars {  // Icons: close panel & application menu
                 color:     $unhovered-icon-color;
                 cursor:    pointer;
                 font-size: 30px;
@@ -203,10 +203,10 @@ canvas {
                 right: 20px;
             }
 
-            .fa-bars {  // Icon: control menu
+            .fa-bars {  // Icon: application menu
                 left: 20px;
 
-                &.control-menu-open {
+                &.application-menu-open {
                     color: create-control-color(70%);
                 }
             }
@@ -407,7 +407,7 @@ canvas {
 
 }
 
-.control-menu-container {
+.application-menu-container {
     left:     20px;
     position: absolute;
     top:      55px;
@@ -419,7 +419,7 @@ canvas {
         text-decoration: none;
     }
 
-    .control-menu-item {
+    .application-menu-item {
         background-color: #ffffff;
         color:            #000000;
         cursor:           pointer;

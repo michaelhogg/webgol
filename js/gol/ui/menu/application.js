@@ -1,9 +1,9 @@
 /**
- * Game Of Life user interface: Control menu
+ * Game Of Life user interface: Application menu
  *
  * @param {GOLUIPanelKeyboardShortcuts} panelKeyboardShortcuts
  */
-function GOLUIMenuControl(panelKeyboardShortcuts) {
+function GOLUIMenuApplication(panelKeyboardShortcuts) {
 
     /**
      * @type {GOLUIPanelKeyboardShortcuts}
@@ -21,11 +21,11 @@ function GOLUIMenuControl(panelKeyboardShortcuts) {
 /**
  * Initialise
  */
-GOLUIMenuControl.prototype.init = function() {
+GOLUIMenuApplication.prototype.init = function() {
 
     var _this = this;
 
-    $("#iControlMenuIcon").on("click", function(event) {
+    $("#iApplicationMenuIcon").on("click", function(event) {
         event.stopPropagation();  // Stop event from bubbling up to the document on-click handler
         _this.isOpen = !_this.isOpen;
         _this.update();
@@ -38,11 +38,11 @@ GOLUIMenuControl.prototype.init = function() {
         }
     });
 
-    $("#divControlMenuKeyboardShortcuts").on("click", function() {
+    $("#divApplicationMenuKeyboardShortcuts").on("click", function() {
         _this.panelKeyboardShortcuts.open();
     });
 
-    $("#divControlMenuTroubleshooting").on("click", function() {
+    $("#divApplicationMenuTroubleshooting").on("click", function() {
         GOLUIPanelSupport.open(false, "Experiencing problems with WebGOL?", true, _this.gol);
     });
 
@@ -51,10 +51,10 @@ GOLUIMenuControl.prototype.init = function() {
 /**
  * Update
  */
-GOLUIMenuControl.prototype.update = function() {
+GOLUIMenuApplication.prototype.update = function() {
 
-    $("#divControlMenuContainer").toggle(this.isOpen);
+    $("#divApplicationMenuContainer").toggle(this.isOpen);
 
-    $("#iControlMenuIcon").toggleClass("control-menu-open", this.isOpen);
+    $("#iApplicationMenuIcon").toggleClass("application-menu-open", this.isOpen);
 
 };

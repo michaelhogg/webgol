@@ -265,11 +265,11 @@ GOLUI.prototype.init = function() {
     this.panelKeyboardShortcuts = new GOLUIPanelKeyboardShortcuts();
     this.panelKeyboardShortcuts.init();
 
-    // Configure menus
+    // Menus
 
-    var menuControl = new GOLUIMenuControl(this.panelKeyboardShortcuts);
+    var menuApplication = new GOLUIMenuApplication(this.panelKeyboardShortcuts);
 
-    menuControl.init();
+    menuApplication.init();
 
     this.configureCellSizeMenu();
 

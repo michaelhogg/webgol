@@ -122,7 +122,7 @@ canvas {
 .panel-outer-container .panel-middle-container .panel-inner-container .fa-bars {
   left: 20px;
 }
-.panel-outer-container .panel-middle-container .panel-inner-container .fa-bars.control-menu-open {
+.panel-outer-container .panel-middle-container .panel-inner-container .fa-bars.application-menu-open {
   color: #66bfff;
 }
 
@@ -320,7 +320,7 @@ canvas {
   font-weight: 300;
 }
 
-.control-menu-container {
+.application-menu-container {
   left: 20px;
   position: absolute;
   top: 55px;
@@ -332,10 +332,10 @@ canvas {
   -moz-box-shadow: 0px 4px 15px 5px rgba(0, 0, 0, 0.6);
   box-shadow: 0px 4px 15px 5px rgba(0, 0, 0, 0.6);
 }
-.control-menu-container a {
+.application-menu-container a {
   text-decoration: none;
 }
-.control-menu-container .control-menu-item {
+.application-menu-container .application-menu-item {
   background-color: #ffffff;
   color: #000000;
   cursor: pointer;
@@ -344,10 +344,10 @@ canvas {
   padding: 7px 13px;
   white-space: nowrap;
 }
-.control-menu-container .control-menu-item .fa {
+.application-menu-container .application-menu-item .fa {
   margin-right: 5px;
 }
-.control-menu-container .control-menu-item.first-item {
+.application-menu-container .application-menu-item.first-item {
   -webkit-border-top-left-radius: 4px;
   -moz-border-radius-topleft: 4px;
   border-top-left-radius: 4px;
@@ -361,7 +361,7 @@ canvas {
   -moz-border-radius-bottomright: 0px;
   border-bottom-right-radius: 0px;
 }
-.control-menu-container .control-menu-item.last-item {
+.application-menu-container .application-menu-item.last-item {
   -webkit-border-top-left-radius: 0px;
   -moz-border-radius-topleft: 0px;
   border-top-left-radius: 0px;
@@ -375,10 +375,10 @@ canvas {
   -moz-border-radius-bottomright: 4px;
   border-bottom-right-radius: 4px;
 }
-.control-menu-container .control-menu-item:not(.first-item) {
+.application-menu-container .application-menu-item:not(.first-item) {
   border-top: 1px solid #dddddd;
 }
-.control-menu-container .control-menu-item:hover {
+.application-menu-container .application-menu-item:hover {
   background-color: #0068b3;
   color: #ffffff;
 }
