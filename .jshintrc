@@ -38,6 +38,7 @@
         "GOLUIPanelSupport":              true,
         "GOLUISwitcheryMutation":         false,
         "GOLUISwitcheryWrapping":         false,
+        "GOLUIToolbar":                   false,
         "GOLUIUtils":                     true,
         "GOLUtils":                       true,
         "Igloo":                          false,

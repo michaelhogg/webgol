@@ -17,6 +17,11 @@ function GOLUI(gol, golAnimator) {
     this.golAnimator = golAnimator;
 
     /**
+     * @type {(GOLUIToolbar|null)}
+     */
+    this.toolbar = null;
+
+    /**
      * @type {(GOLUIPanelControl|null)}
      */
     this.panelControl = null;
@@ -25,16 +30,6 @@ function GOLUI(gol, golAnimator) {
      * @type {(GOLUIPanelKeyboardShortcuts|null)}
      */
     this.panelKeyboardShortcuts = null;
-
-    /**
-     * Object storing the current state of the UI
-     * @type {object}
-     */
-    this.state = {
-        hasUserOpenedControlPanelYet: false,
-        isToolbarDisplayed:           false,
-        toolbarFadeoutTimeoutID:      null
-    };
 
 }
 
@@ -55,40 +50,6 @@ GOLUI.FAST_FADE_DURATION = 200;
 GOLUI.SLOW_FADE_DURATION = 1000;
 
 /**
- * Set the mousemove event handler for the canvas
- */
-GOLUI.prototype.configureCanvasMousemove = function() {
-
-    var _this = this;
-
-    $("#golCanvas").on("mousemove", function() {
-
-        if (!_this.state.isToolbarDisplayed) {
-            $("#divToolbar").fadeIn(GOLUI.FAST_FADE_DURATION);
-            _this.state.isToolbarDisplayed = true;
-        }
-
-        if (_this.state.toolbarFadeoutTimeoutID !== null) {
-            clearTimeout(_this.state.toolbarFadeoutTimeoutID);
-            _this.state.toolbarFadeoutTimeoutID = null;
-        }
-
-        if (_this.state.hasUserOpenedControlPanelYet) {
-            _this.state.toolbarFadeoutTimeoutID = setTimeout(
-                function() {
-                    $("#divToolbar").fadeOut(GOLUI.SLOW_FADE_DURATION);
-                    _this.state.isToolbarDisplayed      = false;
-                    _this.state.toolbarFadeoutTimeoutID = null;
-                },
-                1500
-            );
-        }
-
-    });
-
-};
-
-/**
  * Set the event handler for the control keys
  */
 GOLUI.prototype.configureControlKeys = function() {
@@ -99,7 +60,7 @@ GOLUI.prototype.configureControlKeys = function() {
         switch (event.which) {
             case 80:  // p
                 _this.golAnimator.toggle();
-                _this.updateToolbar();
+                _this.toolbar.update();
                 break;
             case 83:  // s
                 if (!_this.golAnimator.isRunning()) {
@@ -116,68 +77,6 @@ GOLUI.prototype.configureControlKeys = function() {
                 }
                 break;
         }
-    });
-
-};
-
-/**
- * Update the toolbar
- */
-GOLUI.prototype.updateToolbar = function() {
-
-    var isRunning = this.golAnimator.isRunning();
-
-    $("#iToolbarPlay" ).toggle(!isRunning);
-    $("#iToolbarPause").toggle( isRunning);
-
-    $("#iToolbarStepForwards").toggleClass("tool-disabled", isRunning);
-
-};
-
-/**
- * Configure the toolbar
- */
-GOLUI.prototype.configureToolbar = function() {
-
-    var _this = this;
-
-    this.state.isToolbarDisplayed = true;
-
-    $("#divToolbar").fadeIn(GOLUI.SLOW_FADE_DURATION);
-
-    $("#divToolbar").on("mousemove", function() {
-
-        if (_this.state.toolbarFadeoutTimeoutID !== null) {
-            clearTimeout(_this.state.toolbarFadeoutTimeoutID);
-            _this.state.toolbarFadeoutTimeoutID = null;
-        }
-
-    });
-
-    $("#iToolbarPlay, #iToolbarPause").on("click", function() {
-
-        _this.golAnimator.toggle();
-        _this.updateToolbar();
-
-    });
-
-    $("#iToolbarStepForwards").on("click", function() {
-
-        if (!_this.golAnimator.isRunning()) {
-            _this.gol.calculateAndRenderNextState();
-        }
-
-    });
-
-    $("#iToolbarOpenControlPanel").on("click", function() {
-
-        $("#divToolbar").fadeOut(GOLUI.FAST_FADE_DURATION);
-
-        _this.state.isToolbarDisplayed           = false;
-        _this.state.hasUserOpenedControlPanelYet = true;
-
-        _this.panelControl.open();
-
     });
 
 };
@@ -217,18 +116,16 @@ GOLUI.prototype.init = function() {
 
     // Set event handlers
 
-    this.configureCanvasMousemove();
-
     this.configureControlKeys();
 
     // Miscellaneous
 
-    var buttonRandomModeRandomise = new GOLUIButtonRandomModeRandomise(this.gol);
+    this.toolbar = new GOLUIToolbar(this.golAnimator, this.panelControl);
+    this.toolbar.init();
 
+    var buttonRandomModeRandomise = new GOLUIButtonRandomModeRandomise(this.gol);
     buttonRandomModeRandomise.init();
 
     GOLUIHelp.generateMarkersAndBubbles();
-
-    this.configureToolbar();
 
 };
