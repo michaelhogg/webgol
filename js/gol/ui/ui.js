@@ -121,20 +121,6 @@ GOLUI.prototype.configureControlKeys = function() {
 };
 
 /**
- * Set the event handler for the "Random mode: Randomise" button
- */
-GOLUI.prototype.configureRandomModeRandomiseButton = function() {
-
-    var _this = this;
-
-    $("#buttonRandomModeRandomise").on("click", function() {
-        _this.gol.randomiseState();
-        _this.gol.renderState();
-    });
-
-};
-
-/**
  * Update the toolbar
  */
 GOLUI.prototype.updateToolbar = function() {
@@ -235,9 +221,11 @@ GOLUI.prototype.init = function() {
 
     this.configureControlKeys();
 
-    this.configureRandomModeRandomiseButton();
-
     // Miscellaneous
+
+    var buttonRandomModeRandomise = new GOLUIButtonRandomModeRandomise(this.gol);
+
+    buttonRandomModeRandomise.init();
 
     GOLUIHelp.generateMarkersAndBubbles();
 
