@@ -55,33 +55,6 @@ GOLUI.FAST_FADE_DURATION = 200;
 GOLUI.SLOW_FADE_DURATION = 1000;
 
 /**
- * Configure the "target framerate" <select> menu
- */
-GOLUI.prototype.configureTargetFramerateMenu = function() {
-
-    var framerates = [
-        0.25, 0.5, 1, 2, 4, 6, 8, 10, 15, 20, 25, 30, 40, 50, 60
-    ];
-
-    GOLUIUtils.populateMenuWithValues(
-        $("#selectTargetFramerate"),
-        framerates,
-        this.golAnimator.targetFPS
-    );
-
-    var _this = this;
-
-    $("#selectTargetFramerate").on("change", function() {
-
-        var framerate = parseFloat($(this).val());
-
-        _this.golAnimator.changeTargetFramerate(framerate);
-
-    });
-
-};
-
-/**
  * Set the mousemove event handler for the canvas
  */
 GOLUI.prototype.configureCanvasMousemove = function() {
@@ -240,13 +213,13 @@ GOLUI.prototype.init = function() {
 
     // Menus
 
-    var menuApplication = new GOLUIMenuApplication(this.panelKeyboardShortcuts);
-    var menuCellSize    = new GOLUIMenuCellSize(this.gol);
+    var menuApplication     = new GOLUIMenuApplication(this.panelKeyboardShortcuts);
+    var menuCellSize        = new GOLUIMenuCellSize(this.gol);
+    var menuTargetFramerate = new GOLUIMenuTargetFramerate(this.golAnimator);
 
     menuApplication.init();
     menuCellSize.init();
-
-    this.configureTargetFramerateMenu();
+    menuTargetFramerate.init();
 
     // Switcherys
 
