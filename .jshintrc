@@ -36,6 +36,7 @@
         "GOLUIPanelControl":              false,
         "GOLUIPanelKeyboardShortcuts":    false,
         "GOLUIPanelSupport":              true,
+        "GOLUIShortcutKeys":              false,
         "GOLUISwitcheryMutation":         false,
         "GOLUISwitcheryWrapping":         false,
         "GOLUIToolbar":                   false,

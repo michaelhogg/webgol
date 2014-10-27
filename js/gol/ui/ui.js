@@ -50,39 +50,7 @@ GOLUI.FAST_FADE_DURATION = 200;
 GOLUI.SLOW_FADE_DURATION = 1000;
 
 /**
- * Set the event handler for the control keys
- */
-GOLUI.prototype.configureControlKeys = function() {
-
-    var _this = this;
-
-    $(document).on("keyup", function(event) {
-        switch (event.which) {
-            case 80:  // p
-                _this.golAnimator.toggle();
-                _this.toolbar.update();
-                break;
-            case 83:  // s
-                if (!_this.golAnimator.isRunning()) {
-                    _this.gol.calculateAndRenderNextState();
-                }
-                break;
-            case 27:  // esc
-                if (GOLUIPanelSupport.canBeClosed()) {
-                    GOLUIPanelSupport.close();
-                } else if (_this.panelKeyboardShortcuts.isOpen) {
-                    _this.panelKeyboardShortcuts.close();
-                } else if (_this.panelControl.isOpen) {
-                    _this.panelControl.close();
-                }
-                break;
-        }
-    });
-
-};
-
-/**
- * Initialise the UI
+ * Initialise
  */
 GOLUI.prototype.init = function() {
 
@@ -114,17 +82,16 @@ GOLUI.prototype.init = function() {
     wrappingSwitchery.init();
     mutationSwitchery.init();
 
-    // Set event handlers
-
-    this.configureControlKeys();
-
     // Miscellaneous
 
     this.toolbar = new GOLUIToolbar(this.golAnimator, this.panelControl);
     this.toolbar.init();
 
     var buttonRandomModeRandomise = new GOLUIButtonRandomModeRandomise(this.gol);
+    var shortcutKeys              = new GOLUIShortcutKeys(this.golAnimator, this.toolbar, this.panelKeyboardShortcuts, this.panelControl);
+
     buttonRandomModeRandomise.init();
+    shortcutKeys.init();
 
     GOLUIHelp.generateMarkersAndBubbles();
 
