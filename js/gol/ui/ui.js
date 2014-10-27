@@ -66,7 +66,7 @@ GOLUI.prototype.init = function() {
 
     // Menus
 
-    var menuApplication     = new GOLUIMenuApplication(this.panelKeyboardShortcuts);
+    var menuApplication     = new GOLUIMenuApplication(this.gol, this.panelKeyboardShortcuts);
     var menuCellSize        = new GOLUIMenuCellSize(this.gol);
     var menuTargetFramerate = new GOLUIMenuTargetFramerate(this.golAnimator);
 

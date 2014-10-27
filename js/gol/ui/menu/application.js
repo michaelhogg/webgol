@@ -1,9 +1,15 @@
 /**
  * Game Of Life user interface: Application menu
  *
+ * @param {GOL}                         gol
  * @param {GOLUIPanelKeyboardShortcuts} panelKeyboardShortcuts
  */
-function GOLUIMenuApplication(panelKeyboardShortcuts) {
+function GOLUIMenuApplication(gol, panelKeyboardShortcuts) {
+
+    /**
+     * @type {GOL}
+     */
+    this.gol = gol;
 
     /**
      * @type {GOLUIPanelKeyboardShortcuts}
