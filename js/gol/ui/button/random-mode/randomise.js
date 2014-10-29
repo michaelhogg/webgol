@@ -21,7 +21,7 @@ GOLUIButtonRandomModeRandomise.prototype.init = function() {
 
     $("#buttonRandomModeRandomise").on("click", function() {
         _this.gol.randomiseState();
-        _this.gol.renderState();
+        _this.gol.gpu.renderState();
     });
 
 };

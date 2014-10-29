@@ -34,6 +34,12 @@ function GOL(canvas, cellSize) {
     this.gl = this.igloo.gl;
 
     /**
+     * GOLGPU object (responsible for all GPU-related functionality)
+     * @type {GOLGPU}
+     */
+    this.gpu = new GOLGPU(this);
+
+    /**
      * Width of the view (canvas)
      * @constant {number}
      */
@@ -157,6 +163,12 @@ function GOL(canvas, cellSize) {
     this.MODE_CUSTOM = 3;
 
     /**
+     * Current mode
+     * @type {number}
+     */
+    this.currentMode = this.MODE_RANDOM;
+
+    /**
      * Number of cells to mutate per step (only applicable in Random mode)
      * @constant {number}
      */
@@ -171,124 +183,11 @@ function GOL(canvas, cellSize) {
  */
 GOL.prototype.init = function() {
 
-    var shaderSources = {
-        // Throws an error if source code fetch fails
-        vertex:            GOLUtils.fetchShaderSourceCode("glsl/triangle-strip.vert"),
-        nextStateFragment: GOLUtils.fetchShaderSourceCode("glsl/next-state.frag"    ),
-        renderFragment:    GOLUtils.fetchShaderSourceCode("glsl/render.frag"        )
-    };
-
-    /**
-     * Igloo-wrapped WebGLProgram objects
-     * @type {Igloo.Program}
-     */
-    try {
-        this.programs = {
-            // Throws an error if compiling or linking fails
-            nextState: new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.nextStateFragment),
-            render:    new Igloo.Program(this.gl, shaderSources.vertex, shaderSources.renderFragment   )
-        };
-    } catch (e) {
-        throw new Error("Error compiling or linking WebGLProgram: " + e.message);
-    }
-
-    /**
-     * Triangle strip data for the vertex shader
-     */
-    this.triangleStrip = {
-
-        /**
-         * Type of primitives to render
-         * @type {number}
-         */
-        primitivesMode: this.gl.TRIANGLE_STRIP,
-
-        /**
-         * Igloo-wrapped WebGLBuffer object holding vertex attribute data
-         * of a triangle strip which fills the entire render area
-         * @type {Igloo.Buffer}
-         */
-        vertexBuffer: this.igloo.array(
-            new Float32Array([
-                -1, -1,  // Normalised XY coords
-                 1, -1,
-                -1,  1,
-                 1,  1
-            ])
-        ),
-
-        /**
-         * Number of components per vertex attribute
-         * @type {number}
-         */
-        componentsPerVertexAttribute: 2,
-
-        /**
-         * Total number of vertices
-         * @type {number}
-         */
-        totalVertices: 4
-
-    };
-
-    /**
-     * Igloo-wrapped WebGLTexture objects
-     * @type {Igloo.Texture}
-     */
-    this.textures = {
-        front: this.createTexture(),
-        back:  this.createTexture()
-    };
-
-    /**
-     * Igloo-wrapped off-screen WebGLFramebuffer for rendering and reading texture data
-     * @type {Igloo.Framebuffer}
-     */
-    this.offscreenFramebuffer = this.igloo.framebuffer();
-
-    /**
-     * Current mode
-     * @type {number}
-     */
-    this.currentMode = this.MODE_RANDOM;
+    this.gpu.init();
 
     this.randomiseState();
-    this.renderState();
 
-};
-
-/**
- * Create a new blank 2D texture to hold a GOL state
- *
- * @returns {Igloo.Texture}
- */
-GOL.prototype.createTexture = function() {
-
-    // ArrayBufferView, ImageData, HTMLImageElement, HTMLCanvasElement or HTMLVideoElement
-    var imageSource = null;
-
-    // TextureWrapMode enum -- must be CLAMP_TO_EDGE to support textures with NPOT dimensions (non-power-of-two)
-    var wrapMode = this.gl.CLAMP_TO_EDGE;
-
-    // TextureMinFilter and TextureMagFilter enums
-    var minifyMagnifyFilter = this.gl.NEAREST;
-
-    // Create texture
-    var texture = this.igloo.texture(imageSource, this.TEXTURE_PIXELFORMAT, wrapMode, minifyMagnifyFilter);
-
-    // Set size and fill with 0
-    texture.blank(this.STATE_WIDTH, this.STATE_HEIGHT);
-
-    switch (this.gl.getError()) {
-        case this.gl.NO_ERROR:
-            break;
-        case this.gl.INVALID_VALUE:
-            throw new Error("Failed to create texture (requested texture size " + this.STATE_WIDTH + " x " + this.STATE_HEIGHT + " was probably too big)");
-        default:
-            throw new Error("Failed to create texture (unknown error)");
-    }
-
-    return texture;
+    this.gpu.renderState();
 
 };
 
@@ -332,23 +231,9 @@ GOL.prototype.iterateOverAllCells = function(callback) {
  */
 GOL.prototype.getStateAsGOLGrid = function() {
 
+    var rgba    = this.gpu.getStatePixels();
     var golGrid = GOLGridFactory.createEmpty(this.STATE_WIDTH, this.STATE_HEIGHT);
-    var rgba    = new Uint8Array(this.TOTAL_CELLS * this.CHANNELS_PER_PIXEL);
     var redChannel, cellState;
-
-    // Make the off-screen framebuffer active
-    // and attach the "front" texture for readPixels() to read
-    this.offscreenFramebuffer.attach(this.textures.front);
-
-    this.gl.readPixels(
-        0,                         // x
-        0,                         // y
-        this.STATE_WIDTH,          // width
-        this.STATE_HEIGHT,         // height
-        this.TEXTURE_PIXELFORMAT,  // PixelFormat
-        this.TEXTURE_PIXELTYPE,    // PixelType
-        rgba                       // array to receive pixel data
-    );
 
     this.iterateOverAllCells(function(cellIndex, pixelIndex) {
 
@@ -388,7 +273,7 @@ GOL.prototype.setStateUsingGOLGrid = function(golGrid) {
 
     });
 
-    this.textures.front.subset(rgba, 0, 0, this.STATE_WIDTH, this.STATE_HEIGHT);
+    this.gpu.setStatePixels(rgba);
 
 };
 
@@ -426,18 +311,13 @@ GOL.prototype.clearState = function() {
  * @param {number}  x
  * @param {number}  y
  * @param {boolean} state
+ * @throws Error if x or y is invalid
  */
 GOL.prototype.setCellState = function(x, y, state) {
 
-    if (x < 0)  throw new Error("Invalid X coord: " + x);
-    if (y < 0)  throw new Error("Invalid Y coord: " + y);
-
-    if (x >= this.STATE_WIDTH)   throw new Error("Invalid X coord: " + x + " (width of state is "  + this.STATE_WIDTH  + ")");
-    if (y >= this.STATE_HEIGHT)  throw new Error("Invalid Y coord: " + y + " (height of state is " + this.STATE_HEIGHT + ")");
-
     var rgba = (state ? this.COLOUR_ALIVE : this.COLOUR_DEAD);
 
-    this.textures.front.subset(rgba, x, y, 1, 1);
+    this.gpu.setStatePixel(x, y, rgba);
 
 };
 
@@ -472,134 +352,13 @@ GOL.prototype.toggleMutation = function() {
 };
 
 /**
- * Swap the texture buffers
- */
-GOL.prototype.swap = function() {
-
-    var tmp = this.textures.front;
-
-    this.textures.front = this.textures.back;
-    this.textures.back  = tmp;
-
-};
-
-/**
- * Run a program
- *
- * @param {Igloo.Program} program
- * @param {Igloo.Texture} inputTexture
- * @param {object[]}      floatUniforms
- * @param {object[]}      intUniforms
- * @throws Error if drawing fails
- */
-GOL.prototype.runProgram = function(program, inputTexture, floatUniforms, intUniforms) {
-
-    var textureUnitIndex = 0;  // Evaluates to TextureUnit TEXTURE0
-    var i;
-
-    // Make the specified texture unit active, and bind the inputTexture to it
-    inputTexture.bind(textureUnitIndex);
-
-    // Make the program active
-    program.use();
-
-    // Make the triangle strip's vertex attribute data available to the vertex shader
-    program.attrib(
-        "quad",
-        this.triangleStrip.vertexBuffer,
-        this.triangleStrip.componentsPerVertexAttribute
-    );
-
-    // Specify the texture unit to be used by the sampler in the fragment shaders
-    // (this makes the inputTexture accessible in the shaders via the sampler)
-    program.uniformi("sampler", textureUnitIndex);
-
-    // Set the float uniform variables
-    for (i = 0; i < floatUniforms.length; i++) {
-        program.uniform(
-            floatUniforms[i].name,
-            floatUniforms[i].value
-        );
-    }
-
-    // Set the int uniform variables
-    for (i = 0; i < intUniforms.length; i++) {
-        program.uniformi(
-            intUniforms[i].name,
-            intUniforms[i].value
-        );
-    }
-
-    // Render the triangle strip
-    // (throws an error if something goes wrong)
-    program.draw(
-        this.triangleStrip.primitivesMode,
-        this.triangleStrip.totalVertices
-    );
-
-};
-
-/**
- * Step the GOL state on the GPU, without rendering anything to the screen
- *
- * @throws Error if program drawing fails
- */
-GOL.prototype.calculateNextState = function() {
-
-    // Render to the off-screen framebuffer
-    // and write the rendered image to the "back" texture
-    this.offscreenFramebuffer.attach(this.textures.back);
-
-    this.gl.viewport(0, 0, this.STATE_WIDTH, this.STATE_HEIGHT);
-
-    var floatUniforms = [
-        { name: "stateDimensions", value: new Float32Array([this.STATE_WIDTH, this.STATE_HEIGHT]) }
-    ];
-
-    var intUniforms = [
-        { name: "enableWrapping", value: (this.enableWrapping ? 1 : 0) }
-    ];
-
-    this.runProgram(this.programs.nextState, this.textures.front, floatUniforms, intUniforms);
-
-    this.swap();
-
-};
-
-/**
- * Render the GOL state (stored on the GPU) to the user's screen (canvas)
- *
- * @throws Error if program drawing fails
- */
-GOL.prototype.renderState = function() {
-
-    // Render to the default framebuffer (the user's screen)
-    this.igloo.defaultFramebuffer.bind();
-
-    this.gl.viewport(0, 0, this.VIEW_WIDTH, this.VIEW_HEIGHT);
-
-    var floatUniforms = [
-        { name: "viewDimensions",    value: new Float32Array([this.VIEW_WIDTH, this.VIEW_HEIGHT]) },
-        { name: "colourTopLeft",     value: this.cornerColours.topLeft                            },
-        { name: "colourTopRight",    value: this.cornerColours.topRight                           },
-        { name: "colourBottomLeft",  value: this.cornerColours.bottomLeft                         },
-        { name: "colourBottomRight", value: this.cornerColours.bottomRight                        }
-    ];
-
-    var intUniforms = [];
-
-    this.runProgram(this.programs.render, this.textures.front, floatUniforms, intUniforms);
-
-};
-
-/**
  * Calculate the next GOL state, and render it to the screen
  *
- * @throws Error if program drawing fails
+ * @throws Error if something goes wrong
  */
 GOL.prototype.calculateAndRenderNextState = function() {
 
-    this.calculateNextState();
+    this.gpu.calculateNextState();
 
     if (this.currentMode === this.MODE_RANDOM && this.enableMutation) {
         for (var i = 0; i < this.MUTATION_RATE; i++) {
@@ -607,6 +366,6 @@ GOL.prototype.calculateAndRenderNextState = function() {
         }
     }
 
-    this.renderState();
+    this.gpu.renderState();
 
 };
