@@ -25,6 +25,10 @@
     "globals": {
         "GOL":                            false,
         "GOLAnimator":                    false,
+        "GOLGPU":                         false,
+        "GOLGPUProgram":                  false,
+        "GOLGPUProgramNextState":         false,
+        "GOLGPUProgramRender":            false,
         "GOLGrid":                        false,
         "GOLGridFactory":                 true,
         "GOLUI":                          false,
