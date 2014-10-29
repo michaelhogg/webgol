@@ -63,21 +63,6 @@ module.exports = function(grunt) {
                     config: 'config.rb'
                 }
             }
-        },
-
-        watch: {
-            webgol_lintspaces: {
-                files: ['<%= lintspaces_src %>'],
-                tasks: ['lintspaces']
-            },
-            webgol_js: {
-                files: ['js/**/*.js'],
-                tasks: ['jshint', 'concat']
-            },
-            webgol_css: {
-                files: ['scss/*.scss'],
-                tasks: ['compass']
-            }
         }
 
     });
@@ -87,7 +72,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-compass');
-    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('webgol_dev',  ['lintspaces', 'jshint', 'concat', 'compass']);
     grunt.registerTask('webgol_prod', ['lintspaces', 'jshint', 'uglify', 'compass']);
