@@ -31,6 +31,7 @@
         "GOLGPUProgramRender":            false,
         "GOLGrid":                        false,
         "GOLGridFactory":                 true,
+        "GOLShaderSources":               true,
         "GOLUI":                          false,
         "GOLUIButtonRandomModeRandomise": false,
         "GOLUIHelp":                      true,
