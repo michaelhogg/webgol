@@ -29,13 +29,6 @@ function GOLGPU(gol) {
  */
 GOLGPU.prototype.init = function() {
 
-    var sources = {
-        // Throws an error if source code fetch fails
-        vTriangleStrip: GOLUtils.fetchShaderSourceCode("glsl/triangle-strip.vert"),
-        fNextState:     GOLUtils.fetchShaderSourceCode("glsl/next-state.frag"    ),
-        fRender:        GOLUtils.fetchShaderSourceCode("glsl/render.frag"        )
-    };
-
     try {
         /**
          * GOLGPUProgram-wrapped WebGLProgram objects
@@ -43,8 +36,8 @@ GOLGPU.prototype.init = function() {
          */
         this.gpuPrograms = {
             // Throws an error if compiling or linking fails
-            nextState: new GOLGPUProgramNextState(this, sources.vTriangleStrip, sources.fNextState),
-            render:    new GOLGPUProgramRender(   this, sources.vTriangleStrip, sources.fRender   )
+            nextState: new GOLGPUProgramNextState(this, GOLShaderSources.vTriangleStrip, GOLShaderSources.fNextState),
+            render:    new GOLGPUProgramRender(   this, GOLShaderSources.vTriangleStrip, GOLShaderSources.fRender   )
         };
     } catch (e) {
         throw new Error("Error compiling or linking WebGLProgram: " + e.message);
