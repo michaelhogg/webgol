@@ -80,6 +80,21 @@ module.exports = function(grunt) {
             }
         },
 
+        // Insert minified GLSL shaders into shader-sources.js
+        includereplace: {
+            webgol: {
+                options: {
+                    includesDir: 'glslmin/',
+                    processIncludeContents: function(includeContents) {
+                        // Replace newlines with \n to create valid JavaScript string literals
+                        return includeContents.replace(/\n/g, '\\n');
+                    }
+                },
+                src:  'js/shader-sources.js',
+                dest: 'jsmin/shader-sources.js'
+            }
+        },
+
         // Compile SCSS to CSS
         compass: {
             webgol: {
@@ -109,8 +124,9 @@ module.exports = function(grunt) {
         uglify: {
             webgol: {
                 files: {
-                    'jsmin/gol.js':  ['js/gol/**/*.js'],
-                    'jsmin/main.js': ['js/main.js']
+                    'jsmin/shader-sources.js': ['jsmin/shader-sources.js'],
+                    'jsmin/gol.js':            ['js/gol/**/*.js'],
+                    'jsmin/main.js':           ['js/main.js']
                 }
             }
         }
@@ -125,7 +141,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-compass');
 
-    grunt.registerTask('webgol_core', ['lintspaces', 'string-replace', 'jshint', 'compass']);
+    grunt.registerTask('webgol_core', ['lintspaces', 'string-replace', 'jshint', 'includereplace', 'compass']);
 
     grunt.registerTask('webgol_dev',  ['webgol_core', 'concat']);
     grunt.registerTask('webgol_prod', ['webgol_core', 'uglify']);
