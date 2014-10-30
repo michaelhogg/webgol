@@ -68,6 +68,8 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-lintspaces');
+    grunt.loadNpmTasks('grunt-string-replace');
+    grunt.loadNpmTasks('grunt-include-replace');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
