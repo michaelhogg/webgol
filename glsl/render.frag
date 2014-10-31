@@ -6,21 +6,21 @@ precision mediump float;
 #define COLOUR_DEAD  vec4(0.0, 0.0, 0.0, 1.0)
 #define COLOUR_ALIVE vec4(1.0, 0.0, 0.0, 1.0)
 
-uniform sampler2D sampler;
-uniform vec2      viewDimensions;
+uniform sampler2D uSampler;
+uniform vec2      uViewDimensions;
 
-uniform vec4 colourTopLeft;
-uniform vec4 colourTopRight;
-uniform vec4 colourBottomLeft;
-uniform vec4 colourBottomRight;
+uniform vec4 uColourTopLeft;
+uniform vec4 uColourTopRight;
+uniform vec4 uColourBottomLeft;
+uniform vec4 uColourBottomRight;
 
 /**
  * Get the cell's state
  */
 int getCellState() {
 
-    vec2 coord  = gl_FragCoord.xy / viewDimensions;  // Normalise to range 0-1
-    vec4 colour = texture2D(sampler, coord);
+    vec2 coord  = gl_FragCoord.xy / uViewDimensions;  // Normalise to range 0-1
+    vec4 colour = texture2D(uSampler, coord);
 
     return ((colour.r == COLOUR_ALIVE.r) ? CELL_STATE_ALIVE : CELL_STATE_DEAD);
 
@@ -31,10 +31,10 @@ int getCellState() {
  */
 vec4 calculateInterpolatedColour() {
 
-    vec2 fraction = gl_FragCoord.xy / viewDimensions;
+    vec2 fraction = gl_FragCoord.xy / uViewDimensions;
 
-    vec4 colourTop    = mix(colourTopLeft,    colourTopRight,    fraction.x);
-    vec4 colourBottom = mix(colourBottomLeft, colourBottomRight, fraction.x);
+    vec4 colourTop    = mix(uColourTopLeft,    uColourTopRight,    fraction.x);
+    vec4 colourBottom = mix(uColourBottomLeft, uColourBottomRight, fraction.x);
 
     return mix(colourBottom, colourTop, fraction.y);
 

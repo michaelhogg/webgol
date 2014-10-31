@@ -32,11 +32,11 @@ GOLGPUProgramNextState.prototype.run = function() {
     var inputTexture = this.gpu.textures.stateMain;
 
     var floatUniforms = [
-        { name: "stateDimensions", value: new Float32Array([this.gol.STATE_WIDTH, this.gol.STATE_HEIGHT]) }
+        { name: "uStateDimensions", value: new Float32Array([this.gol.STATE_WIDTH, this.gol.STATE_HEIGHT]) }
     ];
 
     var intUniforms = [
-        { name: "enableWrapping", value: (this.gol.enableWrapping ? 1 : 0) }
+        { name: "uEnableWrapping", value: (this.gol.enableWrapping ? 1 : 0) }
     ];
 
     // Throws an error if something goes wrong

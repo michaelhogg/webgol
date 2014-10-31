@@ -48,14 +48,14 @@ GOLGPUProgram.prototype.run = function(inputTexture, floatUniforms, intUniforms)
 
     // Make the triangle strip's vertex attribute data available to the vertex shader
     this.program.attrib(
-        "quad",
+        "aVertex",
         this.gpu.triangleStrip.vertexBuffer,
         this.gpu.triangleStrip.componentsPerVertexAttribute
     );
 
     // Specify the texture unit to be used by the sampler in the fragment shaders
     // (this makes the inputTexture accessible in the shaders via the sampler)
-    this.program.uniformi("sampler", textureUnitIndex);
+    this.program.uniformi("uSampler", textureUnitIndex);
 
     // Set the float uniform variables
     for (i = 0; i < floatUniforms.length; i++) {

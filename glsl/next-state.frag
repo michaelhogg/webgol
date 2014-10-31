@@ -6,9 +6,9 @@ precision mediump float;
 #define COLOUR_DEAD  vec4(0.0, 0.0, 0.0, 1.0)
 #define COLOUR_ALIVE vec4(1.0, 0.0, 0.0, 1.0)
 
-uniform sampler2D sampler;
-uniform vec2      stateDimensions;
-uniform bool      enableWrapping;
+uniform sampler2D uSampler;
+uniform vec2      uStateDimensions;
+uniform bool      uEnableWrapping;
 
 /**
  * Wrap value to the range 0-1
@@ -27,9 +27,9 @@ float wrapValue(float value) {
  */
 int getCellState(vec2 offset) {
 
-    vec2 coord = (gl_FragCoord.xy + offset) / stateDimensions;  // Normalise to range 0-1
+    vec2 coord = (gl_FragCoord.xy + offset) / uStateDimensions;  // Normalise to range 0-1
 
-    if (enableWrapping == true) {
+    if (uEnableWrapping == true) {
         coord.x = wrapValue(coord.x);  // Wrap horizontally
         coord.y = wrapValue(coord.y);  // Wrap vertically
     } else {
@@ -38,7 +38,7 @@ int getCellState(vec2 offset) {
         }
     }
 
-    vec4 colour = texture2D(sampler, coord);
+    vec4 colour = texture2D(uSampler, coord);
 
     return ((colour.r == COLOUR_ALIVE.r) ? CELL_STATE_ALIVE : CELL_STATE_DEAD);
 
