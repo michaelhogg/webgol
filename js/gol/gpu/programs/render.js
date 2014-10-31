@@ -31,11 +31,10 @@ GOLGPUProgramRender.prototype.run = function() {
     var inputTexture = this.gpu.textures.stateMain;
 
     var floatUniforms = [
-        { name: "uViewDimensions",    value: new Float32Array([this.gol.VIEW_WIDTH, this.gol.VIEW_HEIGHT]) },
-        { name: "uColourTopLeft",     value: this.gol.cornerColours.topLeft                                },
-        { name: "uColourTopRight",    value: this.gol.cornerColours.topRight                               },
-        { name: "uColourBottomLeft",  value: this.gol.cornerColours.bottomLeft                             },
-        { name: "uColourBottomRight", value: this.gol.cornerColours.bottomRight                            }
+        { name: "uColourTopLeft",     value: this.gol.cornerColours.topLeft     },
+        { name: "uColourTopRight",    value: this.gol.cornerColours.topRight    },
+        { name: "uColourBottomLeft",  value: this.gol.cornerColours.bottomLeft  },
+        { name: "uColourBottomRight", value: this.gol.cornerColours.bottomRight }
     ];
 
     var intUniforms = [];
