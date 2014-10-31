@@ -36,8 +36,8 @@ GOLGPU.prototype.init = function() {
          */
         this.gpuPrograms = {
             // Throws an error if compiling or linking fails
-            nextState: new GOLGPUProgramNextState(this, GOLShaderSources.vTriangleStrip, GOLShaderSources.fNextState),
-            render:    new GOLGPUProgramRender(   this, GOLShaderSources.vTriangleStrip, GOLShaderSources.fRender   )
+            nextState: new GOLGPUProgramNextState(this, GOLShaderSources.vNextState, GOLShaderSources.fNextState),
+            render:    new GOLGPUProgramRender(   this, GOLShaderSources.vRender,    GOLShaderSources.fRender   )
         };
     } catch (e) {
         throw new Error("Error compiling or linking WebGLProgram: " + e.message);
