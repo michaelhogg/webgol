@@ -3,17 +3,17 @@ precision mediump float;
 #define CELL_STATE_ALIVE 1
 #define COLOUR_DEAD vec4(0.0, 0.0, 0.0, 1.0)
 #define COLOUR_ALIVE vec4(1.0, 0.0, 0.0, 1.0)
-uniform sampler2D sampler;
-uniform vec2 stateDimensions;
-uniform bool enableWrapping;
+uniform sampler2D uSampler;
+uniform vec2 uStateDimensions;
+uniform bool uEnableWrapping;
 float wrapValue(float value) {
  if (value < 0.0) value += 1.0;
  if (value > 1.0) value -= 1.0;
  return value;
 }
 int getCellState(vec2 offset) {
- vec2 coord = (gl_FragCoord.xy + offset) / stateDimensions;
- if (enableWrapping == true) {
+ vec2 coord = (gl_FragCoord.xy + offset) / uStateDimensions;
+ if (uEnableWrapping == true) {
  coord.x = wrapValue(coord.x);
  coord.y = wrapValue(coord.y);
  } else {
@@ -21,7 +21,7 @@ int getCellState(vec2 offset) {
  return CELL_STATE_DEAD;
  }
  }
- vec4 colour = texture2D(sampler, coord);
+ vec4 colour = texture2D(uSampler, coord);
  return ((colour.r == COLOUR_ALIVE.r) ? CELL_STATE_ALIVE : CELL_STATE_DEAD);
 }
 int countNeighbours() {
