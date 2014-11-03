@@ -9,6 +9,25 @@ A [WebGL](http://en.wikipedia.org/wiki/WebGL) implementation of
 (GOL).
 
 
+## Improvements
+
+WebGOL was forked from
+[webgl-game-of-life](https://github.com/skeeto/webgl-game-of-life),
+and features the following improvements:
+
+* Dynamically-sized canvas which fills the window
+* Coloured cells
+* User-configurable cell size, framerate and wraparound
+* Mutations (randomly-added live cells to prevent life from dying out)
+* Control panel user interface
+* User-friendly error handling and troubleshooting
+* No use of deprecated synchronous Ajax needed to load shader source code
+* No dependent texture reads in "render" shader
+* [SRP](http://en.wikipedia.org/wiki/Single_responsibility_principle) object-oriented code architecture
+* [SCSS](http://sass-lang.com/) stylesheet
+* [Grunt](http://gruntjs.com/) development tasks for linting and minifying code
+
+
 ## What is Conway's Game of Life?
 
 > LIFE is a classic computer game.  It was invented by John H. Conway
