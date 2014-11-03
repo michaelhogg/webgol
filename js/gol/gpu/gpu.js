@@ -20,6 +20,12 @@ function GOLGPU(gol) {
      */
     this.gl = gol.gl;
 
+    /**
+     * Maximum number of texture units available for use in a fragment shader (will always be at least 8)
+     * @constant {number}
+     */
+    this.MAX_TEXTURE_UNITS = this.gl.getParameter(this.gl.MAX_TEXTURE_IMAGE_UNITS);
+
 }
 
 /**
