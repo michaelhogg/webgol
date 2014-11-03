@@ -30,18 +30,29 @@ function GOLGPUProgram(gpu, vertexSourceCode, fragmentSourceCode) {
 /**
  * Run
  *
- * @param {Igloo.Texture} inputTexture
- * @param {object[]}      floatUniforms
- * @param {object[]}      intUniforms
- * @throws Error if drawing fails
+ * @param {object[]} inputTextures
+ * @param {object[]} floatUniforms
+ * @param {object[]} intUniforms
+ * @throws Error if something goes wrong
  */
-GOLGPUProgram.prototype.run = function(inputTexture, floatUniforms, intUniforms) {
+GOLGPUProgram.prototype.run = function(inputTextures, floatUniforms, intUniforms) {
 
-    var textureUnitIndex = 0;  // Evaluates to TextureUnit TEXTURE0
+    if (inputTextures.length > this.gpu.MAX_TEXTURE_UNITS) {
+        throw new Error(
+            "Too many texture units requested " +
+            "(available: " + this.gpu.MAX_TEXTURE_UNITS + ", " +
+            "requested: "  + inputTextures.length       + ")"
+        );
+    }
+
     var i;
 
-    // Make the specified texture unit active, and bind the inputTexture to it
-    inputTexture.bind(textureUnitIndex);
+    // Bind the textures to the texture units, where i is:
+    // * the index into the inputTextures array, and
+    // * the TextureUnit number (TEXTURE0, TEXTURE1, TEXTURE2, etc)
+    for (i = 0; i < inputTextures.length; i++) {
+        inputTextures[i].texture.bind(i);
+    }
 
     // Make the program active
     this.program.use();
@@ -53,9 +64,15 @@ GOLGPUProgram.prototype.run = function(inputTexture, floatUniforms, intUniforms)
         this.gpu.triangleStrip.componentsPerVertexAttribute
     );
 
-    // Specify the texture unit to be used by the sampler in the fragment shaders
-    // (this makes the inputTexture accessible in the shaders via the sampler)
-    this.program.uniformi("uSampler", textureUnitIndex);
+    // Map the texture units to uniform sampler variables in the fragment shader, where i is:
+    // * the index into the inputTextures array, and
+    // * the TextureUnit number (TEXTURE0, TEXTURE1, TEXTURE2, etc)
+    for (i = 0; i < inputTextures.length; i++) {
+        this.program.uniformi(
+            inputTextures[i].samplerName,
+            i
+        );
+    }
 
     // Set the float uniform variables
     for (i = 0; i < floatUniforms.length; i++) {

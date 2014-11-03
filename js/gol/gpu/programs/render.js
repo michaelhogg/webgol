@@ -28,7 +28,9 @@ GOLGPUProgramRender.prototype.run = function() {
 
     this.gpu.setViewport(this.gol.VIEW_WIDTH, this.gol.VIEW_HEIGHT);
 
-    var inputTexture = this.gpu.textures.stateMain;
+    var inputTextures = [
+        { samplerName: "uSampler", texture: this.gpu.textures.stateMain }
+    ];
 
     var floatUniforms = [
         { name: "uColourTopLeft",     value: this.gol.cornerColours.topLeft     },
@@ -40,6 +42,6 @@ GOLGPUProgramRender.prototype.run = function() {
     var intUniforms = [];
 
     // Throws an error if something goes wrong
-    GOLGPUProgram.prototype.run.call(this, inputTexture, floatUniforms, intUniforms);
+    GOLGPUProgram.prototype.run.call(this, inputTextures, floatUniforms, intUniforms);
 
 };
