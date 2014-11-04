@@ -12,6 +12,12 @@ var GOLShaderSources = {
     fNextState: "@@include('next-state.frag')",
 
     vRender: "@@include('render.vert')",
-    fRender: "@@include('render.frag')"
+    fRender: "@@include('render.frag')",
+
+    vBlur: "@@include('blur.vert')",
+    fBlur: "@@include('blur.frag')",
+
+    vAdd: "@@include('add.vert')",
+    fAdd: "@@include('add.frag')"
 
 };
