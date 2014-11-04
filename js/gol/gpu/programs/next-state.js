@@ -24,13 +24,13 @@ function GOLGPUProgramNextState(gpu, vertexSourceCode, fragmentSourceCode) {
 GOLGPUProgramNextState.prototype.run = function() {
 
     // Render to the off-screen framebuffer
-    // and write the rendered image to the stateTemp texture
-    this.gpu.offscreenFramebuffer.attach(this.gpu.textures.stateTemp);
+    // and write the rendered image to the temp texture
+    this.gpu.offscreenFramebuffer.attach(this.gpu.textures.temp);
 
     this.gpu.setViewport(this.gol.STATE_WIDTH, this.gol.STATE_HEIGHT);
 
     var inputTextures = [
-        { samplerName: "uSampler", texture: this.gpu.textures.stateMain }
+        { samplerName: "uSampler", texture: this.gpu.textures.state }
     ];
 
     var floatUniforms = [

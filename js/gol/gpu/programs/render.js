@@ -29,7 +29,7 @@ GOLGPUProgramRender.prototype.run = function() {
     this.gpu.setViewport(this.gol.VIEW_WIDTH, this.gol.VIEW_HEIGHT);
 
     var inputTextures = [
-        { samplerName: "uSampler", texture: this.gpu.textures.stateMain }
+        { samplerName: "uSampler", texture: this.gpu.textures.state }
     ];
 
     var floatUniforms = [

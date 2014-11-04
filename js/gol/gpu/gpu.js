@@ -94,8 +94,8 @@ GOLGPU.prototype.init = function() {
      * @type {Igloo.Texture}
      */
     this.textures = {
-        stateMain: this.createTexture(),
-        stateTemp: this.createTexture()
+        state: this.createTexture(),
+        temp:  this.createTexture()
     };
 
     /**
@@ -152,8 +152,8 @@ GOLGPU.prototype.getStatePixels = function() {
     var rgba = new Uint8Array(this.gol.TOTAL_CELLS * this.gol.CHANNELS_PER_PIXEL);
 
     // Make the off-screen framebuffer active
-    // and attach the stateMain texture for readPixels() to read
-    this.offscreenFramebuffer.attach(this.textures.stateMain);
+    // and attach the state texture for readPixels() to read
+    this.offscreenFramebuffer.attach(this.textures.state);
 
     this.gl.readPixels(
         0,                             // x
@@ -176,7 +176,7 @@ GOLGPU.prototype.getStatePixels = function() {
  */
 GOLGPU.prototype.setStatePixels = function(rgba) {
 
-    this.textures.stateMain.subset(rgba, 0, 0, this.gol.STATE_WIDTH, this.gol.STATE_HEIGHT);
+    this.textures.state.subset(rgba, 0, 0, this.gol.STATE_WIDTH, this.gol.STATE_HEIGHT);
 
 };
 
@@ -196,7 +196,7 @@ GOLGPU.prototype.setStatePixel = function(x, y, rgba) {
     if (x >= this.gol.STATE_WIDTH)   throw new Error("Invalid X coord: " + x + " (state width is "  + this.gol.STATE_WIDTH  + ")");
     if (y >= this.gol.STATE_HEIGHT)  throw new Error("Invalid Y coord: " + y + " (state height is " + this.gol.STATE_HEIGHT + ")");
 
-    this.textures.stateMain.subset(rgba, x, y, 1, 1);
+    this.textures.state.subset(rgba, x, y, 1, 1);
 
 };
 
@@ -226,10 +226,10 @@ GOLGPU.prototype.bindDefaultFramebuffer = function() {
  */
 GOLGPU.prototype.swapStateTextures = function() {
 
-    var tmp = this.textures.stateMain;
+    var tmp = this.textures.state;
 
-    this.textures.stateMain = this.textures.stateTemp;
-    this.textures.stateTemp = tmp;
+    this.textures.state = this.textures.temp;
+    this.textures.temp  = tmp;
 
 };
 
