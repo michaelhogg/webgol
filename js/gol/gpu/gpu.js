@@ -222,18 +222,6 @@ GOLGPU.prototype.bindDefaultFramebuffer = function() {
 };
 
 /**
- * Swap the state textures
- */
-GOLGPU.prototype.swapStateTextures = function() {
-
-    var tmp = this.textures.state;
-
-    this.textures.state = this.textures.temp;
-    this.textures.temp  = tmp;
-
-};
-
-/**
  * Step the GOL state on the GPU, without rendering anything to the screen/canvas
  *
  * @throws Error if program execution fails
@@ -242,7 +230,10 @@ GOLGPU.prototype.calculateNextState = function() {
 
     this.gpuPrograms.nextState.run();
 
-    this.swapStateTextures();
+    var temp = this.textures.temp;
+
+    this.textures.temp  = this.textures.state;
+    this.textures.state = temp;
 
 };
 
