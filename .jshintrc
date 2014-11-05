@@ -43,6 +43,7 @@
         "GOLUIPanelKeyboardShortcuts":    false,
         "GOLUIPanelSupport":              true,
         "GOLUIShortcutKeys":              false,
+        "GOLUISliderGlow":                false,
         "GOLUISliderTargetFramerate":     false,
         "GOLUISwitcheryMutation":         false,
         "GOLUISwitcheryWrapping":         false,

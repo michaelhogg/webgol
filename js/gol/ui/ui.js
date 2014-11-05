@@ -75,8 +75,10 @@ GOLUI.prototype.init = function() {
     // Sliders
 
     var sliderTargetFramerate = new GOLUISliderTargetFramerate(this.golAnimator);
+    var sliderGlow            = new GOLUISliderGlow(this.gol.gpu);
 
     sliderTargetFramerate.init();
+    sliderGlow.init();
 
     // Switcherys
 
