@@ -24,7 +24,7 @@ function GOLGPU(gol) {
      * Brightening factor for blur program (1.0 means no brightening)
      * @type {number}
      */
-    this.blurBrighteningFactor = 2.0;
+    this.blurBrighteningFactor = 1.5;
 
     /**
      * Maximum number of texture units available for use in a fragment shader (will always be at least 8)
