@@ -86,10 +86,10 @@ function GOL(canvas, cellSize) {
      * @type {Float32Array}
      */
     this.cornerColours = {
-        topLeft:     new Float32Array([1.0, 1.0, 0.0, 1.0]),  // Yellow
-        topRight:    new Float32Array([1.0, 0.0, 0.0, 1.0]),  // Red
-        bottomLeft:  new Float32Array([0.0, 1.0, 0.0, 1.0]),  // Green
-        bottomRight: new Float32Array([0.3, 0.3, 1.0, 1.0])   // Blue
+        topLeft:     new Float32Array([1.0, 1.0, 0.1, 1.0]),  // Yellow
+        topRight:    new Float32Array([1.0, 0.1, 0.1, 1.0]),  // Red
+        bottomLeft:  new Float32Array([0.1, 1.0, 0.1, 1.0]),  // Green
+        bottomRight: new Float32Array([0.1, 0.1, 1.0, 1.0])   // Blue
     };
 
     /**
