@@ -19,6 +19,7 @@ and features the following improvements:
 * Coloured cells
 * User-configurable cell size, framerate and wraparound
 * Mutations (randomly-added live cells to prevent life from dying out)
+* [Glow/bloom](http://en.wikipedia.org/wiki/Bloom_%28shader_effect%29) visual effect
 * Control panel user interface
 * User-friendly error handling and troubleshooting
 * No use of deprecated synchronous Ajax needed to load shader source code
