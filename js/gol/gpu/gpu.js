@@ -102,10 +102,12 @@ GOLGPU.prototype.init = function() {
      * @type {Igloo.Texture}
      */
     this.textures = {
-        state:  this.createTexture(),
-        render: this.createTexture(),
-        blur:   this.createTexture(),
-        temp:   this.createTexture()
+        // Use "nearest neighbour" filtering for most textures, to preserve sharp edges of pixels
+        // Use "bilinear" filtering for blur texture, to smooth the blur effect
+        state:  this.createTexture(this.gl.NEAREST),
+        render: this.createTexture(this.gl.NEAREST),
+        blur:   this.createTexture(this.gl.LINEAR),
+        temp:   this.createTexture(this.gl.NEAREST)
     };
 
     /**
@@ -119,10 +121,11 @@ GOLGPU.prototype.init = function() {
 /**
  * Create a new blank 2D texture
  *
+ * @param   {TextureMagFilter} magnifyFilter
  * @returns {Igloo.Texture}
  * @throws Error if something goes wrong
  */
-GOLGPU.prototype.createTexture = function() {
+GOLGPU.prototype.createTexture = function(magnifyFilter) {
 
     // ArrayBufferView, ImageData, HTMLImageElement, HTMLCanvasElement or HTMLVideoElement
     var imageSource = null;
@@ -130,11 +133,8 @@ GOLGPU.prototype.createTexture = function() {
     // TextureWrapMode enum -- must be CLAMP_TO_EDGE to support textures with NPOT dimensions (non-power-of-two)
     var wrapMode = this.gl.CLAMP_TO_EDGE;
 
-    // TextureMinFilter and TextureMagFilter enums
-    var minifyMagnifyFilter = this.gl.NEAREST;
-
     // Create texture
-    var texture = this.igloo.texture(imageSource, this.gol.TEXTURE_PIXELFORMAT, wrapMode, minifyMagnifyFilter);
+    var texture = this.igloo.texture(imageSource, this.gol.TEXTURE_PIXELFORMAT, wrapMode, magnifyFilter);
 
     // Set size and fill with 0
     texture.blank(this.gol.STATE_WIDTH, this.gol.STATE_HEIGHT);
