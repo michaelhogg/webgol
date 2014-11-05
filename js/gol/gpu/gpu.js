@@ -248,12 +248,19 @@ GOLGPU.prototype.calculateNextState = function() {
 };
 
 /**
- * Render the GOL state (stored on the GPU) to the user's screen/canvas
+ * Render the GOL state, add a glow/bloom effect, and display on the user's screen/canvas
  *
  * @throws Error if program execution fails
  */
 GOLGPU.prototype.renderState = function() {
 
-    this.gpuPrograms.render.run();
+    this.gpuPrograms.render.run(this.textures.state, this.textures.render);
+
+    // Blur horizontally, then blur vertically
+    this.gpuPrograms.blur.run(this.textures.render, this.textures.temp, false, this.blurBrighteningFactor);
+    this.gpuPrograms.blur.run(this.textures.temp,   this.textures.blur, true,  this.blurBrighteningFactor);
+
+    // Add the blur to the rendered state, to create a glow/bloom effect
+    this.gpuPrograms.addAndDisplay.run(this.textures.render, this.textures.blur);
 
 };

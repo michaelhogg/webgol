@@ -1,7 +1,7 @@
 /**
  * Game Of Life GPU program: Render
  *
- * Render the GOL state (stored on the GPU) to the user's screen/canvas
+ * Render the GOL state to a texture, using interpolated colours
  *
  * @extends GOLGPUProgram
  * @param {GOLGPU} gpu
@@ -19,17 +19,20 @@ function GOLGPUProgramRender(gpu, vertexSourceCode, fragmentSourceCode) {
 /**
  * Run
  *
+ * @param {Igloo.Texture} textureIn
+ * @param {Igloo.Texture} textureOut
  * @throws Error if something goes wrong
  */
-GOLGPUProgramRender.prototype.run = function() {
+GOLGPUProgramRender.prototype.run = function(textureIn, textureOut) {
 
-    // Bind the default framebuffer (the user's screen/canvas) for rendering
-    this.gpu.bindDefaultFramebuffer();
+    // Render to the off-screen framebuffer
+    // and write the rendered image to the textureOut texture
+    this.gpu.offscreenFramebuffer.attach(textureOut);
 
-    this.gpu.setViewport(this.gol.VIEW_WIDTH, this.gol.VIEW_HEIGHT);
+    this.gpu.setViewport(this.gol.STATE_WIDTH, this.gol.STATE_HEIGHT);
 
     var inputTextures = [
-        { samplerName: "uSampler", texture: this.gpu.textures.state }
+        { samplerName: "uSampler", texture: textureIn }
     ];
 
     var floatUniforms = [
