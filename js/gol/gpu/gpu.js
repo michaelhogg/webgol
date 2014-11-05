@@ -96,8 +96,10 @@ GOLGPU.prototype.init = function() {
      * @type {Igloo.Texture}
      */
     this.textures = {
-        state: this.createTexture(),
-        temp:  this.createTexture()
+        state:  this.createTexture(),
+        render: this.createTexture(),
+        blur:   this.createTexture(),
+        temp:   this.createTexture()
     };
 
     /**
