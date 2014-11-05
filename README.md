@@ -129,7 +129,10 @@ WebGOL can run a 1080p simulation at 60 frames-per-second
 
 ## License
 
-WebGOL is licensed under the MIT License. It's a fork of
+WebGOL is licensed under the
+[MIT License (Expat)](http://en.wikipedia.org/wiki/MIT_License).
+
+It's a fork of
 [webgl-game-of-life](https://github.com/skeeto/webgl-game-of-life),
 which does not contain any license details, but the author's blog
 indicates that the code is released into the public domain:
