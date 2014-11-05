@@ -22,6 +22,42 @@ function GOLGrid() {
 }
 
 /**
+ * Constant representing left horizontal alignment
+ * @constant {number}
+ */
+GOLGrid.ALIGN_LEFT = 1;
+
+/**
+ * Constant representing centre horizontal alignment
+ * @constant {number}
+ */
+GOLGrid.ALIGN_CENTRE = 2;
+
+/**
+ * Constant representing right horizontal alignment
+ * @constant {number}
+ */
+GOLGrid.ALIGN_RIGHT = 3;
+
+/**
+ * Constant representing top vertical alignment
+ * @constant {number}
+ */
+GOLGrid.ALIGN_TOP = 4;
+
+/**
+ * Constant representing middle vertical alignment
+ * @constant {number}
+ */
+GOLGrid.ALIGN_MIDDLE = 5;
+
+/**
+ * Constant representing bottom vertical alignment
+ * @constant {number}
+ */
+GOLGrid.ALIGN_BOTTOM = 6;
+
+/**
  * Get a cell's index in the cellData array
  *
  * @param   {number} x
