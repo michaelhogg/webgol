@@ -205,6 +205,36 @@ GOLGrid.prototype.paste = function(pasteGrid, pasteX, pasteY) {
 };
 
 /**
+ * Set part of the grid, by "pasting" another GOLGrid object at the specified alignment position
+ *
+ * @param {GOLGrid} pasteGrid
+ * @param {number}  alignX - One of: GOLGrid.ALIGN_LEFT, GOLGrid.ALIGN_CENTRE, GOLGrid.ALIGN_RIGHT
+ * @param {number}  alignY - One of: GOLGrid.ALIGN_TOP,  GOLGrid.ALIGN_MIDDLE, GOLGrid.ALIGN_BOTTOM
+ * @throws Error if alignX or alignY is invalid, or if pasteGrid is too big
+ */
+GOLGrid.prototype.pasteAligned = function(pasteGrid, alignX, alignY) {
+
+    var pasteX, pasteY;
+
+    switch (alignX) {
+        case GOLGrid.ALIGN_LEFT:    pasteX = 0;                                               break;
+        case GOLGrid.ALIGN_CENTRE:  pasteX = Math.floor((this.width - pasteGrid.width) / 2);  break;
+        case GOLGrid.ALIGN_RIGHT:   pasteX = this.width - pasteGrid.width;                    break;
+        default:                    throw new Error("Invalid horizontal alignment: [" + alignX + "]");
+    }
+
+    switch (alignY) {
+        case GOLGrid.ALIGN_TOP:     pasteY = 0;                                                 break;
+        case GOLGrid.ALIGN_MIDDLE:  pasteY = Math.floor((this.height - pasteGrid.height) / 2);  break;
+        case GOLGrid.ALIGN_BOTTOM:  pasteY = this.height - pasteGrid.height;                    break;
+        default:                    throw new Error("Invalid vertical alignment: [" + alignY + "]");
+    }
+
+    this.paste(pasteGrid, pasteX, pasteY);
+
+};
+
+/**
  * Get as a text grid
  *
  * @param   {string} liveChar - Character representing a live cell
