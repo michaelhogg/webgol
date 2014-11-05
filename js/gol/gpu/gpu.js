@@ -143,7 +143,11 @@ GOLGPU.prototype.createTexture = function(magnifyFilter) {
         case this.gl.NO_ERROR:
             break;
         case this.gl.INVALID_VALUE:
-            throw new Error("Failed to create texture (requested texture size " + this.gol.STATE_WIDTH + " x " + this.gol.STATE_HEIGHT + " was probably too big)");
+            throw new Error(
+                "Failed to create texture (requested texture size " +
+                this.gol.STATE_WIDTH + " x " + this.gol.STATE_HEIGHT +
+                " was probably too big; make the window smaller and reload the page)"
+            );
         default:
             throw new Error("Failed to create texture (unknown error)");
     }
