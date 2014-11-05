@@ -15,15 +15,15 @@ WebGOL was forked from
 [webgl-game-of-life](https://github.com/skeeto/webgl-game-of-life),
 and features the following improvements:
 
-* Dynamically-sized canvas which fills the window
-* Coloured cells
+* Dynamically-sized canvas which fills the window (using [NPOT textures](https://www.khronos.org/webgl/wiki/WebGL_and_OpenGL_Differences#Non-Power_of_Two_Texture_Support))
+* Coloured cells ([linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation) of corner colours)
 * User-configurable cell size, framerate and wraparound
 * Mutations (randomly-added live cells to prevent life from dying out)
 * [Glow/bloom](http://en.wikipedia.org/wiki/Bloom_%28shader_effect%29) visual effect
 * Control panel user interface
 * User-friendly error handling and troubleshooting
-* No use of deprecated synchronous Ajax needed to load shader source code
-* No dependent texture reads in "render" shader
+* Shader source code loaded without using [deprecated synchronous Ajax](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Parameters)
+* [Non-dependent texture reads](http://stackoverflow.com/questions/1054096/what-is-a-dependent-texture-read) in most shaders
 * [SRP](http://en.wikipedia.org/wiki/Single_responsibility_principle) object-oriented code architecture
 * [SCSS](http://sass-lang.com/) stylesheet
 * [Grunt](http://gruntjs.com/) development tasks for linting and minifying code
