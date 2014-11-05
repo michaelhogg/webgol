@@ -27,6 +27,8 @@
         "GOLAnimator":                    false,
         "GOLGPU":                         false,
         "GOLGPUProgram":                  false,
+        "GOLGPUProgramAddAndDisplay":     false,
+        "GOLGPUProgramBlur":              false,
         "GOLGPUProgramNextState":         false,
         "GOLGPUProgramRender":            false,
         "GOLGrid":                        false,
