@@ -14,12 +14,22 @@ var GOLUtils = {
      */
     getWebglInfo: function(gol) {
 
-        var gl   = gol.gl;
+        var gl = gol.gl;
+
+        var maxTextureSize        = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+        var maxViewportDimensions = gl.getParameter(gl.MAX_VIEWPORT_DIMS);
+
         var info = [
             "Vendor = "                   + gl.getParameter(gl.VENDOR),
             "Renderer = "                 + gl.getParameter(gl.RENDERER),
             "Version = "                  + gl.getParameter(gl.VERSION),
-            "Shading language version = " + gl.getParameter(gl.SHADING_LANGUAGE_VERSION)
+            "Shading language version = " + gl.getParameter(gl.SHADING_LANGUAGE_VERSION),
+            "Max texture size = "         + maxTextureSize           + " x " + maxTextureSize,
+            "Max viewport dimensions = "  + maxViewportDimensions[0] + " x " + maxViewportDimensions[1],
+            "Bits per channel (RGBA) = "  + gl.getParameter(gl.RED_BITS  ) + "," +
+                                            gl.getParameter(gl.GREEN_BITS) + "," +
+                                            gl.getParameter(gl.BLUE_BITS ) + "," +
+                                            gl.getParameter(gl.ALPHA_BITS)
         ];
 
         // gl.getSupportedExtensions() could also be added to info
