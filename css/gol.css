@@ -208,9 +208,9 @@ canvas {
   width: 1px;
 }
 .panel-table td.spacer-cell {
-  max-width: 20px;
-  min-width: 20px;
-  width: 20px;
+  max-width: 10px;
+  min-width: 10px;
+  width: 10px;
 }
 .panel-table td.button-cell {
   text-align: center;
@@ -220,6 +220,8 @@ canvas {
   display: inline-block;
   font-weight: 400;
   padding: 5px 10px;
+  text-align: center;
+  width: 30px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -230,6 +232,9 @@ canvas {
   font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
   font-size: 12pt;
   font-weight: 400;
+}
+.panel-table td input[type=range] {
+  width: 120px;
 }
 .panel-table td button {
   font-family: "Oxygen", "Helvetica", "Arial", sans-serif;
