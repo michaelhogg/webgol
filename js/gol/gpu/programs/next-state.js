@@ -19,18 +19,20 @@ function GOLGPUProgramNextState(gpu, vertexSourceCode, fragmentSourceCode) {
 /**
  * Run
  *
+ * @param {Igloo.Texture} textureIn
+ * @param {Igloo.Texture} textureOut
  * @throws Error if something goes wrong
  */
-GOLGPUProgramNextState.prototype.run = function() {
+GOLGPUProgramNextState.prototype.run = function(textureIn, textureOut) {
 
     // Render to the off-screen framebuffer
-    // and write the rendered image to the temp texture
-    this.gpu.offscreenFramebuffer.attach(this.gpu.textures.temp);
+    // and write the rendered image to the textureOut texture
+    this.gpu.offscreenFramebuffer.attach(textureOut);
 
     this.gpu.setViewport(this.gol.STATE_WIDTH, this.gol.STATE_HEIGHT);
 
     var inputTextures = [
-        { samplerName: "uSampler", texture: this.gpu.textures.state }
+        { samplerName: "uSampler", texture: textureIn }
     ];
 
     var floatUniforms = [

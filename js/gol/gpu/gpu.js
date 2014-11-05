@@ -238,7 +238,7 @@ GOLGPU.prototype.bindDefaultFramebuffer = function() {
  */
 GOLGPU.prototype.calculateNextState = function() {
 
-    this.gpuPrograms.nextState.run();
+    this.gpuPrograms.nextState.run(this.textures.state, this.textures.temp);
 
     var temp = this.textures.temp;
 
