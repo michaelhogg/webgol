@@ -253,6 +253,7 @@ GOL.prototype.getStateAsGOLGrid = function() {
  * Set the GOL state using a GOLGrid object
  *
  * @param {GOLGrid} golGrid
+ * @throws Error if grid dimensions do not match GOL state dimensions
  */
 GOL.prototype.setStateUsingGOLGrid = function(golGrid) {
 

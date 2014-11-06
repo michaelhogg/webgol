@@ -63,6 +63,7 @@ GOLGrid.ALIGN_BOTTOM = 6;
  * @param   {number} x
  * @param   {number} y
  * @returns {number}
+ * @throws Error if x or y is invalid
  */
 GOLGrid.prototype.getCellIndex = function(x, y) {
 
@@ -112,6 +113,7 @@ GOLGrid.prototype.setCell = function(x, y, state) {
  * @param {boolean[]} cellData
  * @param {number}    width
  * @param {number}    height
+ * @throws Error if parameters are not self-consistent
  */
 GOLGrid.prototype.setUsingBoolArray = function(cellData, width, height) {
 
@@ -131,6 +133,7 @@ GOLGrid.prototype.setUsingBoolArray = function(cellData, width, height) {
  * @param {string} textGrid
  * @param {string} liveChar - Character representing a live cell
  * @param {string} deadChar - Character representing a dead cell
+ * @throws Error if row lengths are inconsistent, or if an invalid character is found
  */
 GOLGrid.prototype.setUsingTextGrid = function(textGrid, liveChar, deadChar) {
 
@@ -180,6 +183,7 @@ GOLGrid.prototype.setUsingTextGrid = function(textGrid, liveChar, deadChar) {
  * @param {GOLGrid} pasteGrid
  * @param {number}  pasteX
  * @param {number}  pasteY
+ * @throws Error if pasteX or pasteY is invalid, or if pasteGrid is too big
  */
 GOLGrid.prototype.paste = function(pasteGrid, pasteX, pasteY) {
 
