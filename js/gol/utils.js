@@ -7,6 +7,50 @@
 var GOLUtils = {
 
     /**
+     * Test whether the value is an integer
+     *
+     * @param   {*} value
+     * @returns {boolean}
+     */
+    isInt: function(value) {
+
+        return (
+            (typeof value === "number") &&
+            isFinite(value)             &&
+            (Math.round(value) === value)
+        );
+
+    },
+
+    /**
+     * Test whether the value is a float
+     *
+     * @param   {*} value
+     * @returns {boolean}
+     */
+    isFloat: function(value) {
+
+        return (
+            (typeof value === "number") &&
+            isFinite(value)             &&
+            (Math.round(value) !== value)
+        );
+
+    },
+
+    /**
+     * Test whether the value is a boolean
+     *
+     * @param   {*} value
+     * @returns {boolean}
+     */
+    isBool: function(value) {
+
+        return (value === true || value === false);
+
+    },
+
+    /**
      * Get WebGL info
      *
      * @param   {GOL} gol
