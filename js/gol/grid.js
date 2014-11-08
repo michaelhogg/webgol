@@ -24,36 +24,42 @@ function GOLGrid() {
 /**
  * Constant representing left horizontal alignment
  * @constant {number}
+ * @static
  */
 GOLGrid.ALIGN_LEFT = 1;
 
 /**
  * Constant representing centre horizontal alignment
  * @constant {number}
+ * @static
  */
 GOLGrid.ALIGN_CENTRE = 2;
 
 /**
  * Constant representing right horizontal alignment
  * @constant {number}
+ * @static
  */
 GOLGrid.ALIGN_RIGHT = 3;
 
 /**
  * Constant representing top vertical alignment
  * @constant {number}
+ * @static
  */
 GOLGrid.ALIGN_TOP = 4;
 
 /**
  * Constant representing middle vertical alignment
  * @constant {number}
+ * @static
  */
 GOLGrid.ALIGN_MIDDLE = 5;
 
 /**
  * Constant representing bottom vertical alignment
  * @constant {number}
+ * @static
  */
 GOLGrid.ALIGN_BOTTOM = 6;
 
