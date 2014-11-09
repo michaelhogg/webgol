@@ -15,7 +15,8 @@ module.exports = function(grunt) {
             'js/**/*.js',
             'package.json',
             'README.md',
-            'scss/*.scss'
+            'scss/*.scss',
+            'tests/**/*.js'
         ],
 
 
@@ -76,7 +77,10 @@ module.exports = function(grunt) {
                 options: {
                     jshintrc: '.jshintrc'
                 },
-                src: ['js/**/*.js']
+                src: [
+                    'js/**/*.js',
+                    'tests/**/*.js'
+                ]
             }
         },
 
@@ -129,6 +133,20 @@ module.exports = function(grunt) {
                     'jsmin/main.js':           ['js/main.js']
                 }
             }
+        },
+
+
+        /*--- Test tasks ---*/
+
+        // Run Jasmine tests
+        jasmine: {
+            webgol: {
+                options: {
+                    specs:   'tests/specs/**/*.js',
+                    helpers: 'tests/helpers/**/*.js'
+                },
+                src: 'js/gol/**/*.js'
+            }
         }
 
     });
@@ -140,11 +158,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-compass');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     grunt.registerTask('webgol_core', ['lintspaces', 'string-replace', 'jshint', 'includereplace', 'compass']);
 
     grunt.registerTask('webgol_dev',  ['webgol_core', 'concat']);
     grunt.registerTask('webgol_prod', ['webgol_core', 'uglify']);
+
+    grunt.registerTask('webgol_test', ['lintspaces', 'jshint', 'jasmine']);
 
     grunt.registerTask('default', ['webgol_dev']);
 
