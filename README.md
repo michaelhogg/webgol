@@ -1,4 +1,4 @@
-# WebGOL
+# WebGOL [![Build Status](https://travis-ci.org/michaelhogg/webgol.svg?branch=master)](https://travis-ci.org/michaelhogg/webgol)
 
 ![Screenshot](screenshot.png)
 
