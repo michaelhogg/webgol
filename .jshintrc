@@ -22,7 +22,10 @@
     /*--- Globals ---*/
     "browser": true,
     "jquery":  true,
+    "jasmine": true,
     "globals": {
+
+        // GOL
         "GOL":                            false,
         "GOLAnimator":                    false,
         "GOLGPU":                         false,
@@ -50,9 +53,17 @@
         "GOLUIToolbar":                   false,
         "GOLUIUtils":                     true,
         "GOLUtils":                       true,
-        "Igloo":                          false,
-        "Switchery":                      false,
-        "WebGLRenderingContext":          false
+
+        // Libraries
+        "Igloo":     false,
+        "Switchery": false,
+
+        // Browser
+        "WebGLRenderingContext": false,
+
+        // Jasmine helpers
+        "multispec": false
+
     }
 
 }
