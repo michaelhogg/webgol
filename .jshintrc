@@ -49,7 +49,7 @@
         "GOLUISliderGlow":                false,
         "GOLUISliderTargetFramerate":     false,
         "GOLUISwitcheryMutation":         false,
-        "GOLUISwitcheryWrapping":         false,
+        "GOLUISwitcheryWraparound":       false,
         "GOLUIToolbar":                   false,
         "GOLUIUtils":                     true,
         "GOLUtils":                       true,

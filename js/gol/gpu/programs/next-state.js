@@ -40,7 +40,7 @@ GOLGPUProgramNextState.prototype.run = function(textureIn, textureOut) {
     ];
 
     var intUniforms = [
-        { name: "uEnableWrapping", value: (this.gol.enableWrapping ? 1 : 0) }
+        { name: "uEnableWraparound", value: (this.gol.enableWraparound ? 1 : 0) }
     ];
 
     // Throws an error if something goes wrong

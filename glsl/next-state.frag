@@ -8,7 +8,7 @@ precision mediump float;
 
 uniform sampler2D uSampler;
 uniform vec2      uStateDimensions;
-uniform bool      uEnableWrapping;
+uniform bool      uEnableWraparound;
 
 /**
  * Wrap value to the range 0-1
@@ -29,7 +29,7 @@ int getCellState(vec2 offset) {
 
     vec2 coord = (gl_FragCoord.xy + offset) / uStateDimensions;  // Normalise to range 0-1
 
-    if (uEnableWrapping == true) {
+    if (uEnableWraparound == true) {
         coord.x = wrapValue(coord.x);  // Wrap horizontally
         coord.y = wrapValue(coord.y);  // Wrap vertically
     } else {

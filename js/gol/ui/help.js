@@ -15,7 +15,7 @@ var GOLUIHelp = {
             { id: "CellSize",        html: "The width and height of each cell, in pixels<br>(changing this setting will reload the page,<br>to recreate the WebGL textures)" },
             { id: "TargetFramerate", html: "The number of frames-per-second to attempt to reach" },
             { id: "ActualFramerate", html: "The actual number of frames-per-second being displayed" },
-            { id: "Wrapping",        html: "Wrap the screen horizontally (left and right edges joined)<br>and vertically (top and bottom edges joined)" },
+            { id: "Wraparound",      html: "Wrap the screen horizontally (left and right edges joined)<br>and vertically (top and bottom edges joined)" },
             { id: "Glow",            html: "The brightness of the glow (bloom) visual effect" },
 
             { id: "RandomModeMutation", html: "Randomly add live cells<br>to prevent life from dying out" }

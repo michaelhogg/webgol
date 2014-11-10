@@ -82,10 +82,10 @@ GOLUI.prototype.init = function() {
 
     // Switcherys
 
-    var wrappingSwitchery = new GOLUISwitcheryWrapping(this.gol);
-    var mutationSwitchery = new GOLUISwitcheryMutation(this.gol);
+    var wraparoundSwitchery = new GOLUISwitcheryWraparound(this.gol);
+    var mutationSwitchery   = new GOLUISwitcheryMutation(this.gol);
 
-    wrappingSwitchery.init();
+    wraparoundSwitchery.init();
     mutationSwitchery.init();
 
     // Miscellaneous

@@ -73,7 +73,7 @@ function GOL(canvas, cellSize) {
      * Should the GOL state wrap horizontally and vertically?
      * @type {boolean}
      */
-    this.enableWrapping = true;
+    this.enableWraparound = true;
 
     /**
      * Should cells be randomly mutated? (only applicable in Random mode)
@@ -335,11 +335,11 @@ GOL.prototype.mutateRandomCell = function() {
 };
 
 /**
- * Toggle the wrapping of the GOL state
+ * Toggle the wraparound of the GOL state
  */
-GOL.prototype.toggleWrapping = function() {
+GOL.prototype.toggleWraparound = function() {
 
-    this.enableWrapping = !this.enableWrapping;
+    this.enableWraparound = !this.enableWraparound;
 
 };
 
