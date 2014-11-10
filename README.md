@@ -21,12 +21,13 @@ and features the following improvements:
 * Mutations (randomly-added live cells to prevent life from dying out)
 * [Glow/bloom](http://en.wikipedia.org/wiki/Bloom_%28shader_effect%29) visual effect
 * Control panel user interface
-* User-friendly error handling and troubleshooting
+* Comprehensive error handling and troubleshooting
 * Shader source code loaded without using [deprecated synchronous Ajax](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Parameters)
 * [Non-dependent texture reads](http://stackoverflow.com/questions/1054096/what-is-a-dependent-texture-read) in most shaders
 * [SRP](http://en.wikipedia.org/wiki/Single_responsibility_principle) object-oriented code architecture
 * [SCSS](http://sass-lang.com/) stylesheet
-* [Grunt](http://gruntjs.com/) development tasks for linting and minifying code
+* A few [Jasmine](http://jasmine.github.io/) tests (running on [Travis CI](https://travis-ci.org/))
+* [Grunt](http://gruntjs.com/) development tasks for linting, minifying, compiling and testing
 
 
 ## What is Conway's Game of Life?
